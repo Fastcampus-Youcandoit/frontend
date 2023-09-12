@@ -36,6 +36,13 @@
     "no-unused-vars": "off",
     "react/jsx-filename-extension": ["warn", { "extensions": [".tsx"] }],
     "import/extensions": "off",
-    "prettier/prettier": ["error", { "endOfLine": "auto" }]
+    "prettier/prettier": ["error", { "endOfLine": "auto" }],
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": "arrow-function",
+        "unnamedComponents": "arrow-function"
+      }
+    ]
   }
 }

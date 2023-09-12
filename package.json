@@ -8,11 +8,11 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.50",
-    "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
     "firebase": "^10.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.15.0",
     "react-scripts": "5.0.1",
     "styled-components": "^6.0.7",
@@ -45,6 +45,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react": "^18.2.21",
     "eslint": "^8.49.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^9.0.0",

@@ -8,5 +8,5 @@
   "arrowParens": "avoid",
   "orderedImports": true,
   "bracketSpacing": true,
-  "jsxBracketSameLine": false
+  "jsxBracketSameLine": true
 }
