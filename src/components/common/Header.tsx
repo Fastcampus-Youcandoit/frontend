@@ -3,7 +3,7 @@ import gelleryBlack from "../../assets/icons/header_icon/header_gellery_black_ic
 import github from "../../assets/icons/header_icon/header_github_black_icon.png";
 import wikiBlack from "../../assets/icons/header_icon/header_wiki_black_icon.png";
 import Logo from "./Logo";
-import cummute from "../../assets/icons/header_icon/header_commute_white-icon.png";
+import CommuteButtonComponent from "../commute/CommuteButtonComponent";
 
 const HeaderBox = styled.header`
   width: 100vw;
@@ -48,21 +48,6 @@ const Span = styled.span`
   padding-bottom: 0.2rem;
 `;
 
-const CommuteButton = styled.button`
-  background-color: #000000;
-  height: 100%;
-  border-radius: 10px;
-  font-size: 1rem;
-  padding: 0 2rem;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  .commute_span {
-    color: #ffff;
-    margin-left: 0.5rem;
-  }
-`;
-
 const Header = () => {
   return (
     <HeaderBox>
@@ -81,10 +66,7 @@ const Header = () => {
             <IconImg src={github} alt="github icon" className="github" />
           </HeaderItem>
           <HeaderItem>
-            <CommuteButton type="button">
-              <IconImg src={cummute} />
-              <Span className="commute_span">commute</Span>
-            </CommuteButton>
+            <CommuteButtonComponent />
           </HeaderItem>
         </HeaderItems>
       </HeaderNav>
