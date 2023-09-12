@@ -1,0 +1,39 @@
+@font-face {
+  font-family: "NotoSansKR-Bold";
+  src: url("./NotoSans/NotoSansKR-Bold.ttf");
+}
+
+@font-face {
+  font-family: "NotoSansKR-Medium";
+  src: url("./NotoSans/NotoSansKR-Medium.ttf");
+}
+
+@font-face {
+  font-family: "NotoSansKR-Regular";
+  src: url("./NotoSans/NotoSansKR-Regular.ttf");
+}
+
+@font-face {
+  font-family: "NotoSansKR-Light";
+  src: url("./NotoSans/NotoSansKR-Light.ttf");
+}
+
+@font-face {
+  font-family: "SUITE-Bold";
+  src: url("./SUITE/SUITE-Bold.ttf");
+}
+
+@font-face {
+  font-family: "SUITE-Medium";
+  src: url("./SUITE/SUITE-Medium.ttf");
+}
+
+@font-face {
+  font-family: "SUITE-Regular";
+  src: url("./SUITE/SUITE-Regular.ttf");
+}
+
+@font-face {
+  font-family: "SUITE-Light";
+  src: url("./SUITE/SUITE-Light.ttf");
+}
