@@ -104,7 +104,6 @@ const WikiSideBar = () => {
   const [CompanyIconRotation, setCompanyIconRotation] = useState(false);
   const [ProjectIconRotation, setProjectIconRotation] = useState(false);
   const [OnboardingIconRotation, setOnboardingIconRotation] = useState(false);
-  const [activeItem, setActiveItem] = useState(null);
 
   const ToggleCompanyText = () => {
     setCompanyTextVisible(!CompanyTextVisible);
