@@ -3,6 +3,7 @@ import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import Home from "./pages/Home";
 import GlobalStyle from "./styles/globalStyle";
+import SideBar from "./components/common/SideBar";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
       </Routes>
+      <SideBar />
     </BrowserRouter>
   );
 };
