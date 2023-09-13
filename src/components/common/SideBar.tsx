@@ -11,7 +11,7 @@ import onbordingBlack from "../../assets/icons/sidebar_icon/onboarding_black_ico
 import onbordingBlue from "../../assets/icons/sidebar_icon/onboarding_blue_icon.png";
 
 const SideBarBox = styled.div`
-  width: 400px;
+  width: 370px;
   height: 90vh;
   margin-top: 15px;
   font-family: "NotoSansKR-Regular";
@@ -104,7 +104,6 @@ const WikiSideBar = () => {
   const [CompanyIconRotation, setCompanyIconRotation] = useState(false);
   const [ProjectIconRotation, setProjectIconRotation] = useState(false);
   const [OnboardingIconRotation, setOnboardingIconRotation] = useState(false);
-  const [activeItem, setActiveItem] = useState(null);
 
   const ToggleCompanyText = () => {
     setCompanyTextVisible(!CompanyTextVisible);

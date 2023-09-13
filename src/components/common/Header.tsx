@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import "../../assets/fonts/Font.css";
 import gelleryBlack from "../../assets/icons/header_icon/header_gellery_black_icon.png";
 import github from "../../assets/icons/header_icon/header_github_black_icon.png";
 import wikiBlack from "../../assets/icons/header_icon/header_wiki_black_icon.png";
@@ -23,6 +24,7 @@ const HeaderItems = styled.nav`
   display: flex;
   height: 50%;
   gap: 1.5rem;
+  font-family: "SUITE-Medium";
 `;
 
 const HeaderItem = styled.div`
@@ -57,6 +59,7 @@ const CommuteButton = styled.button`
   display: flex;
   align-items: center;
   cursor: pointer;
+  font-family: "SUITE-Medium";
   .commute_span {
     color: #ffff;
     margin-left: 0.5rem;
