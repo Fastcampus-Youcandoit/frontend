@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import github from "../../assets/icons/header_icon/header_github_black_icon.png";
 import logo from "../../assets/icons/header_icon/logo.png";
+import "../../assets/fonts/Font.css";
 
 const FooterBox = styled.footer`
   width: 100vw;
@@ -19,7 +20,7 @@ const GithubIcon = styled.img`
 `;
 
 const FooterItemsBox = styled.div`
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   padding-top: 0.1rem;
   height: 1.5rem;
   display: flex;
@@ -31,6 +32,7 @@ const FooterLogoBox = styled.div`
 
 const FooterTeamInfo = styled.div`
   display: flex;
+  font-family: "NotoSansKR-Regular";
   margin-left: 1rem;
   padding-top: 0.25rem;
   > div:not(:last-child)::after {
