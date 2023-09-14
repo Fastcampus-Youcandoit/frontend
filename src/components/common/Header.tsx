@@ -28,8 +28,7 @@ const HeaderItems = styled.nav`
 
 const HeaderItem = styled.div`
   font-size: 1rem;
-  font-family: "SUITE-Regular";
-  font-weight: 700;
+  font-family: "SUITE-bold";
   height: 100%;
   display: flex;
   align-items: center;
