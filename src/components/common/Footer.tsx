@@ -7,7 +7,7 @@ const FooterBox = styled.footer`
   width: 100vw;
   position: fixed;
   bottom: 0;
-  height: 5rem;
+  height: 8vh;
   padding: 1rem 4rem 0 4rem;
   border-top: 1px solid #707070;
   display: flex;

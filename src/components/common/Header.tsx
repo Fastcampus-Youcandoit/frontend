@@ -8,7 +8,7 @@ import "../../assets/fonts/Font.css";
 
 const HeaderBox = styled.header`
   width: 100vw;
-  height: 5rem;
+  height: 9vh;
   padding: 0 2rem;
 `;
 
