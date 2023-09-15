@@ -171,7 +171,7 @@ const GallerySideBar = () => {
 const Wikis = () => {
   return (
     <Routes>
-      <Route path="/" element={<WikiSideBar />}>
+      <Route path="/wiki" element={<WikiSideBar />}>
         <Route path="office-life" element={<OfficeLife />}>
           <Route path="company-rules" element={<CompanyRules />} />
           <Route path="team-introduction" element={<TeamIntroduction />} />
@@ -194,7 +194,7 @@ const Wikis = () => {
 const Gallerys = () => {
   return (
     <Routes>
-      <Route path="/" element={<GallerySideBar />}>
+      <Route path="/gallery" element={<GallerySideBar />}>
         <Route path="photos" element={<Photos />}>
           <Route path="office-photo" element={<OfficePhoto />} />
           <Route path="business" element={<Business />} />

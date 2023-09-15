@@ -59,7 +59,9 @@ const Header = () => {
         <HeaderItems>
           <HeaderItem>
             <IconImg src={wikiBlack} alt="wiki icon" />
-            <Span>wiki</Span>
+            <Span>
+              <Link to="/wiki">wiki</Link>
+            </Span>
           </HeaderItem>
           <HeaderItem>
             <IconImg src={gelleryBlack} alt="gellery icon" />

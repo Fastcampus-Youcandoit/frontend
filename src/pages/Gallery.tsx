@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import GallerySection from "../components/gallery/GallerySection";
 import GalleryModal from "../components/gallery/GalleryModal";
