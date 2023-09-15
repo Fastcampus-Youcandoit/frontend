@@ -4,10 +4,11 @@ import github from "../../assets/icons/header_icon/header_github_black_icon.png"
 import wikiBlack from "../../assets/icons/header_icon/header_wiki_black_icon.png";
 import Logo from "./Logo";
 import CommuteButtonComponent from "../commute/CommuteButtonComponent";
+import "../../assets/fonts/Font.css";
 
 const HeaderBox = styled.header`
   width: 100vw;
-  height: 5rem;
+  height: 9vh;
   padding: 0 2rem;
 `;
 
@@ -27,7 +28,7 @@ const HeaderItems = styled.nav`
 
 const HeaderItem = styled.div`
   font-size: 1rem;
-  font-weight: 500;
+  font-family: "SUITE-bold";
   height: 100%;
   display: flex;
   align-items: center;
