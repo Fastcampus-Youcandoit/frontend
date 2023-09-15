@@ -1,10 +1,10 @@
 import styled from "styled-components";
+import "../../assets/fonts/Font.css";
 import gelleryBlack from "../../assets/icons/header_icon/header_gellery_black_icon.png";
 import github from "../../assets/icons/header_icon/header_github_black_icon.png";
 import wikiBlack from "../../assets/icons/header_icon/header_wiki_black_icon.png";
 import Logo from "./Logo";
 import CommuteButtonComponent from "../commute/CommuteButtonComponent";
-import "../../assets/fonts/Font.css";
 
 const HeaderBox = styled.header`
   width: 100vw;
@@ -24,6 +24,7 @@ const HeaderItems = styled.nav`
   display: flex;
   height: 50%;
   gap: 1.5rem;
+  font-family: "SUITE-Medium";
 `;
 
 const HeaderItem = styled.div`
