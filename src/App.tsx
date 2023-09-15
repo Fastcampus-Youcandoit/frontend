@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./components/common/Header";
 import Home from "./pages/Home";
 import GlobalStyle from "./styles/globalStyle";
-import SideBar from "./components/SideBar/SideBar";
 
 const App = () => {
   return (
@@ -12,7 +11,6 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
       </Routes>
-      <SideBar />
     </BrowserRouter>
   );
 };
