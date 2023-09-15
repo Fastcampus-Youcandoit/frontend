@@ -1,9 +1,9 @@
 import React, { useRef, useState, useCallback } from "react";
 import styled from "styled-components";
 import { ref, uploadString } from "firebase/storage";
-import { storage } from "../firebase";
-import closeIconUrl from "../assets/icons/gallery_icon/image_close_icon.png";
-import uploadIconUrl from "../assets/icons/gallery_icon/image_upload_icon.png";
+import { storage } from "../../firebase";
+import closeIconUrl from "../../assets/icons/gallery_icon/image_close_icon.png";
+import uploadIconUrl from "../../assets/icons/gallery_icon/image_upload_icon.png";
 
 interface ModalProps {
   isModalChange: () => void;
@@ -80,9 +80,7 @@ const ModalUploadIcon = styled.img`
 `;
 
 const UploadDescription = styled.p`
-  font-size: 18px;
-  font-weight: 600;
-  font-family: Noto Sans KR;
+  font: normal normal bold 20px/32px Noto Sans KR;
   margin-top: 20px;
   > img {
     width: 25px;
@@ -92,7 +90,7 @@ const UploadDescription = styled.p`
 
 const FileNameBox = styled.div`
   display: flex;
-  margin: 20px auto 0px 70px;
+  margin: 20px auto 0px 65px;
   > svg {
     margin-right: 3px;
   }
@@ -105,9 +103,7 @@ const Input = styled.input`
 const FileName = styled.p`
   margin-left: 5px;
   text-align: center;
-  font-size: 16px;
-  font-weight: 700;
-  font-family: Noto Sans KR;
+  font: normal normal bold 16px/18px Noto Sans KR;
 `;
 
 const ButtonBox = styled.div`
@@ -119,20 +115,16 @@ const Button = styled.button<stylesProps>`
   padding: 6px 16px;
   margin-left: 15px;
   text-align: center;
-  font-size: 22px;
-  font-weight: 700;
-  font-family: Noto Sans KR;
+  font: normal normal bold 25px/30px Noto Sans KR;
   border: 1px solid #d2d2d2;
   border-radius: 10px;
   cursor: pointer;
   color: ${props => props.color || "#000"};
   background-color: ${props => props.backgroundColor || "#fff"};
-  
+  transition: transform 1s;
   &:hover {
-    border: 1px solid #087ea4; 
-    color: ${props => (props.color === "#000" ? "#087ea4" : "fff")};
-    background-color: ${props =>
-      props.backgroundColor === "#000" ? "#087ea4" : "#fff"};
+    transform: scale(1.15);
+    transition: transform 0.8s;
 `;
 
 const GalleryModal = ({ isModalChange }: ModalProps) => {
@@ -170,23 +162,51 @@ const GalleryModal = ({ isModalChange }: ModalProps) => {
     }
   };
 
+  // check image file
+  const checkImageFile = (file: File | undefined): boolean => {
+    if (file) {
+      const allowedExtentions = ["png", "jpg", "jpeg", "gif"];
+      const fileExtension: string =
+        file.name.split(".").pop()?.toLowerCase() || "";
+
+      if (allowedExtentions.includes(fileExtension)) {
+        return true;
+      }
+    } else {
+      return false;
+    }
+    return false;
+  };
+
   // drag input
   const handleDrag = useCallback(async (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    const selectedFile = e.dataTransfer.files[0];
-    setSelectedFileName(selectedFile?.name || null);
+    const selectedFile: File | undefined = e.dataTransfer.files[0];
 
-    handlePreview(selectedFile);
+    if (checkImageFile(selectedFile)) {
+      setSelectedFileName(selectedFile?.name || null);
+      handlePreview(selectedFile);
+    } else {
+      alert("이미지 파일만 업로드가 가능합니다.");
+      setSelectedFileName(null);
+      setSelectedImage(null);
+    }
   }, []);
 
+  // file change
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0];
-    handlePreview(selectedFile);
+    const selectedFile: File | undefined = e.target.files?.[0];
+
+    if (checkImageFile(selectedFile)) {
+      handlePreview(selectedFile);
+    } else {
+      alert("이미지 파일만 업로드가 가능합니다.");
+    }
   };
 
   const handleUpload = async () => {
     if (!selectedImage) {
-      alert("이미지를 선택해주세요.");
+      alert("파일을 선택해주세요.");
     }
 
     try {
@@ -235,7 +255,7 @@ const GalleryModal = ({ isModalChange }: ModalProps) => {
             type="file"
             ref={imageInputRef}
             onChange={handleFileChange}
-            accept=".png,.jpg,.jpeg"
+            accept=".png,.jpg,.jpeg,.gif"
           />
           <FileName>{selectedFileName || "이미지.png"}</FileName>
         </FileNameBox>
