@@ -1,4 +1,9 @@
 import styled from "styled-components";
+import { useState } from "react";
+import Calendar from "react-calendar";
+import chevronL from "../../assets/images/chevron/chevron_left.png";
+import chevronR from "../../assets/images/chevron/chevron_right.png";
+import "react-calendar/dist/Calendar.css";
 
 const SectionContainer = styled.section`
   width: 50%;
@@ -7,12 +12,15 @@ const SectionContainer = styled.section`
   border-radius: 10px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
   padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
 `;
 
 const SectionHeader = styled.div`
   display: flex;
   justify-content: space-between;
   font-family: "NotoSansKR-Bold";
+  margin-bottom: 1rem;
 `;
 
 const HeaderContentContainer = styled.div`
@@ -33,11 +41,23 @@ const SectionButton = styled.button`
   background-color: #f6f7f9;
   border-radius: 5px;
   border: none;
-  padding: 0.3rem 0.4rem;
+  padding: 0.2rem;
+  height: 1.5rem;
   cursor: pointer;
 `;
 
+const SectionButtonImg = styled.img`
+  width: 100%;
+  height: 100%;
+  background-color: #f6f7f9;
+`;
+
+const CalendarBox = styled.div`
+  height: 100%;
+`;
+
 const HomeCalendar = () => {
+  const [value, setValue] = useState(new Date());
   return (
     <SectionContainer>
       <SectionHeader>
@@ -45,10 +65,17 @@ const HomeCalendar = () => {
           <SectionHeaderTitle>2023년 9월 일정</SectionHeaderTitle>
         </HeaderContentContainer>
         <SectionButtonBox>
-          <SectionButton type="button">{"<"}</SectionButton>
-          <SectionButton type="button">{">"}</SectionButton>
+          <SectionButton type="button">
+            <SectionButtonImg src={chevronL} />
+          </SectionButton>
+          <SectionButton type="button">
+            <SectionButtonImg src={chevronR} />
+          </SectionButton>
         </SectionButtonBox>
       </SectionHeader>
+      <CalendarBox>
+        <Calendar value={value} />
+      </CalendarBox>
     </SectionContainer>
   );
 };
