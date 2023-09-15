@@ -11,10 +11,11 @@ interface ModalProps {
 
 interface stylesProps {
   color?: string;
+  borderColor?: string;
   backgroundColor?: string;
 }
 
-const ModalBackground = styled.div`
+export const ModalBackground = styled.div`
   position: fixed;
   display: flex;
   align-items: center;
@@ -39,7 +40,7 @@ const ModalBox = styled.div`
   z-index: 99;
 `;
 
-const CloseButton = styled.button`
+export const CloseButton = styled.button`
   margin: 20px;
   margin-left: auto;
   border: none;
@@ -106,24 +107,24 @@ const FileName = styled.p`
   font: normal normal bold 16px/18px Noto Sans KR;
 `;
 
-const ButtonBox = styled.div`
+export const ButtonBox = styled.div`
   margin: auto 20px 20px auto;
 `;
 
-const Button = styled.button<stylesProps>`
+export const Button = styled.button<stylesProps>`
   height: 45px;
   padding: 6px 16px;
   margin-left: 15px;
   text-align: center;
-  font: normal normal bold 25px/30px Noto Sans KR;
-  border: 1px solid #d2d2d2;
+  font: normal normal bold 20px/30px Noto Sans KR;
+  border: 2px solid ${props => props.borderColor || "#d2d2d2"};
   border-radius: 10px;
   cursor: pointer;
   color: ${props => props.color || "#000"};
   background-color: ${props => props.backgroundColor || "#fff"};
-  transition: transform 1s;
+  transition: transform 0.8s;
   &:hover {
-    transform: scale(1.15);
+    transform: scale(1.08);
     transition: transform 0.8s;
 `;
 
@@ -223,7 +224,7 @@ const GalleryModal = ({ isModalChange }: ModalProps) => {
 
   return (
     <ModalBackground onClick={handleClickBackground} ref={modalBackgroundRef}>
-      <ModalBox>
+      <ModalBox onClick={e => e.stopPropagation()}>
         <CloseButton type="button" onClick={isModalChange}>
           <img src={closeIconUrl} alt="close icon" />
         </CloseButton>
@@ -263,6 +264,7 @@ const GalleryModal = ({ isModalChange }: ModalProps) => {
         <ButtonBox>
           <Button
             color="#000"
+            borderColor="#000"
             backgroundColor="#fff"
             type="button"
             onClick={isModalChange}>
@@ -273,7 +275,7 @@ const GalleryModal = ({ isModalChange }: ModalProps) => {
             color="#fff"
             backgroundColor="#000"
             type="button">
-            OK
+            Upload
           </Button>
         </ButtonBox>
       </ModalBox>

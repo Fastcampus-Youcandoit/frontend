@@ -3,6 +3,11 @@ import { useState, useEffect } from "react";
 import { getDownloadURL, listAll, ref } from "firebase/storage";
 import { storage } from "../../firebase";
 import uploadIconUrl from "../../assets/icons/gallery_icon/image_upload_icon.png";
+import GalleryDetailModal from "./GalleryDetailModal";
+
+interface ModalProps {
+  isModalChange: () => void;
+}
 
 const GalleryBox = styled.div`
   margin-top: 2rem;
@@ -48,14 +53,17 @@ const GalleryItem = styled.img`
   height: 260px;
   object-fit: cover;
   border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.8s;
+  &:hover {
+    transform: scale(1.02);
+    transition: transform 0.8s;
+  }
 `;
-
-interface ModalProps {
-  isModalChange: () => void;
-}
 
 const GallerySection = ({ isModalChange }: ModalProps) => {
   const [imgUrls, setImgUrls] = useState<string[]>([]);
+  const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchImage = async () => {
@@ -81,6 +89,14 @@ const GallerySection = ({ isModalChange }: ModalProps) => {
     };
   }, []);
 
+  const openDetailModal = (imageUrl: string) => {
+    setSelectedImageUrl(imageUrl);
+  };
+
+  const closeDetailModal = () => {
+    setSelectedImageUrl(null);
+  };
+
   return (
     <GalleryBox>
       <GalleryHeader>
@@ -91,9 +107,21 @@ const GallerySection = ({ isModalChange }: ModalProps) => {
       </GalleryHeader>
       <GalleryContainer>
         {imgUrls.map((url, index) => (
-          <GalleryItem key={url} src={url} alt={`${index} + image`} />
+          <GalleryItem
+            key={url}
+            src={url}
+            alt={`${index} + image`}
+            onClick={() => openDetailModal(url)}
+          />
         ))}
       </GalleryContainer>
+
+      {selectedImageUrl && (
+        <GalleryDetailModal
+          imageUrl={selectedImageUrl}
+          onClose={closeDetailModal}
+        />
+      )}
     </GalleryBox>
   );
 };

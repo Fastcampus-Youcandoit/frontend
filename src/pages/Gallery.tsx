@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { Gallerys } from "../components/SideBar/SideBar";
 import GallerySection from "../components/gallery/GallerySection";
 import GalleryModal from "../components/gallery/GalleryModal";
 
@@ -17,7 +18,7 @@ const Gallery = () => {
 
   return (
     <GalleryWrapper>
-      {/* 사이드바 컴포넌트 */}
+      <Gallerys />
 
       <GallerySection isModalChange={isModalChange} />
       {/* Modal */}
