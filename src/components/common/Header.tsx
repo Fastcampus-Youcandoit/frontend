@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import "../../assets/fonts/Font.css";
 import gelleryBlack from "../../assets/icons/header_icon/header_gellery_black_icon.png";
@@ -62,7 +63,9 @@ const Header = () => {
           </HeaderItem>
           <HeaderItem>
             <IconImg src={gelleryBlack} alt="gellery icon" />
-            <Span>gellery</Span>
+            <Span>
+              <Link to="/gallery">gellery</Link>
+            </Span>
           </HeaderItem>
           <HeaderItem>
             <IconImg src={github} alt="github icon" className="github" />
