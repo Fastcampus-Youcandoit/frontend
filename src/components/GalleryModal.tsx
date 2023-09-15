@@ -1,5 +1,7 @@
 import React, { useRef, useState, useCallback } from "react";
 import styled from "styled-components";
+import { ref, uploadString } from "firebase/storage";
+import { storage } from "../firebase";
 import closeIconUrl from "../assets/icons/gallery_icon/image_close_icon.png";
 import uploadIconUrl from "../assets/icons/gallery_icon/image_upload_icon.png";
 
@@ -139,7 +141,7 @@ const GalleryModal = ({ isModalChange }: ModalProps) => {
   const modalBackgroundRef = useRef<HTMLDivElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
 
-  // drag input
+  // click modal background
   const handleClickBackground = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === modalBackgroundRef.current) {
       isModalChange();
@@ -168,6 +170,7 @@ const GalleryModal = ({ isModalChange }: ModalProps) => {
     }
   };
 
+  // drag input
   const handleDrag = useCallback(async (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const selectedFile = e.dataTransfer.files[0];
@@ -179,6 +182,23 @@ const GalleryModal = ({ isModalChange }: ModalProps) => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     handlePreview(selectedFile);
+  };
+
+  const handleUpload = async () => {
+    if (!selectedImage) {
+      alert("이미지를 선택해주세요.");
+    }
+
+    try {
+      if (selectedImage) {
+        const storageRef = ref(storage, `images/${selectedFileName}`);
+        await uploadString(storageRef, selectedImage, "data_url");
+        alert("업로드가 완료되었습니다.");
+        window.location.href = "/gallery";
+      }
+    } catch (error) {
+      console.error("Error uploading image: ", error);
+    }
   };
 
   return (
@@ -228,7 +248,11 @@ const GalleryModal = ({ isModalChange }: ModalProps) => {
             onClick={isModalChange}>
             Cancel
           </Button>
-          <Button color="#fff" backgroundColor="#000" type="button">
+          <Button
+            onClick={handleUpload}
+            color="#fff"
+            backgroundColor="#000"
+            type="button">
             OK
           </Button>
         </ButtonBox>

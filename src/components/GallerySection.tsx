@@ -98,8 +98,7 @@ const GallerySection = ({ isModalChange }: ModalProps) => {
         </GalleryHeader>
         <GalleryContainer>
           {imgUrls.map((url, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <GalleryItem key={index} src={url} alt={`${index} + image`} />
+            <GalleryItem key={url} src={url} alt={`${index} + image`} />
           ))}
         </GalleryContainer>
       </GalleryBox>
