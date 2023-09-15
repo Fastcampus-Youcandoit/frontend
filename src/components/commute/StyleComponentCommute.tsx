@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 export const Span = styled.span`
@@ -9,7 +8,7 @@ export const Span = styled.span`
 
 export const WorkOnMark = styled.img`
   width: 1rem;
-  backgroun-color: black;
+  background-color: black;
   position: relative;
   right: 1rem;
 `;
@@ -26,7 +25,7 @@ export const CommuteButton = styled.button`
   align-items: center;
   cursor: pointer;
   .commute_span {
-    color: #00000;
+    color: #0000;
     transition: all 0.3s ease 0s;
 
     &:hover {
@@ -129,9 +128,9 @@ export const Buttons = styled.div`
 `;
 
 export const WorkOnOff = styled.button<{ workonoff: boolean }>`
-  background-color:${props => (props.workonoff ? "#e6f7ff" : "white")};
-  border:${props => (props.workonoff ? "none" : "1px solid #dcdcdc;")};
-  border-radius: 5px;  
+  background-color: ${props => (props.workonoff ? "#e6f7ff" : "white")};
+  border: ${props => (props.workonoff ? "none" : "1px solid #dcdcdc;")};
+  border-radius: 5px;
   width: 110px;
   font-size: 1rem;
   padding: 8px 0;
@@ -142,7 +141,7 @@ export const WorkOnOff = styled.button<{ workonoff: boolean }>`
   &:hover {
     transform: scale(1.05);
   }
-}`;
+`;
 
 export const OkayButtonDiv = styled.div`
   display: flex;
