@@ -110,7 +110,7 @@ const GallerySection = ({ isModalChange }: ModalProps) => {
           <GalleryItem
             key={url}
             src={url}
-            alt={`${index} + image`}
+            alt={`${index} image`}
             onClick={() => openDetailModal(url)}
           />
         ))}

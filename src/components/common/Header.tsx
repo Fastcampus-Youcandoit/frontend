@@ -64,7 +64,7 @@ const Header = () => {
           <HeaderItem>
             <IconImg src={gelleryBlack} alt="gellery icon" />
             <Span>
-              <Link to="/gallery">gellery</Link>
+              <Link to="/gallery">gallery</Link>
             </Span>
           </HeaderItem>
           <HeaderItem>

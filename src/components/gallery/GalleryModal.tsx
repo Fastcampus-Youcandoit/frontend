@@ -205,6 +205,7 @@ const GalleryModal = ({ isModalChange }: ModalProps) => {
     }
   };
 
+  // image upload
   const handleUpload = async () => {
     if (!selectedImage) {
       alert("파일을 선택해주세요.");
