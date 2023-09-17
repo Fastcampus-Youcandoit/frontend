@@ -69,9 +69,7 @@ const CommuteButtonComponent = () => {
               : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqtoS2rwPaT4aKpGPERdpEN1_rcfojGCNOrCjxOpWOA-HAmODktSNwOEXHHw_rHpQ-8is&usqp=CAU"
           }
         />
-        <Span className="commute_span">
-          {workonoff ? workOnTime : "commute"}
-        </Span>
+        <Span>{workonoff ? workOnTime : "commute"}</Span>
       </CommuteButton>
       {modalOpen && (
         <CommuteModal
