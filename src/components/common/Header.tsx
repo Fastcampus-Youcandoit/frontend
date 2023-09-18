@@ -55,7 +55,9 @@ const Header = () => {
   return (
     <HeaderBox>
       <HeaderNav>
-        <Logo />
+        <Link to="/">
+          <Logo />
+        </Link>
         <HeaderItems>
           <HeaderItem>
             <IconImg src={wikiBlack} alt="wiki icon" />

@@ -1,8 +1,13 @@
+import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Text } from "../../styles/SideBarStyle";
 
+const Div = styled.div`
+  height: 300px;
+`;
+
 const OfficePhoto = () => {
-  return <div>내부사진 내용</div>;
+  return <Div>내부사진 내용</Div>;
 };
 
 const Business = () => {
@@ -15,17 +20,17 @@ const JobPosting = () => {
 
 const Photos = () => {
   return (
-    <div>
-      <Link to="office-photo">
+    <>
+      <Link to="/gallery/photo/office-photo">
         <Text>내부 사진</Text>
       </Link>
-      <Link to="business">
+      <Link to="/gallery/photo/business">
         <Text>협력사</Text>
       </Link>
-      <Link to="job-posting">
+      <Link to="/gallery/photo/job-posting">
         <Text>내부 사진</Text>
       </Link>
-    </div>
+    </>
   );
 };
 

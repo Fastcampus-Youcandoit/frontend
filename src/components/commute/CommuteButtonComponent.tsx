@@ -50,14 +50,14 @@ const CommuteButtonComponent = () => {
     }
   };
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      checkOnOff();
-    }, 1000);
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
+  // useEffect(() => {
+  //   const timer = setInterval(() => {
+  //     checkOnOff();
+  //   }, 1000);
+  //   return () => {
+  //     clearInterval(timer);
+  //   };
+  // }, []);
 
   return (
     <>

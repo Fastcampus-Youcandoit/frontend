@@ -55,7 +55,7 @@ const WikiSideBar = () => {
   return (
     <SideBarBox>
       <SideBarItem>
-        <Link to="/office-life">
+        <Link to="office-life">
           <SideBarMainText
             onClick={ToggleCompanyText}
             style={{
@@ -79,7 +79,7 @@ const WikiSideBar = () => {
         {CompanyTextVisible && <Outlet />}
       </SideBarItem>
       <SideBarItem>
-        <Link to="/project">
+        <Link to="project">
           <SideBarMainText
             onClick={ToggleProjectText}
             style={{
@@ -103,7 +103,7 @@ const WikiSideBar = () => {
         {ProjectTextVisible && <Outlet />}
       </SideBarItem>
       <SideBarItem>
-        <Link to="/onboarding">
+        <Link to="onboarding">
           <SideBarMainText
             onClick={ToggleOnboardingText}
             style={{
@@ -141,7 +141,7 @@ const GallerySideBar = () => {
   return (
     <SideBarBox>
       <SideBarItem>
-        <Link to="/photos">
+        <Link to="photos">
           <SideBarMainText
             onClick={ToggleCompanyText}
             style={{
@@ -168,41 +168,4 @@ const GallerySideBar = () => {
   );
 };
 
-const Wikis = () => {
-  return (
-    <Routes>
-      <Route path="/wiki" element={<WikiSideBar />}>
-        <Route path="office-life" element={<OfficeLife />}>
-          <Route path="company-rules" element={<CompanyRules />} />
-          <Route path="team-introduction" element={<TeamIntroduction />} />
-          <Route path="organization-chart" element={<OrganizationChart />} />
-        </Route>
-        <Route path="project" element={<Project />}>
-          <Route path="in-progress" element={<InProject />} />
-          <Route path="upcoming" element={<UpComing />} />
-          <Route path="completed" element={<Completed />} />
-        </Route>
-        <Route path="onboarding" element={<Onboarding />}>
-          <Route path="reading-list" element={<ReadingList />} />
-          <Route path="topics" element={<Topics />} />
-        </Route>
-      </Route>
-    </Routes>
-  );
-};
-
-const Gallerys = () => {
-  return (
-    <Routes>
-      <Route path="/gallery" element={<GallerySideBar />}>
-        <Route path="photos" element={<Photos />}>
-          <Route path="office-photo" element={<OfficePhoto />} />
-          <Route path="business" element={<Business />} />
-          <Route path="job-posting" element={<JobPosting />} />
-        </Route>
-      </Route>
-    </Routes>
-  );
-};
-
-export { Wikis, Gallerys };
+export { WikiSideBar, GallerySideBar };
