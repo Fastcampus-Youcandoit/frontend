@@ -16,13 +16,13 @@ const OrganizationChart = () => {
 const OfficeLife = () => {
   return (
     <div>
-      <Link to="company-rules">
+      <Link to="/wiki/office-life/company-rules">
         <Text>회사내규</Text>
       </Link>
-      <Link to="team-introduction">
+      <Link to="/wiki/office-life/team-introduction">
         <Text>팀소개</Text>
       </Link>
-      <Link to="organization-chart">
+      <Link to="/wiki/office-life/organization-chart">
         <Text>조직도</Text>
       </Link>
     </div>
