@@ -52,7 +52,7 @@ export const CloseButton = styled.button`
   }
 `;
 
-const UploadBox = styled.div`
+export const UploadBox = styled.div`
   width: 600px;
   height: 320px;
   display: flex;
