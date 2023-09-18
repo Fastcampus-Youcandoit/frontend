@@ -4,6 +4,7 @@ export const Span = styled.span`
   font-size: 1.3rem;
   padding-bottom: 0.2rem;
   width: 4rem;
+  color: black;
 `;
 
 export const WorkOnMark = styled.img`
@@ -24,15 +25,11 @@ export const CommuteButton = styled.button`
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  .commute_span {
-    color: #0000;
-    transition: all 0.3s ease 0s;
-
-    &:hover {
-      transform: scale(1.04);
-    }
-  }
   border: none;
+  transition: all 0.3s ease 0s;
+
+  &:hover {
+    transform: scale(1.04);
 `;
 
 export const Modal = styled.div`
@@ -137,7 +134,7 @@ export const WorkOnOff = styled.button<{ workonoff: boolean }>`
   font-weight: 800;
   cursor: pointer;
   transition: all 0.3s ease 0s;
-
+  color: ${props => (props.workonoff ? "#087ea4" : "black")};
   &:hover {
     transform: scale(1.05);
   }
