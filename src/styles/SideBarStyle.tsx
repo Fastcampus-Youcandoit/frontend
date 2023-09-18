@@ -3,7 +3,7 @@ import styled from "styled-components";
 const SideBarBox = styled.div`
   width: 370px;
   height: 90vh;
-  margin-top: 15px;
+  margin: 15px 20px 0 0;
   font-family: "NotoSansKR-Regular";
 `;
 
