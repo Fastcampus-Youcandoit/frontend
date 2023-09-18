@@ -3,7 +3,7 @@ import styled from "styled-components";
 const SideBarBox = styled.div`
   width: 370px;
   height: 90vh;
-  margin: 15px 20px 0 0;
+  margin: 15px 50px 0 0;
   font-family: "NotoSansKR-Regular";
 `;
 
@@ -50,6 +50,7 @@ const Text = styled.a`
   cursor: pointer;
   display: flex;
   align-items: center;
+  color: #000;
 
   &:hover {
     background-color: #f6f7f9;
