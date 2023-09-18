@@ -35,7 +35,6 @@ const App = () => {
     <BrowserRouter>
       <GlobalStyle />
       <Header />
-      <Footer />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/wiki" element={<Wiki />}>

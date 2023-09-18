@@ -1,9 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
-import Calendar from "react-calendar";
 import chevronL from "../../assets/images/chevron/chevron_left.png";
 import chevronR from "../../assets/images/chevron/chevron_right.png";
-import "react-calendar/dist/Calendar.css";
 
 const SectionContainer = styled.section`
   width: 50%;
@@ -73,9 +71,9 @@ const HomeCalendar = () => {
           </SectionButton>
         </SectionButtonBox>
       </SectionHeader>
-      <CalendarBox>
-        <Calendar value={value} />
-      </CalendarBox>
+      {/* <CalendarBox>
+
+      </CalendarBox> */}
     </SectionContainer>
   );
 };
