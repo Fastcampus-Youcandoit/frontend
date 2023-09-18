@@ -4,16 +4,20 @@ import Footer from "./components/common/Footer";
 import Home from "./pages/Home";
 import Gallery from "./pages/Gallery";
 import GlobalStyle from "./styles/globalStyle";
+import Wiki from "./pages/Wiki";
 
 const App = () => {
   return (
     <BrowserRouter>
       <GlobalStyle />
       <Header />
-      <Footer />
       <Routes>
         <Route path="/" element={<Home />} />
+<<<<<<< Updated upstream
         <Route path="/gallery" element={<Gallery />} />
+=======
+        <Route path="/wiki" element={<Wiki />} />
+>>>>>>> Stashed changes
       </Routes>
     </BrowserRouter>
   );
