@@ -21,14 +21,14 @@ const JobPosting = () => {
 const Photos = () => {
   return (
     <>
-      <Link to="/gallery/photo/office-photo">
+      <Link to="/gallery/photos/office-photo">
         <Text>내부 사진</Text>
       </Link>
-      <Link to="/gallery/photo/business">
+      <Link to="/gallery/photos/business">
         <Text>협력사</Text>
       </Link>
-      <Link to="/gallery/photo/job-posting">
-        <Text>내부 사진</Text>
+      <Link to="/gallery/photos/job-posting">
+        <Text>채용공고</Text>
       </Link>
     </>
   );

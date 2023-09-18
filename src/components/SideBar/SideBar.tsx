@@ -162,7 +162,7 @@ const GallerySideBar = () => {
             />
           </SideBarMainText>
         </Link>
-        {PhotosTextVisible && <Outlet />}
+        {/* {PhotosTextVisible && <Outlet />} */}
       </SideBarItem>
     </SideBarBox>
   );
