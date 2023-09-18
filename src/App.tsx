@@ -13,11 +13,8 @@ const App = () => {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-<<<<<<< Updated upstream
         <Route path="/gallery" element={<Gallery />} />
-=======
         <Route path="/wiki" element={<Wiki />} />
->>>>>>> Stashed changes
       </Routes>
     </BrowserRouter>
   );
