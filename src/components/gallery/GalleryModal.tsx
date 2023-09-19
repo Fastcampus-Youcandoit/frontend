@@ -11,10 +11,11 @@ interface ModalProps {
 
 interface stylesProps {
   color?: string;
+  borderColor?: string;
   backgroundColor?: string;
 }
 
-const ModalBackground = styled.div`
+export const ModalBackground = styled.div`
   position: fixed;
   display: flex;
   align-items: center;
@@ -26,7 +27,7 @@ const ModalBackground = styled.div`
   z-index: 98;
 `;
 
-const ModalBox = styled.div`
+export const ModalBox = styled.div`
   width: 740px;
   height: 520px;
   margin: 0 auto;
@@ -39,7 +40,7 @@ const ModalBox = styled.div`
   z-index: 99;
 `;
 
-const CloseButton = styled.button`
+export const CloseButton = styled.button`
   margin: 20px;
   margin-left: auto;
   border: none;
@@ -51,7 +52,7 @@ const CloseButton = styled.button`
   }
 `;
 
-const UploadBox = styled.div`
+export const UploadBox = styled.div`
   width: 600px;
   height: 320px;
   display: flex;
@@ -65,7 +66,7 @@ const UploadBox = styled.div`
   cursor: pointer;
 `;
 
-const ImagePreview = styled.img`
+export const ImagePreview = styled.img`
   width: 600px;
   height: 320px;
   object-fit: cover;
@@ -73,13 +74,13 @@ const ImagePreview = styled.img`
   box-shadow: 0px 3px 6px #00000029;
 `;
 
-const ModalUploadIcon = styled.img`
+export const ModalUploadIcon = styled.img`
   width: 80px;
   height: 80px;
   text-align: center;
 `;
 
-const UploadDescription = styled.p`
+export const UploadDescription = styled.p`
   font: normal normal bold 20px/32px Noto Sans KR;
   margin-top: 20px;
   > img {
@@ -88,47 +89,64 @@ const UploadDescription = styled.p`
   }
 `;
 
-const FileNameBox = styled.div`
+export const FileNameBox = styled.div`
   display: flex;
+  align-items: center;
   margin: 20px auto 0px 65px;
   > svg {
     margin-right: 3px;
   }
 `;
 
-const Input = styled.input`
+export const Input = styled.input`
   display: none;
 `;
 
-const FileName = styled.p`
+export const FileName = styled.p`
   margin-left: 5px;
   text-align: center;
   font: normal normal bold 16px/18px Noto Sans KR;
 `;
 
-const ButtonBox = styled.div`
+export const ButtonBox = styled.div`
   margin: auto 20px 20px auto;
 `;
 
-const Button = styled.button<stylesProps>`
+export const Button = styled.button<stylesProps>`
   height: 45px;
   padding: 6px 16px;
   margin-left: 15px;
   text-align: center;
-  font: normal normal bold 25px/30px Noto Sans KR;
-  border: 1px solid #d2d2d2;
+  font: normal normal bold 20px/30px Noto Sans KR;
+  border: 2px solid ${props => props.borderColor || "#d2d2d2"};
   border-radius: 10px;
   cursor: pointer;
   color: ${props => props.color || "#000"};
   background-color: ${props => props.backgroundColor || "#fff"};
-  transition: transform 1s;
+  transition: transform 0.8s;
   &:hover {
-    transform: scale(1.15);
+    transform: scale(1.08);
     transition: transform 0.8s;
   }
 `;
 
+export const Select = styled.select<stylesProps>`
+  margin-right: 8px;
+  color: ${props => (props.color ? "#000" : "#808080")};
+  padding: 2px 3px;
+  border: 1px solid #000;
+  font: normal normal bold 15px Noto Sans KR;
+  border-radius: 3px;
+  > option {
+    border: inherit;
+    font-size: 14px;
+  }
+`;
+
 const GalleryModal = ({ isModalChange }: ModalProps) => {
+  const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
+    undefined,
+  );
   const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const modalBackgroundRef = useRef<HTMLDivElement>(null);
@@ -146,6 +164,11 @@ const GalleryModal = ({ isModalChange }: ModalProps) => {
     if (imageInputRef.current) {
       imageInputRef.current.click();
     }
+  };
+
+  // category
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCategory(e.target.value);
   };
 
   // selected image preview
@@ -205,14 +228,20 @@ const GalleryModal = ({ isModalChange }: ModalProps) => {
     }
   };
 
+  // image upload
   const handleUpload = async () => {
     if (!selectedImage) {
       alert("파일을 선택해주세요.");
+    } else if (!selectedCategory) {
+      alert("카테고리를 선택해주세요.");
     }
 
     try {
-      if (selectedImage) {
-        const storageRef = ref(storage, `images/${selectedFileName}`);
+      if (selectedImage && selectedCategory) {
+        const storageRef = ref(
+          storage,
+          `images/${selectedCategory}/${selectedFileName}`,
+        );
         await uploadString(storageRef, selectedImage, "data_url");
         alert("업로드가 완료되었습니다.");
         window.location.href = "/gallery";
@@ -224,7 +253,7 @@ const GalleryModal = ({ isModalChange }: ModalProps) => {
 
   return (
     <ModalBackground onClick={handleClickBackground} ref={modalBackgroundRef}>
-      <ModalBox>
+      <ModalBox onClick={e => e.stopPropagation()}>
         <CloseButton type="button" onClick={isModalChange}>
           <img src={closeIconUrl} alt="close icon" />
         </CloseButton>
@@ -246,6 +275,17 @@ const GalleryModal = ({ isModalChange }: ModalProps) => {
         </UploadBox>
 
         <FileNameBox>
+          <Select
+            color={selectedCategory}
+            value={selectedCategory}
+            onChange={handleCategoryChange}>
+            <option value="" selected disabled hidden>
+              == 카테고리 선택 ==
+            </option>
+            <option value="office-photo">내부사진</option>
+            <option value="business">협력사</option>
+            <option value="jop-posting">채용공고</option>
+          </Select>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="1em"
@@ -264,6 +304,7 @@ const GalleryModal = ({ isModalChange }: ModalProps) => {
         <ButtonBox>
           <Button
             color="#000"
+            borderColor="#000"
             backgroundColor="#fff"
             type="button"
             onClick={isModalChange}>
@@ -274,7 +315,7 @@ const GalleryModal = ({ isModalChange }: ModalProps) => {
             color="#fff"
             backgroundColor="#000"
             type="button">
-            OK
+            Upload
           </Button>
         </ButtonBox>
       </ModalBox>

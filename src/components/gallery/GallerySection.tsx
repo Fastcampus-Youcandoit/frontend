@@ -3,6 +3,11 @@ import { useState, useEffect } from "react";
 import { getDownloadURL, listAll, ref } from "firebase/storage";
 import { storage } from "../../firebase";
 import uploadIconUrl from "../../assets/icons/gallery_icon/image_upload_icon.png";
+import GalleryDetailModal from "./GalleryDetailModal";
+
+interface ModalProps {
+  isModalChange: () => void;
+}
 
 const GalleryBox = styled.div`
   margin-top: 2rem;
@@ -48,38 +53,72 @@ const GalleryItem = styled.img`
   height: 260px;
   object-fit: cover;
   border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.8s;
+  &:hover {
+    transform: scale(1.02);
+    transition: transform 0.8s;
+  }
 `;
-
-interface ModalProps {
-  isModalChange: () => void;
-}
 
 const GallerySection = ({ isModalChange }: ModalProps) => {
   const [imgUrls, setImgUrls] = useState<string[]>([]);
+  const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(null);
+
+  const fetchImagesFromFolder = async (folderPath: string | undefined) => {
+    const folderRef = ref(storage, folderPath);
+
+    try {
+      const imageList = await listAll(folderRef);
+
+      const imageURLs = await Promise.all(
+        imageList.items.map(async imageRef => {
+          return getDownloadURL(imageRef);
+        }),
+      );
+      return imageURLs;
+    } catch (error) {
+      console.log(`Error fetching image URLs: ${error}`);
+      return [];
+    }
+  };
+
+  const fetchAllImages = async () => {
+    const allImageURLs = [];
+
+    const businessImages = await fetchImagesFromFolder("images/business");
+    const jobPostingImages = await fetchImagesFromFolder("images/job-posting");
+    const officePhotoImages = await fetchImagesFromFolder(
+      "images/office-photo",
+    );
+
+    allImageURLs.push(
+      ...businessImages,
+      ...jobPostingImages,
+      ...officePhotoImages,
+    );
+    setImgUrls(allImageURLs);
+  };
 
   useEffect(() => {
-    const fetchImage = async () => {
-      try {
-        const imagesRef = ref(storage, "images");
-        const allImages = await listAll(imagesRef);
-
-        const urls = await Promise.all(
-          allImages.items.map(async imageRef => {
-            return getDownloadURL(imageRef);
-          }),
-        );
-        setImgUrls(urls);
-      } catch (error) {
-        console.log(`Error fetching image URLs: ${error}`);
-      }
-    };
-
-    fetchImage();
+    try {
+      fetchAllImages();
+    } catch (error) {
+      console.log(`Error fetching image URLs: ${error}`);
+    }
 
     return () => {
       setImgUrls([]);
     };
   }, []);
+
+  const openDetailModal = (imageUrl: string) => {
+    setSelectedImageUrl(imageUrl);
+  };
+
+  const closeDetailModal = () => {
+    setSelectedImageUrl(null);
+  };
 
   return (
     <GalleryBox>
@@ -91,9 +130,21 @@ const GallerySection = ({ isModalChange }: ModalProps) => {
       </GalleryHeader>
       <GalleryContainer>
         {imgUrls.map((url, index) => (
-          <GalleryItem key={url} src={url} alt={`${index} + image`} />
+          <GalleryItem
+            key={url}
+            src={url}
+            alt={`${index} image`}
+            onClick={() => openDetailModal(url)}
+          />
         ))}
       </GalleryContainer>
+
+      {selectedImageUrl && (
+        <GalleryDetailModal
+          imageUrl={selectedImageUrl}
+          onClose={closeDetailModal}
+        />
+      )}
     </GalleryBox>
   );
 };
