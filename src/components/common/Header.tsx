@@ -66,7 +66,7 @@ const Header = () => {
           <HeaderItem>
             <IconImg src={wikiBlack} alt="wiki icon" />
             <Span>
-              <StyledLink to="/wiki">wiki</StyledLink>
+              <StyledLink to="/wiki/office-life/company-rules">wiki</StyledLink>
             </Span>
           </HeaderItem>
           <HeaderItem>

@@ -59,7 +59,7 @@ const EditorContainer = styled.div`
 `;
 
 const ViewerMarginContainer = styled.div`
-  margin: 16px;
+  margin-left: 15px;
 `;
 
 const WikiComponent = () => {
