@@ -1,18 +1,13 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import GlobalStyle from "./styles/globalStyle";
 import Header from "./components/common/Header";
-import Footer from "./components/common/Footer";
-import Home from "./pages/Home";
-
-// Wiki page
-import Wiki from "./pages/Wiki";
 
 // Gallery Componenets
-import Gallery from "./pages/Gallery";
-import OfficePhoto from "./components/gallery/OfficePhoto";
 import Business from "./components/gallery/Business";
 import JobPosting from "./components/gallery/JobPosting";
+import OfficePhoto from "./components/gallery/OfficePhoto";
 import WikiComponent from "./components/wiki/WikiComponent";
+import { Gallery, Home, Wiki } from "./pages";
+import GlobalStyle from "./styles/globalStyle";
 
 const App = () => {
   return (

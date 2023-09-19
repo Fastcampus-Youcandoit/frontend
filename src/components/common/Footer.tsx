@@ -4,9 +4,7 @@ import logo from "../../assets/icons/header_icon/logo.png";
 import "../../assets/fonts/Font.css";
 
 const FooterBox = styled.footer`
-  width: 100vw;
-  position: fixed;
-  bottom: 0;
+  width: 100%;
   height: 8vh;
   padding: 1rem 4rem 0 4rem;
   border-top: 1px solid #707070;

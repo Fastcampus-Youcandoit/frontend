@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import logo from "../../assets/icons/header_icon/logo.png";
 
-const LogoBox = styled.a`
+const LogoBox = styled.div`
   width: 150px;
   height: 50%;
 `;

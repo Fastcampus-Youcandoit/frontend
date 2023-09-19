@@ -4,8 +4,8 @@ import "../../assets/fonts/Font.css";
 import gelleryBlack from "../../assets/icons/header_icon/header_gellery_black_icon.png";
 import github from "../../assets/icons/header_icon/header_github_black_icon.png";
 import wikiBlack from "../../assets/icons/header_icon/header_wiki_black_icon.png";
-import Logo from "./Logo";
 import CommuteButtonComponent from "../commute/CommuteButtonComponent";
+import Logo from "./Logo";
 
 const HeaderBox = styled.header`
   width: 100vw;
@@ -51,24 +51,28 @@ const Span = styled.span`
   padding-bottom: 0.2rem;
 `;
 
+const StyledLink = styled(Link)`
+  color: #000;
+`;
+
 const Header = () => {
   return (
     <HeaderBox>
       <HeaderNav>
-        <Link to="/">
+        <StyledLink to="/">
           <Logo />
-        </Link>
+        </StyledLink>
         <HeaderItems>
           <HeaderItem>
             <IconImg src={wikiBlack} alt="wiki icon" />
             <Span>
-              <Link to="/wiki/office-life/company-rules">wiki</Link>
+              <StyledLink to="/wiki">wiki</StyledLink>
             </Span>
           </HeaderItem>
           <HeaderItem>
             <IconImg src={gelleryBlack} alt="gellery icon" />
             <Span>
-              <Link to="/gallery">gallery</Link>
+              <StyledLink to="/gallery">gellery</StyledLink>
             </Span>
           </HeaderItem>
           <HeaderItem>

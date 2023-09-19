@@ -4,7 +4,7 @@ import chevronR from "../../assets/images/chevron/chevron_right.png";
 
 const SectionContainer = styled.section`
   width: 50%;
-  height: 100%;
+  height: 20rem;
   border: 1.2px solid #d2d2d2;
   border-radius: 10px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
