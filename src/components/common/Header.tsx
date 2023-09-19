@@ -1,13 +1,15 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import "../../assets/fonts/Font.css";
 import gelleryBlack from "../../assets/icons/header_icon/header_gellery_black_icon.png";
 import github from "../../assets/icons/header_icon/header_github_black_icon.png";
 import wikiBlack from "../../assets/icons/header_icon/header_wiki_black_icon.png";
+import CommuteButtonComponent from "../commute/CommuteButtonComponent";
 import Logo from "./Logo";
-import cummute from "../../assets/icons/header_icon/header_commute_white-icon.png";
 
 const HeaderBox = styled.header`
   width: 100vw;
-  height: 5rem;
+  height: 9vh;
   padding: 0 2rem;
 `;
 
@@ -23,11 +25,12 @@ const HeaderItems = styled.nav`
   display: flex;
   height: 50%;
   gap: 1.5rem;
+  font-family: "SUITE-Medium";
 `;
 
 const HeaderItem = styled.div`
   font-size: 1rem;
-  font-weight: 500;
+  font-family: "SUITE-bold";
   height: 100%;
   display: flex;
   align-items: center;
@@ -48,43 +51,35 @@ const Span = styled.span`
   padding-bottom: 0.2rem;
 `;
 
-const CommuteButton = styled.button`
-  background-color: #000000;
-  height: 100%;
-  border-radius: 10px;
-  font-size: 1rem;
-  padding: 0 2rem;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  .commute_span {
-    color: #ffff;
-    margin-left: 0.5rem;
-  }
+const StyledLink = styled(Link)`
+  color: #000;
 `;
 
 const Header = () => {
   return (
     <HeaderBox>
       <HeaderNav>
-        <Logo />
+        <StyledLink to="/">
+          <Logo />
+        </StyledLink>
         <HeaderItems>
           <HeaderItem>
             <IconImg src={wikiBlack} alt="wiki icon" />
-            <Span>wiki</Span>
+            <Span>
+              <StyledLink to="/wiki">wiki</StyledLink>
+            </Span>
           </HeaderItem>
           <HeaderItem>
             <IconImg src={gelleryBlack} alt="gellery icon" />
-            <Span>gellery</Span>
+            <Span>
+              <StyledLink to="/gallery">gellery</StyledLink>
+            </Span>
           </HeaderItem>
           <HeaderItem>
             <IconImg src={github} alt="github icon" className="github" />
           </HeaderItem>
           <HeaderItem>
-            <CommuteButton type="button">
-              <IconImg src={cummute} />
-              <Span className="commute_span">commute</Span>
-            </CommuteButton>
+            <CommuteButtonComponent />
           </HeaderItem>
         </HeaderItems>
       </HeaderNav>
