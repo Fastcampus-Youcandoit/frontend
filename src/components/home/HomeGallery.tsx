@@ -3,7 +3,7 @@ import chevronL from "../../assets/images/chevron/chevron_left.png";
 import chevronR from "../../assets/images/chevron/chevron_right.png";
 
 const SectionContainer = styled.section`
-  width: 100%;
+  width: 50%;
   height: 20rem;
   border: 1.2px solid #d2d2d2;
   border-radius: 10px;
