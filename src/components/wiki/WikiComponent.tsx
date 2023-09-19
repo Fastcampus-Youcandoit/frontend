@@ -21,7 +21,7 @@ const WikiHeader = styled.div`
   margin-top: 25px;
 `;
 
-const WikiMainText = styled.span`
+export const WikiMainText = styled.span`
   font-size: 25px;
   font-family: "NotoSansKR-bold";
 `;

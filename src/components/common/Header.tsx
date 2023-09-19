@@ -72,7 +72,7 @@ const Header = () => {
           <HeaderItem>
             <IconImg src={gelleryBlack} alt="gellery icon" />
             <Span>
-              <StyledLink to="/gallery">gellery</StyledLink>
+              <StyledLink to="/gallery/all">gallery</StyledLink>
             </Span>
           </HeaderItem>
           <HeaderItem>

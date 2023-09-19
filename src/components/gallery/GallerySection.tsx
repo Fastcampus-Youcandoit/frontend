@@ -1,13 +1,12 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { getDownloadURL, listAll, ref } from "firebase/storage";
 import { storage } from "../../firebase";
 import uploadIconUrl from "../../assets/icons/gallery_icon/image_upload_icon.png";
+import GalleryModal from "./GalleryModal";
 import GalleryDetailModal from "./GalleryDetailModal";
-
-interface ModalProps {
-  isModalChange: () => void;
-}
+import { WikiMainText } from "../wiki/WikiComponent";
 
 const GalleryBox = styled.div`
   margin-top: 2rem;
@@ -18,10 +17,6 @@ const GalleryHeader = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  > p {
-    font: normal normal bold 30px/44px Noto Sans KR;
-    margin-bottom: 20px;
-  }
 `;
 
 const UploadButton = styled.button`
@@ -52,6 +47,7 @@ const GalleryItem = styled.img`
   width: 90%;
   height: 260px;
   object-fit: cover;
+  background-color: #808080;
   border-radius: 10px;
   cursor: pointer;
   transition: transform 0.8s;
@@ -61,9 +57,22 @@ const GalleryItem = styled.img`
   }
 `;
 
-const GallerySection = ({ isModalChange }: ModalProps) => {
+const GallerySection = () => {
+  const [isModal, setIsModal] = useState(false);
   const [imgUrls, setImgUrls] = useState<string[]>([]);
   const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(null);
+  const params = useParams<Record<string, string | undefined>>();
+  const pageName = params.pageName || "";
+
+  const pageTitleMapping: Record<string, string> = {
+    "office-photo": "내부 사진",
+    business: "협력사",
+    "job-posting": "채용 공고",
+  };
+
+  const isModalChange = () => {
+    setIsModal(!isModal);
+  };
 
   const fetchImagesFromFolder = async (folderPath: string | undefined) => {
     const folderRef = ref(storage, folderPath);
@@ -100,17 +109,34 @@ const GallerySection = ({ isModalChange }: ModalProps) => {
     setImgUrls(allImageURLs);
   };
 
-  useEffect(() => {
+  const fetchImages = async () => {
     try {
-      fetchAllImages();
+      const imagesRef = ref(storage, `images/${pageName}`);
+      const allImages = await listAll(imagesRef);
+
+      const imageURLs = await Promise.all(
+        allImages.items.map(async imageRef => {
+          return getDownloadURL(imageRef);
+        }),
+      );
+      setImgUrls(imageURLs);
     } catch (error) {
       console.log(`Error fetching image URLs: ${error}`);
+      throw error;
+    }
+  };
+
+  useEffect(() => {
+    if (pageName === "all") {
+      fetchAllImages();
+    } else {
+      fetchImages();
     }
 
     return () => {
       setImgUrls([]);
     };
-  }, []);
+  }, [params]);
 
   const openDetailModal = (imageUrl: string) => {
     setSelectedImageUrl(imageUrl);
@@ -123,7 +149,7 @@ const GallerySection = ({ isModalChange }: ModalProps) => {
   return (
     <GalleryBox>
       <GalleryHeader>
-        <p>YouCanDoIt 내부 사진</p>
+        <WikiMainText>{pageTitleMapping[pageName] || "전체 사진"}</WikiMainText>
         <UploadButton type="button" onClick={isModalChange}>
           <img src={uploadIconUrl} alt="img upload icon" />
         </UploadButton>
@@ -138,6 +164,8 @@ const GallerySection = ({ isModalChange }: ModalProps) => {
           />
         ))}
       </GalleryContainer>
+
+      {isModal && <GalleryModal isModalChange={isModalChange} />}
 
       {selectedImageUrl && (
         <GalleryDetailModal
