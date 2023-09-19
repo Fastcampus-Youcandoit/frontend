@@ -62,10 +62,6 @@ const ViewerMarginContainer = styled.div`
   margin: 16px;
 `;
 
-interface WikiParams {
-  pageName: string;
-}
-
 const WikiComponent = () => {
   const params = useParams<Record<string, string | undefined>>();
   const pageName = params.pageName || "company-rules";
@@ -90,24 +86,33 @@ const WikiComponent = () => {
   const markdownRef = useRef(null);
   const [editMode, setEditMode] = useState(false);
   const [content, setContent] = useState("");
+  const [lastModified, setLastModified] = useState<string | null>(null);
 
   const getContent = async () => {
     const docRef = doc(db, "wiki", pageName);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      setContent(docSnap.data().text);
+      const data = docSnap.data();
+      setContent(data?.text);
+      if (data?.lastModified) {
+        const modifiedDate = new Date(data.lastModified.toDate());
+        setLastModified(modifiedDate.toLocaleString());
+      }
     } else {
       console.log("No such document!");
       setContent("Document not found :(");
+      setLastModified(null); // 데이터가 없는 경우 lastModified 초기화
     }
   };
 
   const uploadContent = async (newContent: string) => {
-    // Add a new document in collection "..."
+    const now = new Date();
     await setDoc(doc(db, "wiki", pageName), {
       text: newContent,
+      lastModified: now,
     });
+    setLastModified(now.toLocaleString()); // 바로 업데이트
   };
 
   useEffect(() => {
@@ -152,7 +157,7 @@ const WikiComponent = () => {
         </EditorContainer>
       </WikiContent>
       <WikiFooter>
-        <ModificationDate>최종 수정일 : </ModificationDate>
+        <ModificationDate>최종 수정일 : {lastModified}</ModificationDate>
       </WikiFooter>
     </WikiContentBox>
   );

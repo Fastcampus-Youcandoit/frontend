@@ -11,7 +11,7 @@ import { db } from "../../firebase";
 interface Props {
   content: string;
   editorRef: React.MutableRefObject<any>;
-  onContentChange: (content: string) => void; // 콜백 함수를 추가
+  onContentChange: (content: string) => void; // 이 콜백 함수를 추가
 }
 
 const MarkdownEditor = ({
@@ -51,7 +51,6 @@ const MarkdownEditor = ({
       previewStyle={window.innerWidth > 1000 ? "vertical" : "tab"} // tab, vertical
       hideModeSwitch
       height="100%"
-      theme="" // '' & 'dark'
       usageStatistics={false}
       toolbarItems={toolbarItems}
       useCommandShortcut
