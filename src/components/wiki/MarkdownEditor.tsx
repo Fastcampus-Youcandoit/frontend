@@ -16,31 +16,15 @@ const MarkdownEditor = ({
   editorRef,
   onContentChange,
 }: Props) => {
-  const handleChange = () => {
-    if (editorRef.current) {
-      const updatedContent = editorRef.current.getInstance().getMarkdown();
-      onContentChange(updatedContent);
-    }
-  };
-
   useEffect(() => {
     if (editorRef.current) {
-      const editorInstance = editorRef.current.getInstance?.();
+      const editorInstance = editorRef.current.getInstance(); // ref 내의 getInstance 획득
 
       if (editorInstance) {
-        if (editorInstance.eventManager) {
-          editorInstance.eventManager.addEventType("myKeyPress");
-
-          editorInstance.addHook("myKeyPress", handleChange);
-
-          editorInstance.getEditor().addEventListener("keydown", (e: any) => {
-            if (e.key === "Enter" && e.ctrlKey) {
-              editorInstance.eventManager.emit("myKeyPress");
-            }
-          });
-        }
-
-        editorInstance.setMarkdown(content);
+        editorInstance.on("change", async () => {
+          const currentValue = editorInstance.getMarkdown();
+          onContentChange(currentValue); // 에디터의 내용이 변경될 때마다 부모 컴포넌트에게 알림
+        });
       }
     }
   }, [editorRef, content]);
@@ -55,7 +39,6 @@ const MarkdownEditor = ({
 
   return (
     <Editor
-      key={content}
       ref={editorRef}
       placeholder="내용을 입력해주세요."
       initialValue={content}
