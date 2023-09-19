@@ -99,6 +99,7 @@ const WikiComponent = () => {
       setContent(docSnap.data().text);
     } else {
       console.log("No such document!");
+      setContent("Document not found :(");
     }
   };
 

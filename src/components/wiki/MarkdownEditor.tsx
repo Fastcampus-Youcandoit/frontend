@@ -11,7 +11,7 @@ import { db } from "../../firebase";
 interface Props {
   content: string;
   editorRef: React.MutableRefObject<any>;
-  onContentChange: (content: string) => void; // 이 콜백 함수를 추가
+  onContentChange: (content: string) => void; // 콜백 함수를 추가
 }
 
 const MarkdownEditor = ({
@@ -21,8 +21,7 @@ const MarkdownEditor = ({
 }: Props) => {
   useEffect(() => {
     if (editorRef.current) {
-      // NOTE: 여기서 editorInstance를 어떻게 가져오는지는 Toast UI Editor의 문서를 참조해야 합니다.
-      const editorInstance = editorRef.current.getInstance?.(); // 이 부분은 확인이 필요
+      const editorInstance = editorRef.current.getInstance?.();
 
       if (editorInstance) {
         editorInstance.on("change", () => {
