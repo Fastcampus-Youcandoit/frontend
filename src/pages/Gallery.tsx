@@ -21,9 +21,9 @@ const Gallery = () => {
     <GalleryWrapper>
       <GallerySideBar />
       <Outlet />
-      {/* <GallerySection isModalChange={isModalChange} /> */}
+      <GallerySection isModalChange={isModalChange} />
       {/* Modal */}
-      {/* {isModal && <GalleryModal isModalChange={isModalChange} />} */}
+      {isModal && <GalleryModal isModalChange={isModalChange} />}
     </GalleryWrapper>
   );
 };
