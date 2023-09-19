@@ -35,29 +35,29 @@ const CommuteButtonComponent = () => {
     });
   };
   // firestore에서 출근시간이 등록됬는지 체크
-  const checkOnOff = async () => {
-    const docRef = doc(db, "time", "workStartTime");
+  // const checkOnOff = async () => {
+  //   const docRef = doc(db, "time", "workStartTime");
 
-    const docSnap = await getDoc(docRef);
+  //   const docSnap = await getDoc(docRef);
 
-    if (docSnap.exists()) {
-      const currentTime: Date = new Date();
-      getWorkingTime(currentTime);
-      setWorkonoff(true);
-    } else {
-      // docSnap.data() will be undefined in this case
-      setWorkonoff(false);
-    }
-  };
+  //   if (docSnap.exists()) {
+  //     const currentTime: Date = new Date();
+  //     getWorkingTime(currentTime);
+  //     setWorkonoff(true);
+  //   } else {
+  //     // docSnap.data() will be undefined in this case
+  //     setWorkonoff(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      checkOnOff();
-    }, 1000);
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
+  // useEffect(() => {
+  //   const timer = setInterval(() => {
+  //     checkOnOff();
+  //   }, 1000);
+  //   return () => {
+  //     clearInterval(timer);
+  //   };
+  // }, []);
 
   return (
     <>
