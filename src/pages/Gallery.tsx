@@ -11,19 +11,11 @@ const GalleryWrapper = styled.div`
 `;
 
 const Gallery = () => {
-  const [isModal, setIsModal] = useState(false);
-
-  const isModalChange = () => {
-    setIsModal(!isModal);
-  };
-
   return (
     <GalleryWrapper>
       <GallerySideBar />
       <Outlet />
-      <GallerySection isModalChange={isModalChange} />
-      {/* Modal */}
-      {isModal && <GalleryModal isModalChange={isModalChange} />}
+      {/* <GallerySection /> */}
     </GalleryWrapper>
   );
 };

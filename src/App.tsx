@@ -8,6 +8,7 @@ import OfficePhoto from "./components/gallery/OfficePhoto";
 import WikiComponent from "./components/wiki/WikiComponent";
 import { Gallery, Home, Wiki } from "./pages";
 import GlobalStyle from "./styles/globalStyle";
+import GallerySection from "./components/gallery/GallerySection";
 
 const App = () => {
   return (
@@ -27,9 +28,7 @@ const App = () => {
         </Route>
         {/* gallery */}
         <Route path="/gallery" element={<Gallery />}>
-          <Route path="office-photo" element={<OfficePhoto />} />
-          <Route path="business" element={<Business />} />
-          <Route path="job-posting" element={<JobPosting />} />
+          <Route path=":pageName" element={<GallerySection />} />
         </Route>
       </Routes>
     </BrowserRouter>

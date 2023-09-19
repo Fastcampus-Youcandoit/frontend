@@ -66,13 +66,13 @@ const Header = () => {
           <HeaderItem>
             <IconImg src={wikiBlack} alt="wiki icon" />
             <Span>
-              <StyledLink to="/wiki">wiki</StyledLink>
+              <StyledLink to="/wiki/office-life/company-rules">wiki</StyledLink>
             </Span>
           </HeaderItem>
           <HeaderItem>
             <IconImg src={gelleryBlack} alt="gellery icon" />
             <Span>
-              <StyledLink to="/gallery">gellery</StyledLink>
+              <StyledLink to="/gallery/all">gallery</StyledLink>
             </Span>
           </HeaderItem>
           <HeaderItem>
