@@ -118,7 +118,7 @@ const HomeCalendar = () => {
     setIsDetailModal(!isDetailModal);
   };
 
-  const handleDayClick = async (day: string) => {
+  const handleDayClick = (day: string) => {
     setSelectedDay(day);
     handelDetailModal();
   };
