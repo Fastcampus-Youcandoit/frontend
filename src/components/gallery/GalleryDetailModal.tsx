@@ -7,8 +7,16 @@ import uploadIconUrl from "../../assets/icons/gallery_icon/image_upload_icon.png
 import {
   ModalBackground,
   CloseButton,
+  UploadDescription,
+  FileNameBox,
+  Input,
+  FileName,
   ButtonBox,
   Button,
+  UploadBox,
+  ImagePreview,
+  ModalBox,
+  ModalUploadIcon,
 } from "./GalleryModal";
 
 interface DetailModalProps {
@@ -16,100 +24,43 @@ interface DetailModalProps {
   onClose: () => void;
 }
 
-const ModalBox = styled.div`
+const DetailModalBox = styled(ModalBox)`
   width: 950px;
-  height: 750px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: #fff;
-  border-radius: 20px;
-  padding: 10px;
-  z-index: 99;
+  height: 700px;
 `;
 
 const DetailImage = styled.img`
-  width: 700px;
-  height: auto;
-  max-height: 100%;
-  margin-top: -20px;
+  width: 750px;
+  max-height: 460px;
+  object-fit: cover;
+  margin: auto 0;
 `;
 
-const Content = styled.p`
-  font: normal normal normal 16px/32px Noto Sans KR;
-  margin: 10px auto 20px 120px;
-  width: 700px;
-  white-wrap: nowrap;
-  border-box: box-sizing;
-  overflow-y: scroll;
-
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-  &::-webkit-scrollbar-track {
-    background-color: lightgray;
-    border-radius: 100px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: gray;
-    border-radius: 100px;
-  }
-`;
-
-const UploadBox = styled.div`
+const DetailUploadBox = styled(UploadBox)`
   width: 700px;
   height: 460px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(0, 0, 0, 0.02);
-  box-shadow: 0px 3px 6px #00000029;
-  border: 2px solid #d2d2d2;
-  border-radius: 30px;
-  cursor: pointer;
 `;
 
-const ImagePreview = styled.img`
+const DetailImagePreview = styled(ImagePreview)`
   width: 700px;
-  height: 360px;
-  object-fit: cover;
-  border-radius: 30px;
-  box-shadow: 0px 3px 6px #00000029;
+  height: 460px;
 `;
 
-const ModalUploadIcon = styled.img`
-  width: 80px;
-  height: 80px;
-  text-align: center;
-`;
-
-const UploadDescription = styled.p`
-  font: normal normal bold 20px/32px Noto Sans KR;
-  margin-top: 20px;
-  > img {
-    width: 25px;
-    height: 25px;
-  }
-`;
-
-const FileNameBox = styled.div`
-  display: flex;
+const DetailFileNameBox = styled(FileNameBox)`
   margin: 20px auto 0px 120px;
-  > svg {
-    margin-right: 3px;
-  }
 `;
 
-const Input = styled.input`
-  display: none;
-`;
-
-const FileName = styled.p`
-  margin-left: 5px;
+const Category = styled.p`
+  margin-left: -25px;
+  margin-top: -30px;
   text-align: center;
-  font: normal normal bold 16px/18px Noto Sans KR;
+  font: normal normal bold 12px Noto Sans KR;
+  color: #808080;
+`;
+
+const EditCategory = styled.p`
+  margin-right: 5px;
+  font: normal normal bold 14px/18px Noto Sans KR;
 `;
 
 const GalleryDetailModal: React.FC<DetailModalProps> = ({
@@ -117,9 +68,13 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
   onClose,
 }) => {
   const [isEdit, setIsEdit] = useState(false);
+
   const [imageName, setImageName] = useState<any | null>(null);
+  const [categoryName, setCategoryName] = useState<any | null>(null);
+
   const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
   const imageInputRef = useRef<HTMLInputElement>(null);
 
   // get image name
@@ -131,15 +86,25 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
     setImageName(imageFileName);
   };
 
+  const getCategoryName = () => {
+    if (imageName) {
+      const parts = imageName?.split("/");
+      const category = parts[1].toUpperCase();
+      setCategoryName(category);
+    }
+  };
+
   useEffect(() => {
     getImageName();
+    getCategoryName();
 
     return () => {
       setImageName(null);
+      setCategoryName(null);
     };
-  }, []);
+  }, [imageName, categoryName]);
 
-  // image edit
+  // image handleIsedit
   const handleIsEdit = () => {
     setIsEdit(!isEdit);
   };
@@ -238,7 +203,10 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
         const imageRef = ref(storage, imageName);
         await deleteObject(imageRef);
         // 이미지 업로드
-        const storageRef = ref(storage, `images/${selectedFileName}`);
+        const storageRef = ref(
+          storage,
+          `images/${categoryName.toLowerCase()}/${selectedFileName}`,
+        );
         await uploadString(storageRef, selectedImage, "data_url");
         alert("이미지가 변경되었습니다.");
         window.location.href = "/gallery";
@@ -250,17 +218,17 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
 
   return (
     <ModalBackground onClick={onClose}>
-      <ModalBox onClick={e => e.stopPropagation()}>
+      <DetailModalBox onClick={e => e.stopPropagation()}>
         <CloseButton onClick={onClose}>
           <img src={closeIconUrl} alt="close icon" />
         </CloseButton>
         {isEdit ? (
-          <UploadBox
+          <DetailUploadBox
             onClick={handleInputFile}
             onDrop={handleDrag}
             onDragOver={e => e.preventDefault()}>
             {selectedImage ? (
-              <ImagePreview src={selectedImage} alt="미리보기" />
+              <DetailImagePreview src={selectedImage} alt="미리보기" />
             ) : (
               <>
                 <ModalUploadIcon src={uploadIconUrl} alt="upload icon" />
@@ -269,12 +237,13 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
                 </UploadDescription>
               </>
             )}
-          </UploadBox>
+          </DetailUploadBox>
         ) : (
           <DetailImage src={imageUrl} alt="Image Detail" />
         )}
 
-        <FileNameBox>
+        <DetailFileNameBox>
+          {isEdit && <EditCategory>{categoryName} | </EditCategory>}
           {isEdit && (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -290,29 +259,13 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
             accept=".png,.jpg,.jpeg,.gif"
           />
 
-          <FileName>
-            {isEdit ? selectedFileName || "이미지.png" : imageName}
-          </FileName>
-        </FileNameBox>
+          {isEdit ? (
+            <FileName>{selectedFileName || "이미지.png"}</FileName>
+          ) : (
+            <Category>CATEGORY | {categoryName}</Category>
+          )}
+        </DetailFileNameBox>
 
-        <Content>
-          이미지의 상세 설명입니다.
-          <br />
-          이미지에 관련된 설명을 확인할 수 있습니다.
-          <br />
-          이미지의 상세 설명입니다.
-          <br />
-          이미지에 관련된 설명을 확인할 수 있습니다.
-          <br />
-          이미지의 상세 설명입니다.
-          <br />
-          이미지에 관련된 설명을 확인할 수 있습니다.
-          <br />
-          이미지의 상세 설명입니다.
-          <br />
-          이미지에 관련된 설명을 확인할 수 있습니다.
-          <br />
-        </Content>
         <ButtonBox>
           {isEdit ? (
             <>
@@ -360,7 +313,7 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
             </>
           )}
         </ButtonBox>
-      </ModalBox>
+      </DetailModalBox>
     </ModalBackground>
   );
 };

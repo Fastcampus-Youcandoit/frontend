@@ -65,24 +65,47 @@ const GallerySection = ({ isModalChange }: ModalProps) => {
   const [imgUrls, setImgUrls] = useState<string[]>([]);
   const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(null);
 
+  const fetchImagesFromFolder = async (folderPath: string | undefined) => {
+    const folderRef = ref(storage, folderPath);
+
+    try {
+      const imageList = await listAll(folderRef);
+
+      const imageURLs = await Promise.all(
+        imageList.items.map(async imageRef => {
+          return getDownloadURL(imageRef);
+        }),
+      );
+      return imageURLs;
+    } catch (error) {
+      console.log(`Error fetching image URLs: ${error}`);
+      return [];
+    }
+  };
+
+  const fetchAllImages = async () => {
+    const allImageURLs = [];
+
+    const businessImages = await fetchImagesFromFolder("images/business");
+    const jobPostingImages = await fetchImagesFromFolder("images/job-posting");
+    const officePhotoImages = await fetchImagesFromFolder(
+      "images/office-photo",
+    );
+
+    allImageURLs.push(
+      ...businessImages,
+      ...jobPostingImages,
+      ...officePhotoImages,
+    );
+    setImgUrls(allImageURLs);
+  };
+
   useEffect(() => {
-    const fetchImage = async () => {
-      try {
-        const imagesRef = ref(storage, "images");
-        const allImages = await listAll(imagesRef);
-
-        const urls = await Promise.all(
-          allImages.items.map(async imageRef => {
-            return getDownloadURL(imageRef);
-          }),
-        );
-        setImgUrls(urls);
-      } catch (error) {
-        console.log(`Error fetching image URLs: ${error}`);
-      }
-    };
-
-    fetchImage();
+    try {
+      fetchAllImages();
+    } catch (error) {
+      console.log(`Error fetching image URLs: ${error}`);
+    }
 
     return () => {
       setImgUrls([]);
