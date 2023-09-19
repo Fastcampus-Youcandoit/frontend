@@ -1,12 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
 import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { Editor } from "@toast-ui/react-editor";
-import { useNavigate, createSearchParams } from "react-router-dom";
-import styled from "styled-components";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../firebase";
 
 interface Props {
   content: string;
