@@ -1,15 +1,19 @@
-import { BrowserRouter } from "react-router-dom";
-import Header from "../components/common/Header";
-import { Wikis } from "../components/SideBar/SideBar";
-import GlobalStyle from "../styles/globalStyle";
+import styled from "styled-components";
+import { Outlet } from "react-router-dom";
+import { WikiSideBar } from "../components/sidebar/SideBar";
+import Footer from "../components/common/Footer";
+
+const WikiWrapper = styled.div`
+  display: flex;
+`;
 
 const Wiki = () => {
   return (
-    <BrowserRouter>
-      <GlobalStyle />
-      <Header />
-      <Wikis />
-    </BrowserRouter>
+    <WikiWrapper>
+      <WikiSideBar />
+      <Outlet />
+      <Footer />
+    </WikiWrapper>
   );
 };
 

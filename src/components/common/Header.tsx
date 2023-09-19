@@ -55,16 +55,20 @@ const Header = () => {
   return (
     <HeaderBox>
       <HeaderNav>
-        <Logo />
+        <Link to="/">
+          <Logo />
+        </Link>
         <HeaderItems>
           <HeaderItem>
             <IconImg src={wikiBlack} alt="wiki icon" />
-            <Span>wiki</Span>
+            <Span>
+              <Link to="/wiki/office-life/company-rules">wiki</Link>
+            </Span>
           </HeaderItem>
           <HeaderItem>
             <IconImg src={gelleryBlack} alt="gellery icon" />
             <Span>
-              <Link to="/gallery">gellery</Link>
+              <Link to="/gallery/office-photo">gellery</Link>
             </Span>
           </HeaderItem>
           <HeaderItem>
