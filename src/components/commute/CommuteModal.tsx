@@ -86,7 +86,7 @@ const CommuteModal: React.FC<CommuteModalProps> = ({
        ${getTodayDate()}  
        ${getCurentTime(currentTime).toString()}  출근처리하시겠습니까?`)
       ) {
-        setWorkonoff(prev => !prev);
+        setWorkonoff(true);
         setWorkingTime(currentTime);
         setModalOpen(false);
       }
@@ -100,6 +100,7 @@ const CommuteModal: React.FC<CommuteModalProps> = ({
       ${getTodayDate()}  
       ${getCurentTime(currentTime).toString()}  퇴근처리하시겠습니까?`)
       ) {
+        setWorkonoff(false);
         deleteWorkingTime();
         // eslint-disable-next-line no-alert
         alert("퇴근처리됬습니다!");

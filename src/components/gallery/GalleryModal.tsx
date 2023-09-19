@@ -125,6 +125,7 @@ const Button = styled.button<stylesProps>`
   &:hover {
     transform: scale(1.15);
     transition: transform 0.8s;
+  }
 `;
 
 const GalleryModal = ({ isModalChange }: ModalProps) => {

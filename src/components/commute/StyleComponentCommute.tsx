@@ -30,6 +30,7 @@ export const CommuteButton = styled.button`
 
   &:hover {
     transform: scale(1.04);
+  }
 `;
 
 export const Modal = styled.div`
