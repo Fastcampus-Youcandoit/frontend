@@ -12,7 +12,6 @@ const Wiki = () => {
     <WikiWrapper>
       <WikiSideBar />
       <Outlet />
-      <Footer />
     </WikiWrapper>
   );
 };

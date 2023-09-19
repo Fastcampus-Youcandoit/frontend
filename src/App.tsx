@@ -7,25 +7,12 @@ import Home from "./pages/Home";
 // Wiki page
 import Wiki from "./pages/Wiki";
 
-// office-life Componenets
-import CompanyRules from "./components/wiki/office-life/CompanyRules";
-import OrganizationChart from "./components/wiki/office-life/OrganizationChart";
-import TeamIntroduction from "./components/wiki/office-life/TeamIntroduction";
-
-// project Components
-import InProject from "./components/wiki/project/InProject";
-import UpComing from "./components/wiki/project/UpComing";
-import Completed from "./components/wiki/project/Completed";
-
-// onboarding Components
-import ReadingList from "./components/wiki/onboarding/ReadingList";
-import Topics from "./components/wiki/onboarding/Topics";
-
 // Gallery Componenets
 import Gallery from "./pages/Gallery";
 import OfficePhoto from "./components/gallery/OfficePhoto";
 import Business from "./components/gallery/Business";
 import JobPosting from "./components/gallery/JobPosting";
+import WikiComponent from "./components/wiki/WikiComponent";
 
 const App = () => {
   return (
@@ -37,22 +24,11 @@ const App = () => {
         {/* wiki */}
         <Route path="/wiki" element={<Wiki />}>
           {/* office-life */}
-          <Route path="office-life/company-rules" element={<CompanyRules />} />
-          <Route
-            path="office-life/team-introduction"
-            element={<TeamIntroduction />}
-          />
-          <Route
-            path="office-life/organization-chart"
-            element={<OrganizationChart />}
-          />
+          <Route path="office-life/:pageName" element={<WikiComponent />} />
           {/* project */}
-          <Route path="project/in-progress" element={<InProject />} />
-          <Route path="project/upcoming" element={<UpComing />} />
-          <Route path="project/completed" element={<Completed />} />
+          <Route path="project/:pageName" element={<WikiComponent />} />
           {/* onboarding */}
-          <Route path="onboarding/reading-list" element={<ReadingList />} />
-          <Route path="onboarding/topics" element={<Topics />} />
+          <Route path="onboarding/:pageName" element={<WikiComponent />} />
         </Route>
         {/* gallery */}
         <Route path="/gallery" element={<Gallery />}>
