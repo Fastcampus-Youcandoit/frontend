@@ -1,5 +1,7 @@
+import WikiComponent from "../WikiComponent";
+
 const CompanyRules = () => {
-  return <div>회사내규 내용</div>;
+  return <WikiComponent />;
 };
 
 export default CompanyRules;
