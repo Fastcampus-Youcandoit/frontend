@@ -7,6 +7,7 @@ import uploadIconUrl from "../../assets/icons/gallery_icon/image_upload_icon.png
 import GalleryModal from "./GalleryModal";
 import GalleryDetailModal from "./GalleryDetailModal";
 import { WikiMainText } from "../wiki/WikiComponent";
+import { useAuth } from "../../context/AuthContext";
 
 const GalleryBox = styled.div`
   margin-top: 2rem;
@@ -58,6 +59,8 @@ const GalleryItem = styled.img`
 `;
 
 const GallerySection = () => {
+  const { currentUser } = useAuth(); // 현재 사용자 정보 가져오기
+
   const [isModal, setIsModal] = useState(false);
   const [imgUrls, setImgUrls] = useState<string[]>([]);
   const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(null);
@@ -150,9 +153,11 @@ const GallerySection = () => {
     <GalleryBox>
       <GalleryHeader>
         <WikiMainText>{pageTitleMapping[pageName] || "전체 사진"}</WikiMainText>
-        <UploadButton type="button" onClick={isModalChange}>
-          <img src={uploadIconUrl} alt="img upload icon" />
-        </UploadButton>
+        {currentUser && (
+          <UploadButton type="button" onClick={isModalChange}>
+            <img src={uploadIconUrl} alt="img upload icon" />
+          </UploadButton>
+        )}
       </GalleryHeader>
       <GalleryContainer>
         {imgUrls.map((url, index) => (

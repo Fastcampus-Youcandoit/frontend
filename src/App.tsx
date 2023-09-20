@@ -11,31 +11,33 @@ import GlobalStyle from "./styles/globalStyle";
 import GallerySection from "./components/gallery/GallerySection";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import { AuthProvider } from "./context/AuthContext";
 
 const App = () => {
   return (
     <BrowserRouter>
       <GlobalStyle />
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-
-        {/* wiki */}
-        <Route path="/wiki" element={<Wiki />}>
-          {/* office-life */}
-          <Route path="office-life/:pageName" element={<WikiComponent />} />
-          {/* project */}
-          <Route path="project/:pageName" element={<WikiComponent />} />
-          {/* onboarding */}
-          <Route path="onboarding/:pageName" element={<WikiComponent />} />
-        </Route>
-        {/* gallery */}
-        <Route path="/gallery" element={<Gallery />}>
-          <Route path=":pageName" element={<GallerySection />} />
-        </Route>
-      </Routes>
+      <AuthProvider>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          {/* wiki */}
+          <Route path="/wiki" element={<Wiki />}>
+            {/* office-life */}
+            <Route path="office-life/:pageName" element={<WikiComponent />} />
+            {/* project */}
+            <Route path="project/:pageName" element={<WikiComponent />} />
+            {/* onboarding */}
+            <Route path="onboarding/:pageName" element={<WikiComponent />} />
+          </Route>
+          {/* gallery */}
+          <Route path="/gallery" element={<Gallery />}>
+            <Route path=":pageName" element={<GallerySection />} />
+          </Route>
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 };

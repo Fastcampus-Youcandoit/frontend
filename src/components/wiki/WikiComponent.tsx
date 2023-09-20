@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useNavigate, useLocation } from "react-router-dom";
+import { getAuth } from "firebase/auth";
 import { db } from "../../firebase";
 import MarkdownEditor from "./MarkdownEditor";
 import MarkdownViewer from "./MarkdownViewer";
@@ -63,6 +64,7 @@ const ViewerMarginContainer = styled.div`
 `;
 
 const WikiComponent = () => {
+  const { currentUser } = getAuth();
   const params = useParams<Record<string, string | undefined>>();
   const pageName = params.pageName || "company-rules";
 
@@ -130,15 +132,17 @@ const WikiComponent = () => {
     <WikiContentBox>
       <WikiHeader>
         <WikiMainText>{pageTitleMapping[pageName] || "회사내규"}</WikiMainText>
-        <WriteIcon
-          src={editMode ? checkIcon : writeIcon}
-          onClick={() => {
-            if (editMode) {
-              uploadContent(content); // 변경된 내용을 Firebase에 업로드
-            }
-            setEditMode(!editMode);
-          }}
-        />
+        {currentUser && (
+          <WriteIcon
+            src={editMode ? checkIcon : writeIcon}
+            onClick={() => {
+              if (editMode) {
+                uploadContent(content); // 변경된 내용을 Firebase에 업로드
+              }
+              setEditMode(!editMode);
+            }}
+          />
+        )}
       </WikiHeader>
       <WikiContent>
         <EditorContainer>

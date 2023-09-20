@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import "../../assets/fonts/Font.css";
 import gelleryBlack from "../../assets/icons/header_icon/header_gellery_black_icon.png";
-import github from "../../assets/icons/header_icon/header_github_black_icon.png";
 import wikiBlack from "../../assets/icons/header_icon/header_wiki_black_icon.png";
 import noticeIcon from "../../assets/icons/header_icon/header_notice_icon.png";
 import dropDownIcon from "../../assets/icons/header_icon/header_dropdown_icon.png";

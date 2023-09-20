@@ -5,7 +5,12 @@ import React, {
   useEffect,
   useMemo,
 } from "react";
-import { User, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  User,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 import { auth } from "../firebase";
 
 type FirebaseUser = User;
@@ -15,6 +20,7 @@ type AuthContextType = {
   currentUser: FirebaseUser | null;
   login: (email: string, password: string) => Promise<void>; // 로그인 함수 추가
   logout: () => Promise<void>; // 로그아웃 함수 추가
+  googleLogin: () => Promise<void>; // 구글 로그인 함수 추가
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -45,6 +51,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const value = useMemo(() => {
     return {
       currentUser,
+      googleLogin: async () => {
+        try {
+          const provider = new GoogleAuthProvider();
+          const result = await signInWithPopup(auth, provider);
+        } catch (error) {
+          console.error("Google 로그인 실패:", error);
+        }
+      },
       login: async (email: string, password: string) => {
         try {
           await signInWithEmailAndPassword(auth, email, password);
