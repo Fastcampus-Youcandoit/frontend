@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { Link, useNavigate } from "react-router-dom";
 import writeIcon from "../assets/icons/wiki_icon/wiki_write_icon.png";
 import Footer from "../components/common/Footer";
 
@@ -132,7 +133,9 @@ const NoticeDetail: React.FC<NoticeDetailProps> = ({ notice, isExpanded }) => {
     <NoticeDetailStyle isExpanded={isExpanded}>
       {notice.content && <P>{notice.content}</P>}
       <NoticeListButton>
-        <NoticeEditButton>수정</NoticeEditButton>
+        <Link to="/notice/write">
+          <NoticeEditButton>수정</NoticeEditButton>
+        </Link>
         <NoticeDeleteButton>삭제</NoticeDeleteButton>
       </NoticeListButton>
     </NoticeDetailStyle>

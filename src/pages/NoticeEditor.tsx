@@ -2,11 +2,10 @@ import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
 import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { Editor } from "@toast-ui/react-editor";
-import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
-import { type } from "os";
 import write from "../assets/icons/notice_icon/notice_write_icon.png";
 import Footer from "../components/common/Footer";
 import { db } from "../firebase";
@@ -85,6 +84,7 @@ const EditorBox = styled.div`
 
 const NoticeEditor = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const editorRef: React.MutableRefObject<any> = useRef();
   const [noticeTitle, setNoticeTitle] = useState<string>("");
   const [noticeContent, setNoticeContent] = useState<string>("");
@@ -119,9 +119,11 @@ const NoticeEditor = () => {
     else AddNotice();
   };
 
-  const handleCancelClick = () => {
-    navigate("/notice");
-  };
+  // useEffect(()=>{
+  //   if(editMode === "modify"){
+
+  //   }
+  // }, [editMode])
 
   return (
     <Wrap>
@@ -129,11 +131,7 @@ const NoticeEditor = () => {
         <BoxHeader>
           <HeaderTitle>공지사항 작성</HeaderTitle>
           <HeaderButtonBox>
-            <HeaderButton
-              type="button"
-              bgcolor="#000"
-              pd="0 0.7rem"
-              onClick={handleCancelClick}>
+            <HeaderButton type="button" bgcolor="#000" pd="0 0.7rem">
               취소
             </HeaderButton>
             <HeaderButton
