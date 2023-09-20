@@ -1,8 +1,10 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import "../assets/fonts/Font.css";
 import googleIcon from "../assets/icons/login_icon/google_icon.png.png";
+import { auth } from "../firebase";
+import { useAuth } from "../context/AuthContext";
 
 interface StyleProps {
   color?: string;
@@ -75,12 +77,17 @@ const Button = styled.button<StyleProps>`
   background-color: ${props => props.backgroundColor || "#fff"};
   border: ${props => props.backgroundColor || "1px solid #d4d4d4"};
   cursor: pointer;
+  translate: transform 0.8s;
   > img {
     float: left;
     margin-left: 25px;
-    margin-right: -50px;
-    width: 25px;
-    height: 25px;
+    margin-right: -53px;
+    width: 28px;
+    height: 28px;
+  }
+  &:hover {
+    transform: scale(1.02);
+    translate: transform 0.8s;
   }
 `;
 
@@ -110,16 +117,62 @@ const Span = styled.span`
 `;
 
 const Login = () => {
+  const { login } = useAuth();
+  const [email, setEmail] = useState<string | undefined>("");
+  const [password, setPassword] = useState<string | undefined>("");
+
+  const navigate = useNavigate();
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e?.target.value);
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+
+  const handleLogin = async () => {
+    try {
+      if (email !== undefined && password !== undefined) {
+        await login(email, password);
+        alert("로그인 되었습니다.");
+        navigate("/");
+      }
+    } catch (error) {
+      alert("이메일 또는 패스워드가 잘못 입력되었습니다.");
+      console.error("로그인 실패:", error);
+    }
+  };
+
   return (
     <Wrapper>
       <div>
         <span>Youcandoit</span>
-        <Form>
+        <Form
+          onSubmit={e => {
+            e.preventDefault();
+            handleLogin();
+          }}>
           <div>
-            <Input type="email" placeholder="이메일을 입력하세요" />
-            <Input type="password" placeholder="비밀번호를 입력하세요" />
-            <Message>아이디 또는 비밀번호를 확인해주세요</Message>
-            <Button color="#087ea4" backgroundColor="#e6f7ff" type="button">
+            <Input
+              type="email"
+              placeholder="이메일을 입력하세요"
+              value={email}
+              onChange={handleEmailChange}
+              required
+            />
+            <Input
+              type="password"
+              placeholder="비밀번호를 입력하세요"
+              value={password}
+              onChange={handlePasswordChange}
+              required
+            />
+            {!email ||
+              (!password && (
+                <Message>아이디 또는 비밀번호를 확인해주세요</Message>
+              ))}
+
+            <Button color="#087ea4" backgroundColor="#e6f7ff" type="submit">
               로그인
             </Button>
             <Text>

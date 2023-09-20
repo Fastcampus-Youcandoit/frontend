@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+/* eslint-disable no-restricted-globals */
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import "../../assets/fonts/Font.css";
 import gelleryBlack from "../../assets/icons/header_icon/header_gellery_black_icon.png";
@@ -6,6 +7,7 @@ import github from "../../assets/icons/header_icon/header_github_black_icon.png"
 import wikiBlack from "../../assets/icons/header_icon/header_wiki_black_icon.png";
 import CommuteButtonComponent from "../commute/CommuteButtonComponent";
 import Logo from "./Logo";
+import { useAuth } from "../../context/AuthContext";
 
 const HeaderBox = styled.header`
   width: 100vw;
@@ -56,6 +58,20 @@ const StyledLink = styled(Link)`
 `;
 
 const Header = () => {
+  const { currentUser, logout } = useAuth(); // 현재 사용자 정보 가져오기
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      if (confirm("로그아웃하시겠습니까?")) {
+        await logout(); // 로그아웃 함수 호출
+        alert("로그아웃 되셨습니다.");
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("로그아웃 실패:", error);
+    }
+  };
   return (
     <HeaderBox>
       <HeaderNav>
@@ -79,7 +95,14 @@ const Header = () => {
             <IconImg src={github} alt="github icon" className="github" />
           </HeaderItem>
           <HeaderItem>
-            <CommuteButtonComponent />
+            {currentUser && <CommuteButtonComponent />}
+            {currentUser ? (
+              <button type="button" onClick={handleLogout}>
+                로그아웃
+              </button>
+            ) : (
+              <Link to="login">로그인</Link>
+            )}
           </HeaderItem>
         </HeaderItems>
       </HeaderNav>
