@@ -6,7 +6,7 @@ import Business from "./components/gallery/Business";
 import JobPosting from "./components/gallery/JobPosting";
 import OfficePhoto from "./components/gallery/OfficePhoto";
 import WikiComponent from "./components/wiki/WikiComponent";
-import { Gallery, Home, Wiki } from "./pages";
+import { Gallery, Home, Notice, NoticeEditor, Wiki } from "./pages";
 import GlobalStyle from "./styles/globalStyle";
 
 const App = () => {
@@ -31,6 +31,8 @@ const App = () => {
           <Route path="business" element={<Business />} />
           <Route path="job-posting" element={<JobPosting />} />
         </Route>
+        <Route path="/notice" element={<Notice />} />
+        <Route path="/notice/edit" element={<NoticeEditor />} />
       </Routes>
     </BrowserRouter>
   );
