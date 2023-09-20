@@ -103,7 +103,7 @@ const CommuteModal: React.FC<CommuteModalProps> = ({
         setWorkonoff(false);
         deleteWorkingTime();
         // eslint-disable-next-line no-alert
-        alert("퇴근처리됬습니다!");
+        alert("퇴근처리됐습니다!");
         setModalOpen(false);
       }
     }

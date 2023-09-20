@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 export const Span = styled.span`
-  font-size: 1.3rem;
-  padding-bottom: 0.2rem;
+  font-size: 1.08rem;
+  // padding-bottom: 0.2rem;
+  margin-left: 5px;
   width: 4rem;
-  color: black;
 `;
 
 export const WorkOnMark = styled.img`
@@ -15,16 +15,18 @@ export const WorkOnMark = styled.img`
 `;
 
 export const CommuteButton = styled.button`
-  background-color: #f6f7f9;
-  height: 100%;
-  border-radius: 10px;
-  font-size: 1rem;
-  padding: 0 2rem;
+  // background-color: #f6f7f9;
+  // height: 100%;
+  // border-radius: 10px;
+  // font-size: inherit;
+  // padding: 0 2rem;
+  // box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+
   display: flex;
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  background: none;
   border: none;
   transition: all 0.3s ease 0s;
 

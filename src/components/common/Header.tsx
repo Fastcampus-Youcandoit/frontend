@@ -1,10 +1,15 @@
 /* eslint-disable no-restricted-globals */
+import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import "../../assets/fonts/Font.css";
 import gelleryBlack from "../../assets/icons/header_icon/header_gellery_black_icon.png";
 import github from "../../assets/icons/header_icon/header_github_black_icon.png";
 import wikiBlack from "../../assets/icons/header_icon/header_wiki_black_icon.png";
+import noticeIcon from "../../assets/icons/header_icon/header_notice_icon.png";
+import dropDownIcon from "../../assets/icons/header_icon/header_dropdown_icon.png";
+import loginIcon from "../../assets/icons/header_icon/header_login_icon.png";
+import logoutIcon from "../../assets/icons/header_icon/header_logout_icon.png";
 import CommuteButtonComponent from "../commute/CommuteButtonComponent";
 import Logo from "./Logo";
 import { useAuth } from "../../context/AuthContext";
@@ -30,7 +35,7 @@ const HeaderItems = styled.nav`
   font-family: "SUITE-Medium";
 `;
 
-const HeaderItem = styled.div`
+export const HeaderItem = styled.div`
   font-size: 1rem;
   font-family: "SUITE-bold";
   height: 100%;
@@ -39,14 +44,17 @@ const HeaderItem = styled.div`
   cursor: pointer;
   gap: 0.2rem;
   border-radius: 10px;
-  .github {
-    width: 2.2rem;
-    height: 80%;
-  }
+  // .github {
+  //   width: 2.2rem;
+  //   height: 80%;
+  // }
 `;
 
-const IconImg = styled.img`
+export const IconImg = styled.img`
   width: 1rem;
+  .dropdown {
+    width: 0.8rem;
+  }
 `;
 
 const Span = styled.span`
@@ -55,11 +63,56 @@ const Span = styled.span`
 
 const StyledLink = styled(Link)`
   color: #000;
+  font-size: inherit;
+`;
+
+const Name = styled.button`
+  margin-right: 3px;
+  font-family: "SUITE-ExtraBold";
+  font-size: 1.08rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+`;
+
+const Logout = styled.button`
+  position: absolute;
+  top: 60px;
+  margin-left: -8px;
+  padding: 15px;
+  background-color: #fff;
+  border: none;
+  box-shadow: 0px 3px 6px #00000029;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 99;
 `;
 
 const Header = () => {
   const { currentUser, logout } = useAuth(); // 현재 사용자 정보 가져오기
+  const userName = currentUser?.displayName;
+  const [isDrop, setIsDrop] = useState<boolean>(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const clickEvent = (e: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
+        setIsDrop(!isDrop);
+      }
+    };
+
+    if (isDrop) {
+      window.addEventListener("click", clickEvent);
+    }
+
+    return () => {
+      window.removeEventListener("click", clickEvent);
+    };
+  }, [isDrop]);
 
   const handleLogout = async () => {
     try {
@@ -79,6 +132,13 @@ const Header = () => {
           <Logo />
         </StyledLink>
         <HeaderItems>
+          <HeaderItem>{currentUser && <CommuteButtonComponent />}</HeaderItem>
+          <HeaderItem>
+            <IconImg src={noticeIcon} alt="wiki icon" />
+            <Span>
+              <StyledLink to="/notice">notice</StyledLink>
+            </Span>
+          </HeaderItem>
           <HeaderItem>
             <IconImg src={wikiBlack} alt="wiki icon" />
             <Span>
@@ -91,19 +151,41 @@ const Header = () => {
               <StyledLink to="/gallery/all">gallery</StyledLink>
             </Span>
           </HeaderItem>
-          <HeaderItem>
+
+          {currentUser ? (
+            <HeaderItem>
+              <div ref={dropdownRef}>
+                <Name type="button" onClick={() => setIsDrop(!isDrop)}>
+                  {userName} 님
+                </Name>
+                <IconImg
+                  className="dropdown"
+                  src={dropDownIcon}
+                  alt="dropdown icon"
+                />
+              </div>
+
+              {isDrop && (
+                <Logout type="button" onClick={handleLogout}>
+                  <HeaderItem>
+                    <IconImg src={logoutIcon} alt="logout icon" />
+                    logout
+                  </HeaderItem>
+                </Logout>
+              )}
+            </HeaderItem>
+          ) : (
+            <HeaderItem>
+              <IconImg src={loginIcon} alt="gellery icon" />
+              <Span>
+                <StyledLink to="/login">login</StyledLink>
+              </Span>
+            </HeaderItem>
+          )}
+
+          {/* <HeaderItem>
             <IconImg src={github} alt="github icon" className="github" />
-          </HeaderItem>
-          <HeaderItem>
-            {currentUser && <CommuteButtonComponent />}
-            {currentUser ? (
-              <button type="button" onClick={handleLogout}>
-                로그아웃
-              </button>
-            ) : (
-              <Link to="login">로그인</Link>
-            )}
-          </HeaderItem>
+          </HeaderItem> */}
         </HeaderItems>
       </HeaderNav>
     </HeaderBox>

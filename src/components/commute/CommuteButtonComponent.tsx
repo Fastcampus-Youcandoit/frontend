@@ -3,6 +3,8 @@ import { getDocs, collection, getDoc, doc } from "firebase/firestore";
 import CommuteModal from "./CommuteModal";
 import { db } from "../../firebase";
 import { Span, CommuteButton, WorkOnMark } from "./StyleComponentCommute";
+import { IconImg } from "../common/Header";
+import commuteIcon from "../../assets/icons/header_icon/header_commute_black_icon.png";
 
 const CommuteButtonComponent = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -79,6 +81,7 @@ const CommuteButtonComponent = () => {
               : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqtoS2rwPaT4aKpGPERdpEN1_rcfojGCNOrCjxOpWOA-HAmODktSNwOEXHHw_rHpQ-8is&usqp=CAU"
           }
         />
+        <IconImg src={commuteIcon} alt="commute icon" />
         <Span className="commute_span">
           {workonoff ? workOnTime : "commute"}
         </Span>
