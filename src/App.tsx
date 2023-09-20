@@ -9,6 +9,7 @@ import WikiComponent from "./components/wiki/WikiComponent";
 import { Gallery, Home, Wiki } from "./pages";
 import GlobalStyle from "./styles/globalStyle";
 import GallerySection from "./components/gallery/GallerySection";
+import Notice from "./pages/Notice";
 
 const App = () => {
   return (
@@ -17,6 +18,8 @@ const App = () => {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
+        {/* notice */}
+        <Route path="/notice" element={<Notice />} />
         {/* wiki */}
         <Route path="/wiki" element={<Wiki />}>
           {/* office-life */}
