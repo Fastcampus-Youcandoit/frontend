@@ -8,13 +8,11 @@ import CommuteButtonComponent from "../commute/CommuteButtonComponent";
 import Logo from "./Logo";
 
 const HeaderBox = styled.header`
-  width: 100vw;
   height: 9vh;
   padding: 0 2rem;
 `;
 
 const HeaderNav = styled.nav`
-  width: 100%;
   height: 100%;
   display: flex;
   justify-content: space-between;
@@ -81,9 +79,7 @@ const Header = () => {
               <StyledLink to="/gallery/all">gallery</StyledLink>
             </Span>
           </HeaderItem>
-          <HeaderItem>
-            <CommuteButtonComponent />
-          </HeaderItem>
+          <HeaderItem>{/* <CommuteButtonComponent /> */}</HeaderItem>
         </HeaderItems>
       </HeaderNav>
     </HeaderBox>

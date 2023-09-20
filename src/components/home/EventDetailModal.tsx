@@ -196,6 +196,7 @@ const EventDetailModal = ({
     if (isEdited) handleFatchEvent();
     isModalChange();
   };
+
   useEffect(() => {
     const fetchData = async () => {
       const dayRef = collection(db, "events");

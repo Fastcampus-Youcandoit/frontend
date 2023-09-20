@@ -1,10 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./components/common/Header";
 
-import WikiComponent from "./components/wiki/WikiComponent";
-import { Gallery, Home, Wiki } from "./pages";
-import GlobalStyle from "./styles/globalStyle";
+// Gallery Componenets
 import GallerySection from "./components/gallery/GallerySection";
+import WikiComponent from "./components/wiki/WikiComponent";
+import { Gallery, Home, Notice, NoticeEditor, Wiki } from "./pages";
+import GlobalStyle from "./styles/globalStyle";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 
@@ -30,6 +31,8 @@ const App = () => {
         <Route path="/gallery" element={<Gallery />}>
           <Route path=":pageName" element={<GallerySection />} />
         </Route>
+        <Route path="/notice" element={<Notice />} />
+        <Route path="/notice/edit" element={<NoticeEditor />} />
       </Routes>
     </BrowserRouter>
   );
