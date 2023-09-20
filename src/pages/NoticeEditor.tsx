@@ -3,9 +3,9 @@ import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-sy
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { Editor } from "@toast-ui/react-editor";
 import { useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import write from "../assets/icons/notice_icon/notice_write_icon.png";
 import Footer from "../components/common/Footer";
 import { db } from "../firebase";
@@ -82,6 +82,10 @@ const EditorBox = styled.div`
   height: 77%;
 `;
 
+const StyledLink = styled(Link)`
+  height: 100%;
+`;
+
 const NoticeEditor = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -95,8 +99,7 @@ const NoticeEditor = () => {
     }
   };
 
-  const AddNotice = async () => {
-    const noticeRef = collection(db, "notice");
+  const fetchNotice = async () => {
     const noticeDate: Date = new Date();
     const currentDate = `${noticeDate.getFullYear()} ${noticeDate.getMonth()}/${noticeDate.getDate()} ${noticeDate.getHours()}:${noticeDate.getMinutes()}`;
     const data = {
@@ -106,8 +109,11 @@ const NoticeEditor = () => {
     };
 
     try {
-      await addDoc(noticeRef, data);
-      navigate("/");
+      if (location.state.id)
+        await updateDoc(doc(db, "notice", location.state.id), data);
+      else await addDoc(collection(db, "notice"), data);
+
+      navigate("/notice");
     } catch (error) {
       console.log(error);
     }
@@ -116,24 +122,43 @@ const NoticeEditor = () => {
   const handleSaveClick = () => {
     if (noticeContent.trim() === "" || noticeTitle.trim() === "")
       alert("제목 또는 내용을 입력해주세요");
-    else AddNotice();
+    else fetchNotice();
   };
 
-  // useEffect(()=>{
-  //   if(editMode === "modify"){
+  const fetchData = async () => {
+    try {
+      const docRef = doc(db, "notice", location.state.id);
+      const docSnap = await getDoc(docRef);
+      const notice = docSnap.data();
+      if (docSnap.exists()) {
+        setNoticeTitle(notice?.title);
+        setNoticeContent(notice?.content);
+        editorRef.current?.getInstance().setMarkdown(notice?.content);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  //   }
-  // }, [editMode])
+  useEffect(() => {
+    if (location.state.id) {
+      fetchData();
+    }
+  }, []);
 
   return (
     <Wrap>
       <WriteBox>
         <BoxHeader>
-          <HeaderTitle>공지사항 작성</HeaderTitle>
+          <HeaderTitle>
+            {location.state.id ? "공지사항 수정" : "공지사항 작성"}
+          </HeaderTitle>
           <HeaderButtonBox>
-            <HeaderButton type="button" bgcolor="#000" pd="0 0.7rem">
-              취소
-            </HeaderButton>
+            <StyledLink to="/notice">
+              <HeaderButton type="button" bgcolor="#000" pd="0 0.7rem">
+                취소
+              </HeaderButton>
+            </StyledLink>
             <HeaderButton
               type="button"
               bgcolor="#fff"

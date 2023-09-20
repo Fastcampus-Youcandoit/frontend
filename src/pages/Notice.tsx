@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
+import { collection, getDocs } from "firebase/firestore";
 import writeIcon from "../assets/icons/wiki_icon/wiki_write_icon.png";
 import Footer from "../components/common/Footer";
+import { db } from "../firebase";
+import NoticeDetail from "../components/notice/NoticeDetail";
 
 const NoticeBox = styled.div`
   width: 100vw;
@@ -45,13 +48,12 @@ const NoticeList = styled.div`
   flex-direction: column;
 `;
 
-const NoticeListItem = styled.div<{ isClicked: boolean }>`
+const NoticeListItem = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 10px 0;
   flex-grow: 1;
   align-items: center;
-  margin-top: ${({ isClicked }) => (isClicked ? "10px" : "0")};
   cursor: pointer;
 `;
 
@@ -79,183 +81,59 @@ const NoticeTitle = styled.span`
   margin-left: 25px;
 `;
 
-const P = styled.p`
-  border: 1px solid #d2d2d2;
-  border-radius: 10px;
-  padding: 15px;
-  margin: 8px 20px 8px 45px;
-`;
-
-const NoticeDetailStyle = styled.div<{ isExpanded: boolean }>`
-  display: ${props => (props.isExpanded ? "block" : "none")};
-`;
-
-const NoticeListButton = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
-
-const NoticeEditButton = styled.button`
-  width: 60px;
-  height: 35px;
-  border: none;
-  border-radius: 5px;
-  color: #087ea4;
-  background-color: #e6f7ff;
-  margin-right: 10px;
-  font-family: "NotoSansKR-Medium";
-`;
-
-const NoticeDeleteButton = styled.button`
-  width: 60px;
-  height: 35px;
-  border: none;
-  border-radius: 5px;
-  margin: 0 20px 10px 0;
-  color: #fff;
-  background-color: #c62917;
-  font-family: "NotoSansKR-Medium";
-`;
-
 interface NoticeDetailProps {
-  notice: {
-    id: number;
-    title: string;
-    author: string;
-    date: string;
-    content?: string;
-  };
-  isExpanded: boolean;
+  id: string;
+  title: string;
+  date: string;
+  content: string;
 }
 
-const NoticeDetail: React.FC<NoticeDetailProps> = ({ notice, isExpanded }) => {
-  return (
-    <NoticeDetailStyle isExpanded={isExpanded}>
-      {notice.content && <P>{notice.content}</P>}
-      <NoticeListButton>
-        <Link to="/notice/write">
-          <NoticeEditButton>수정</NoticeEditButton>
-        </Link>
-        <NoticeDeleteButton>삭제</NoticeDeleteButton>
-      </NoticeListButton>
-    </NoticeDetailStyle>
-  );
-};
-
 const Notice: React.FC = () => {
-  const [expandedNoticeId, setExpandedNoticeId] = useState<number | null>(null);
-  const [clickedListItemId, setClickedListItemId] = useState<number | null>(
-    null,
-  );
+  const [notices, setNotices] = useState<NoticeDetailProps[]>([]);
 
-  const toggleNoticeExpansion = (id: number) => {
-    if (expandedNoticeId === id) {
-      setExpandedNoticeId(null);
-    } else {
-      setExpandedNoticeId(id);
-      setClickedListItemId(id);
+  const fetchData = async () => {
+    try {
+      const noticesData: any[] = [];
+      const querySnapshot = await getDocs(collection(db, "notice"));
+      querySnapshot.forEach(doc => {
+        noticesData.push({ id: doc.id, ...doc.data() });
+      });
+
+      setNotices(noticesData);
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  const notices = [
-    {
-      id: 1,
-      title: "삼성 강남과 함께하는 패캠 원데이 클래스!",
-      author: "장영민",
-      date: "09/21 00:00",
-      content: "선착순 무료! 지금 신청하기",
-    },
-    {
-      id: 2,
-      title: "이번주엔 누구나 1+1 쿠폰 100% 당첨!",
-      author: "장영민",
-      date: "09/21 00:00",
-      content: "선착순 무료! 지금 신청하기",
-    },
-    {
-      id: 3,
-      title: "하반기 공채 지원? 합격 비결은 공채 패키지!",
-      author: "장영민",
-      date: "09/21 00:00",
-      content: "선착순 무료! 지금 신청하기",
-    },
-    {
-      id: 4,
-      title: "백엔드 개발자라면? 핀테크 프로젝트는 못참지!",
-      author: "장영민",
-      date: "09/21 00:00",
-      content: "선착순 무료! 지금 신청하기",
-    },
-    {
-      id: 5,
-      title: "삼성 강남과 함께하는 패캠 원데이 클래스!",
-      author: "장영민",
-      date: "09/21 00:00",
-      content: "선착순 무료! 지금 신청하기",
-    },
-    {
-      id: 6,
-      title: "이번주엔 누구나 1+1 쿠폰 100% 당첨!",
-      author: "장영민",
-      date: "09/21 00:00",
-      content: "선착순 무료! 지금 신청하기",
-    },
-    {
-      id: 7,
-      title: "하반기 공채 지원? 합격 비결은 공채 패키지!",
-      author: "장영민",
-      date: "09/21 00:00",
-      content: "선착순 무료! 지금 신청하기",
-    },
-    {
-      id: 8,
-      title: "백엔드 개발자라면? 핀테크 프로젝트는 못참지!",
-      author: "장영민",
-      date: "09/21 00:00",
-      content: "선착순 무료! 지금 신청하기",
-    },
-    {
-      id: 9,
-      title: "삼성 강남과 함께하는 패캠 원데이 클래스!",
-      author: "장영민",
-      date: "09/21 00:00",
-      content: "선착순 무료! 지금 신청하기",
-    },
-    {
-      id: 10,
-      title: "이번주엔 누구나 1+1 쿠폰 100% 당첨!",
-      author: "장영민",
-      date: "09/21 00:00",
-      content: "선착순 무료! 지금 신청하기",
-    },
-  ];
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <>
       <NoticeBox>
         <NoticeHeader>
           <NoticeMainText>공지사항</NoticeMainText>
-          <WriteIcon src={writeIcon} alt="공지사항 작성 전 작성 아이콘" />
+          <Link to="/notice/edit" state={{ id: null }}>
+            <WriteIcon src={writeIcon} alt="공지사항 작성 전 작성 아이콘" />
+          </Link>
         </NoticeHeader>
         <Hr />
-        {notices.map((notice, i) => (
+        {notices.map((notice: NoticeDetailProps, i) => (
           <NoticeList key={notice.id}>
-            <NoticeListItem
-              onClick={() => toggleNoticeExpansion(notice.id)}
-              isClicked={clickedListItemId === notice.id} // 클릭된 아이템에만 margin-top 스타일 적용
-            >
+            <NoticeListItem>
               <NoticeLeft>
                 <NoticeId>{i + 1}</NoticeId>
                 <NoticeTitle>{notice.title}</NoticeTitle>
               </NoticeLeft>
               <NoticeRight>
-                <span>{notice.author}</span>
                 <span>{notice.date}</span>
               </NoticeRight>
             </NoticeListItem>
             <NoticeDetail
-              notice={notice}
-              isExpanded={expandedNoticeId === notice.id}
+              noticeId={notice.id}
+              content={notice.content}
+              fetchData={fetchData}
             />
           </NoticeList>
         ))}
