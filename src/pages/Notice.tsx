@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
+import { useLocation } from "react-router-dom";
 import writeIcon from "../assets/icons/wiki_icon/wiki_write_icon.png";
 import Footer from "../components/common/Footer";
 import { db } from "../firebase";
@@ -89,8 +90,9 @@ interface NoticeDetailProps {
 }
 
 const Notice: React.FC = () => {
+  const location = useLocation();
   const [notices, setNotices] = useState<NoticeDetailProps[]>([]);
-  const [selectedNoticeId, setSelectedNoticeId] = useState<string | null>(null);
+  const [noticeId, setNoticeId] = useState<string | null>(null);
 
   const fetchData = async () => {
     try {
@@ -101,13 +103,20 @@ const Notice: React.FC = () => {
       });
 
       setNotices(noticesData);
+      if (location.state.noticeId) setNoticeId(location.state.noticeId);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const handleNoticeClick = (id: string) => {
+    setNoticeId(id);
+  };
+
   useEffect(() => {
     fetchData();
+
+    return () => setNoticeId(null);
   }, []);
 
   return (
@@ -121,11 +130,8 @@ const Notice: React.FC = () => {
         </NoticeHeader>
         <Hr />
         {notices.map((notice: NoticeDetailProps, i) => (
-          <NoticeList
-            key={notice.id}
-            onClick={() => setSelectedNoticeId(notice.id)} // 클릭 시 해당 Notice의 ID를 설정
-            className={selectedNoticeId === notice.id ? "selected" : ""}>
-            <NoticeListItem>
+          <NoticeList key={notice.id}>
+            <NoticeListItem onClick={() => handleNoticeClick(notice.id)}>
               <NoticeLeft>
                 <NoticeId>{i + 1}</NoticeId>
                 <NoticeTitle>{notice.title}</NoticeTitle>
@@ -134,19 +140,15 @@ const Notice: React.FC = () => {
                 <span>{notice.date}</span>
               </NoticeRight>
             </NoticeListItem>
+            <NoticeDetail
+              noticeId={notice.id}
+              content={notice.content}
+              fetchData={fetchData}
+              isSelected={noticeId === notice.id}
+            />
           </NoticeList>
         ))}
         <Hr />
-        {selectedNoticeId && (
-          <NoticeDetail
-            noticeId={selectedNoticeId}
-            fetchData={fetchData}
-            content={
-              notices.find(notice => notice.id === selectedNoticeId)?.content ||
-              ""
-            }
-          />
-        )}
       </NoticeBox>
       <Footer />
     </>

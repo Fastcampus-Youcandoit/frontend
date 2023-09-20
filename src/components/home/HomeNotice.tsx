@@ -102,7 +102,7 @@ const HomeNotice = () => {
       <SectionHeader>
         <SectionHeaderTitle>공지사항</SectionHeaderTitle>
         <SectionButtonBox>
-          <StyledLink to="/notice">
+          <StyledLink to="/notice" state={{ noticeId: null }}>
             <SectionButton type="button">전체보기</SectionButton>
           </StyledLink>
         </SectionButtonBox>

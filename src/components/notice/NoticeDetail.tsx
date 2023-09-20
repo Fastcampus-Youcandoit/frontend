@@ -12,8 +12,8 @@ const ContentBox = styled.div`
   margin: 8px 20px 8px 45px;
 `;
 
-const NoticeDetailStyle = styled.div`
-  display: block;
+const NoticeDetailStyle = styled.div<{ isSelected: boolean }>`
+  display: ${props => (props.isSelected ? "block" : "none")};
 `;
 
 const NoticeListButton = styled.div`
@@ -49,15 +49,21 @@ interface DetailType {
   content: string;
   noticeId: string;
   fetchData: () => void;
+  isSelected: boolean;
 }
 
-const NoticeDetail = ({ content, noticeId, fetchData }: DetailType) => {
+const NoticeDetail = ({
+  content,
+  noticeId,
+  fetchData,
+  isSelected,
+}: DetailType) => {
   const deleteNotice = async () => {
     try {
       await deleteDoc(doc(db, "notice", noticeId));
       fetchData();
     } catch (error) {
-      console.log(error);
+      console.log();
     }
   };
 
@@ -66,7 +72,7 @@ const NoticeDetail = ({ content, noticeId, fetchData }: DetailType) => {
   };
 
   return (
-    <NoticeDetailStyle>
+    <NoticeDetailStyle isSelected={isSelected}>
       {content && (
         <ContentBox>
           <Viewer initialValue={content} />
