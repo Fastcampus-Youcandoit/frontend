@@ -2,6 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import "../assets/fonts/Font.css";
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  signOut,
+} from "firebase/auth";
 import googleIcon from "../assets/icons/login_icon/google_icon.png.png";
 
 interface StyleProps {
@@ -110,6 +116,32 @@ const Span = styled.span`
 `;
 
 const Login = () => {
+  const handleGoogleLogin = () => {
+    const provider = new GoogleAuthProvider();
+    const auth = getAuth();
+    signInWithPopup(auth, provider)
+      .then(result => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        // Check if credential is not null before accessing accessToken
+        const token = credential ? credential.accessToken : "";
+        console.log(result);
+        // Use object destructuring for user
+        const { user } = result;
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+        alert("로그인되었습니다");
+      })
+      .catch(error => {
+        console.log(error);
+        // Handle Errors here.
+        const { code, message, customData } = error; // Use object destructuring
+        const { email } = customData; // Use object destructuring
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
+  };
   return (
     <Wrapper>
       <div>
@@ -127,7 +159,7 @@ const Login = () => {
               {"\u00A0 또는 \u00A0"}
               <Hr />
             </Text>
-            <Button type="button">
+            <Button onClick={() => handleGoogleLogin()} type="button">
               <img src={googleIcon} alt="google icon" />
               Google 로그인
             </Button>
