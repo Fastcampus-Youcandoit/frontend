@@ -2,6 +2,12 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import "../assets/fonts/Font.css";
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  signOut,
+} from "firebase/auth";
 import googleIcon from "../assets/icons/login_icon/google_icon.png.png";
 import { auth } from "../firebase";
 import { useAuth } from "../context/AuthContext";
@@ -117,32 +123,32 @@ const Span = styled.span`
 `;
 
 const Login = () => {
-  const { login } = useAuth();
-  const [email, setEmail] = useState<string | undefined>("");
-  const [password, setPassword] = useState<string | undefined>("");
-
-  const navigate = useNavigate();
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e?.target.value);
+  const handleGoogleLogin = () => {
+    const provider = new GoogleAuthProvider();
+    const auth = getAuth();
+    signInWithPopup(auth, provider)
+      .then(result => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        // Check if credential is not null before accessing accessToken
+        const token = credential ? credential.accessToken : "";
+        console.log(result);
+        // Use object destructuring for user
+        const { user } = result;
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+        alert("로그인되었습니다");
+      })
+      .catch(error => {
+        console.log(error);
+        // Handle Errors here.
+        const { code, message, customData } = error; // Use object destructuring
+        const { email } = customData; // Use object destructuring
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
   };
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-
-  const handleLogin = async () => {
-    try {
-      if (email !== undefined && password !== undefined) {
-        await login(email, password);
-        alert("로그인 되었습니다.");
-        navigate("/");
-      }
-    } catch (error) {
-      alert("이메일 또는 패스워드가 잘못 입력되었습니다.");
-      console.error("로그인 실패:", error);
-    }
-  };
-
   return (
     <Wrapper>
       <div>
@@ -180,7 +186,7 @@ const Login = () => {
               {"\u00A0 또는 \u00A0"}
               <Hr />
             </Text>
-            <Button type="button">
+            <Button onClick={() => handleGoogleLogin()} type="button">
               <img src={googleIcon} alt="google icon" />
               Google 로그인
             </Button>
