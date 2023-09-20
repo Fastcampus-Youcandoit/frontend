@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import writeIcon from "../assets/icons/wiki_icon/wiki_write_icon.png";
 import Footer from "../components/common/Footer";
