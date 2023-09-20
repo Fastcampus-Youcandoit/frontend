@@ -176,7 +176,9 @@ const GallerySideBar = () => {
               src={PhotosTextVisible ? photosBlue : " "}
               alt="사진첩 아이콘"
             />
-            <MainText>사진첩</MainText>
+            <Link to="/gallery/all">
+              <MainText>사진첩</MainText>
+            </Link>
           </Section>
           <BottomIcon
             src={PhotosTextVisible ? bottomBlue : bottomBlack}

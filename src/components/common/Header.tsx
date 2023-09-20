@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import "../../assets/fonts/Font.css";
 import gelleryBlack from "../../assets/icons/header_icon/header_gellery_black_icon.png";
-import github from "../../assets/icons/header_icon/header_github_black_icon.png";
 import wikiBlack from "../../assets/icons/header_icon/header_wiki_black_icon.png";
+import noticeBlack from "../../assets/icons/header_icon/header_notice_icon.png";
 import CommuteButtonComponent from "../commute/CommuteButtonComponent";
 import Logo from "./Logo";
 
@@ -62,19 +62,22 @@ const Header = () => {
         </StyledLink>
         <HeaderItems>
           <HeaderItem>
+            <IconImg src={noticeBlack} alt="notice icon" />
+            <Span>
+              <StyledLink to="/notice">notice</StyledLink>
+            </Span>
+          </HeaderItem>
+          <HeaderItem>
             <IconImg src={wikiBlack} alt="wiki icon" />
             <Span>
-              <StyledLink to="/wiki">wiki</StyledLink>
+              <StyledLink to="/wiki/office-life/company-rules">wiki</StyledLink>
             </Span>
           </HeaderItem>
           <HeaderItem>
             <IconImg src={gelleryBlack} alt="gellery icon" />
             <Span>
-              <StyledLink to="/gallery">gellery</StyledLink>
+              <StyledLink to="/gallery/all">gallery</StyledLink>
             </Span>
-          </HeaderItem>
-          <HeaderItem>
-            <IconImg src={github} alt="github icon" className="github" />
           </HeaderItem>
           <HeaderItem>
             <CommuteButtonComponent />

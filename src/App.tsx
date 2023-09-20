@@ -2,9 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./components/common/Header";
 
 // Gallery Componenets
-import Business from "./components/gallery/Business";
-import JobPosting from "./components/gallery/JobPosting";
-import OfficePhoto from "./components/gallery/OfficePhoto";
+import GallerySection from "./components/gallery/GallerySection";
 import WikiComponent from "./components/wiki/WikiComponent";
 import { Gallery, Home, Notice, NoticeEditor, Wiki } from "./pages";
 import GlobalStyle from "./styles/globalStyle";
@@ -16,6 +14,8 @@ const App = () => {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
+        {/* notice */}
+        <Route path="/notice" element={<Notice />} />
         {/* wiki */}
         <Route path="/wiki" element={<Wiki />}>
           {/* office-life */}
@@ -27,9 +27,7 @@ const App = () => {
         </Route>
         {/* gallery */}
         <Route path="/gallery" element={<Gallery />}>
-          <Route path="office-photo" element={<OfficePhoto />} />
-          <Route path="business" element={<Business />} />
-          <Route path="job-posting" element={<JobPosting />} />
+          <Route path=":pageName" element={<GallerySection />} />
         </Route>
         <Route path="/notice" element={<Notice />} />
         <Route path="/notice/edit" element={<NoticeEditor />} />

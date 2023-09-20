@@ -20,7 +20,7 @@ const WikiHeader = styled.div`
   margin-top: 25px;
 `;
 
-const WikiMainText = styled.span`
+export const WikiMainText = styled.span`
   font-size: 25px;
   font-family: "NotoSansKR-bold";
 `;
@@ -58,7 +58,7 @@ const EditorContainer = styled.div`
 `;
 
 const ViewerMarginContainer = styled.div`
-  margin: 16px;
+  margin-left: 15px;
 `;
 
 const WikiComponent = () => {
