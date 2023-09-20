@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import writeIcon from "../assets/icons/wiki_icon/wiki_write_icon.png";
 import Footer from "../components/common/Footer";
@@ -90,6 +90,7 @@ interface NoticeDetailProps {
 
 const Notice: React.FC = () => {
   const [notices, setNotices] = useState<NoticeDetailProps[]>([]);
+  const [selectedNoticeId, setSelectedNoticeId] = useState<string | null>(null);
 
   const fetchData = async () => {
     try {
@@ -120,7 +121,10 @@ const Notice: React.FC = () => {
         </NoticeHeader>
         <Hr />
         {notices.map((notice: NoticeDetailProps, i) => (
-          <NoticeList key={notice.id}>
+          <NoticeList
+            key={notice.id}
+            onClick={() => setSelectedNoticeId(notice.id)} // 클릭 시 해당 Notice의 ID를 설정
+            className={selectedNoticeId === notice.id ? "selected" : ""}>
             <NoticeListItem>
               <NoticeLeft>
                 <NoticeId>{i + 1}</NoticeId>
@@ -130,14 +134,19 @@ const Notice: React.FC = () => {
                 <span>{notice.date}</span>
               </NoticeRight>
             </NoticeListItem>
-            <NoticeDetail
-              noticeId={notice.id}
-              content={notice.content}
-              fetchData={fetchData}
-            />
           </NoticeList>
         ))}
         <Hr />
+        {selectedNoticeId && (
+          <NoticeDetail
+            noticeId={selectedNoticeId}
+            fetchData={fetchData}
+            content={
+              notices.find(notice => notice.id === selectedNoticeId)?.content ||
+              ""
+            }
+          />
+        )}
       </NoticeBox>
       <Footer />
     </>

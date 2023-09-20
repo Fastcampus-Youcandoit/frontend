@@ -3,7 +3,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import GallerySection from "../components/gallery/GallerySection";
 import GalleryModal from "../components/gallery/GalleryModal";
-import { GallerySideBar } from "../components/sideBar/SideBar";
+import { GallerySideBar } from "../components/sidebar/SideBar";
 
 const GalleryWrapper = styled.div`
   display: flex;

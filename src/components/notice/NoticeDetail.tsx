@@ -57,7 +57,7 @@ const NoticeDetail = ({ content, noticeId, fetchData }: DetailType) => {
       await deleteDoc(doc(db, "notice", noticeId));
       fetchData();
     } catch (error) {
-      console.log();
+      console.log(error);
     }
   };
 
