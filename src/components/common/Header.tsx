@@ -16,6 +16,7 @@ import { useAuth } from "../../context/AuthContext";
 const HeaderBox = styled.header`
   height: 9vh;
   padding: 0 2rem;
+  border-bottom: 1px solid #707070;
 `;
 
 const HeaderNav = styled.nav`
@@ -41,10 +42,6 @@ export const HeaderItem = styled.div`
   cursor: pointer;
   gap: 0.2rem;
   border-radius: 10px;
-  // .github {
-  //   width: 2.2rem;
-  //   height: 80%;
-  // }
 `;
 
 export const IconImg = styled.img`
@@ -137,12 +134,6 @@ const Header = () => {
             </Span>
           </HeaderItem>
           <HeaderItem>
-            <IconImg src={noticeIcon} alt="notice icon" />
-            <Span>
-              <StyledLink to="/notice">notice</StyledLink>
-            </Span>
-          </HeaderItem>
-          <HeaderItem>
             <IconImg src={wikiBlack} alt="wiki icon" />
             <Span>
               <StyledLink to="/wiki/office-life/company-rules">wiki</StyledLink>
@@ -185,10 +176,6 @@ const Header = () => {
               </Span>
             </HeaderItem>
           )}
-
-          {/* <HeaderItem>
-            <IconImg src={github} alt="github icon" className="github" />
-          </HeaderItem> */}
         </HeaderItems>
       </HeaderNav>
     </HeaderBox>
