@@ -73,7 +73,7 @@ const StyledLink = styled(Link)`
 const HomeNotice = () => {
   const [notices, setNotices] = useState<NoticeType[] | null>(null);
 
-  const q = query(collection(db, "notice"), limit(5));
+  const q = query(collection(db, "notice"), limit(6));
   const fetchData = async () => {
     const noticesData: any[] = [];
     try {
