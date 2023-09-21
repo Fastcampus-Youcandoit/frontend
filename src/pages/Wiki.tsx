@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Outlet } from "react-router-dom";
-import { WikiSideBar } from "../components/sidebar/SideBar";
-import Footer from "../components/common/Footer";
+import { WikiSideBar } from "../components/sideBar/SideBar";
 
 const WikiWrapper = styled.div`
   display: flex;
