@@ -1,73 +1,28 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   updateProfile,
   Auth,
-  onAuthStateChanged,
 } from "firebase/auth";
-import { getFirestore, doc, setDoc } from "firebase/firestore";
+import { auth } from "../firebase";
+import { Wrapper, Form, Input, Button, Message } from "./Login";
 
-interface StyleProps {
-  color?: string;
-  backgroundColor?: string;
-}
-const Wrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
-  > div {
-    width: 600px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    > span {
-      font: normal normal 90px "Cafe24Shiningstar";
-    }
-  }
-`;
-const Form = styled.form`
-  width: 600px;
-  height: 600px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  margin-top: 20px;
-  box-shadow: 0px 3px 6px #00000029;
-  border: 2px solid #d2d2d2;
-  border-radius: 5px;
-  > div {
-    width: 500px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-`;
-const Input = styled.input`
-  width: 500px;
-  margin-bottom: 25px;
-  padding: 3px 2px;
-  font: normal normal bold 20px/36px Noto Sans KR;
-  border: none; /* 모든 테두리 제거 */
-  border-bottom: 2px solid #808080; /* 밑줄 스타일 및 색상 설정 */
-  &::placeholder {
-    color: #808080;
-  }
+const StyledForm = styled(Form)`
+  height: 35rem;
 `;
 
 const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   text-align: start;
+  margin-bottom: 10px;
   input {
     width: 100%;
     padding: 3px 2px;
     border: none;
     border-bottom: 2px solid #808080;
+    outline: none;
     font: normal normal bold 20px/36px Noto Sans KR;
     &::placeholder {
       color: #808080;
@@ -75,37 +30,7 @@ const InputWrapper = styled.div`
   }
 `;
 
-const Button = styled.button<StyleProps>`
-  margin-bottom: 5px;
-  padding: 10px 0;
-  border-radius: 2px;
-  font: normal normal bold 22px Noto Sans KR;
-  color: ${props => props.color || "#000"};
-  background-color: ${props => props.backgroundColor || "#fff"};
-  border: ${props => props.backgroundColor || "1px solid #d4d4d4"};
-  cursor: pointer;
-  > img {
-    float: left;
-    margin-left: 25px;
-    margin-right: -50px;
-    width: 25px;
-    height: 25px;
-  }
-`;
-
-const Message = styled.span`
-  font: normal bold 16px/28px Noto Sans KR;
-  color: red;
-  display: block;
-  height: 26px;
-  left: 0;
-  margin-top: -25px;
-  margin-bottom: 5px;
-  text-align: left;
-`;
-
 const Signup = () => {
-  const auth = getAuth();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -261,10 +186,10 @@ const Signup = () => {
     <Wrapper>
       <div>
         <span>Youcandoit</span>
-        <Form>
+        <StyledForm>
           <div>
             <InputWrapper>
-              <label>이메일</label>
+              <label htmlFor="email">이메일</label>
               <Input
                 id="email"
                 type="email"
@@ -273,11 +198,12 @@ const Signup = () => {
                 autoFocus
                 onChange={e => setEmail(e.target.value)}
                 onBlur={e => checkEmailValidation(e.target.value)}
+                required
               />
               <Message>{emailMessage}</Message>
             </InputWrapper>
             <InputWrapper>
-              <label>이름</label>
+              <label htmlFor="name">이름</label>
               <Input
                 id="name"
                 type="text"
@@ -289,7 +215,7 @@ const Signup = () => {
               <Message>{nameMessage}</Message>
             </InputWrapper>
             <InputWrapper>
-              <label>비밀번호</label>
+              <label htmlFor="password">비밀번호</label>
               <Input
                 id="password"
                 type="password"
@@ -302,7 +228,7 @@ const Signup = () => {
             </InputWrapper>
 
             <InputWrapper>
-              <label>비밀번호 확인</label>
+              <label htmlFor="passwordCheck">비밀번호 확인</label>
               <Input
                 id="passwordCheck"
                 type="password"
@@ -321,7 +247,7 @@ const Signup = () => {
               회원가입
             </Button>
           </div>
-        </Form>
+        </StyledForm>
       </div>
     </Wrapper>
   );

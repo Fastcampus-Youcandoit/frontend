@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { doc, deleteDoc, setDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 import { db } from "../../firebase";
 import {
   Modal,
@@ -41,17 +42,19 @@ const getCurentTime = (currentTime: Date) => {
 };
 
 // firestore에 출근시간 등록 (출근버튼 클릭시)
-const setWorkingTime = async (currentTime: Date) => {
-  await setDoc(doc(db, "time", "workStartTime"), {
-    time: currentTime,
+const setWorkingTime = async (currentTime: Date, user: any) => {
+  await setDoc(doc(db, "time", user.uid), {
+    uid: user.uid,
+    이름: user.displayName,
+    출근시간: currentTime,
   });
 };
-
 // firestore에 퇴근시간 등록 (퇴근버튼 클릭시)
-const deleteWorkingTime = async () => {
-  await deleteDoc(doc(db, "time", "workStartTime"));
+const deleteWorkingTime = async (user: any) => {
+  await deleteDoc(doc(db, "time", user.uid));
 };
 
+// CommuteModalComponent
 const CommuteModal: React.FC<CommuteModalProps> = ({
   workonoff,
   setWorkonoff,
@@ -61,6 +64,8 @@ const CommuteModal: React.FC<CommuteModalProps> = ({
   const formattedDate = getTodayDate();
   let currentTime: Date;
   const [clock, setClock] = useState("00:00:00");
+  const auth = getAuth();
+  const user = auth.currentUser;
 
   useEffect(() => {
     const Timer = setInterval(() => {
@@ -87,7 +92,7 @@ const CommuteModal: React.FC<CommuteModalProps> = ({
        ${getCurentTime(currentTime).toString()}  출근처리하시겠습니까?`)
       ) {
         setWorkonoff(true);
-        setWorkingTime(currentTime);
+        setWorkingTime(currentTime, user);
         setModalOpen(false);
       }
     }
@@ -101,9 +106,9 @@ const CommuteModal: React.FC<CommuteModalProps> = ({
       ${getCurentTime(currentTime).toString()}  퇴근처리하시겠습니까?`)
       ) {
         setWorkonoff(false);
-        deleteWorkingTime();
+        deleteWorkingTime(user);
         // eslint-disable-next-line no-alert
-        alert("퇴근처리됬습니다!");
+        alert("퇴근처리됐습니다!");
         setModalOpen(false);
       }
     }

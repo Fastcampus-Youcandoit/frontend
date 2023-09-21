@@ -18,6 +18,7 @@ import {
   ModalBox,
   ModalUploadIcon,
 } from "./GalleryModal";
+import { useAuth } from "../../context/AuthContext";
 
 interface DetailModalProps {
   imageUrl: string;
@@ -67,6 +68,8 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
   imageUrl,
   onClose,
 }) => {
+  const { currentUser } = useAuth();
+
   const [isEdit, setIsEdit] = useState(false);
 
   const [imageName, setImageName] = useState<any | null>(null);
@@ -303,13 +306,15 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
                 type="button">
                 Cancel
               </Button>
-              <Button
-                onClick={handleIsEdit}
-                color="#fff"
-                backgroundColor="#000"
-                type="button">
-                Edit
-              </Button>
+              {currentUser && (
+                <Button
+                  onClick={handleIsEdit}
+                  color="#fff"
+                  backgroundColor="#000"
+                  type="button">
+                  Edit
+                </Button>
+              )}
             </>
           )}
         </ButtonBox>
