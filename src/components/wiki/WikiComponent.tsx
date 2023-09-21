@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { doc, getDoc, setDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 import { db } from "../../firebase";
 import MarkdownEditor from "./MarkdownEditor";
 import MarkdownViewer from "./MarkdownViewer";
@@ -64,7 +65,15 @@ const ViewerMarginContainer = styled.div`
 
 // WikiComponent
 const WikiComponent = () => {
-  // Sidebar Page Title Mapping
+  const { currentUser } = getAuth();
+  const params = useParams<Record<string, string | undefined>>();
+  const pageName = params.pageName || "company-rules";
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const previousLocation = useRef(location.pathname);
+
   const pageTitleMapping: Record<string, string> = {
     "company-rules": "회사내규",
     "team-introduction": "팀 소개",
@@ -75,12 +84,6 @@ const WikiComponent = () => {
     "reading-list": "신입사원 필독서",
     topics: "온보딩 주제",
   };
-
-  const params = useParams<Record<string, string | undefined>>();
-  const pageName = params.pageName || "company-rules";
-
-  const location = useLocation(); // page 이동 시 editMode를 false로 변경하기 위해 사용
-  const previousLocation = useRef(location.pathname);
 
   // Markdown Editor & Viewer Ref
   const markdownRef = useRef(null);
@@ -134,15 +137,17 @@ const WikiComponent = () => {
     <WikiContentBox>
       <WikiHeader>
         <WikiMainText>{pageTitleMapping[pageName] || "회사내규"}</WikiMainText>
-        <WriteIcon
-          src={editMode ? checkIcon : writeIcon}
-          onClick={() => {
-            if (editMode) {
-              uploadContent(content); // 변경된 내용을 Firebase에 업로드
-            }
-            setEditMode(!editMode);
-          }}
-        />
+        {currentUser && (
+          <WriteIcon
+            src={editMode ? checkIcon : writeIcon}
+            onClick={() => {
+              if (editMode) {
+                uploadContent(content); // 변경된 내용을 Firebase에 업로드
+              }
+              setEditMode(!editMode);
+            }}
+          />
+        )}
       </WikiHeader>
       <WikiContent>
         <EditorContainer>
