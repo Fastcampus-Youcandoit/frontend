@@ -1,21 +1,18 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import "../assets/fonts/Font.css";
-import {
-  getAuth,
-  signInWithPopup,
-  GoogleAuthProvider,
-  signOut,
-} from "firebase/auth";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import googleIcon from "../assets/icons/login_icon/google_icon.png.png";
+import { auth } from "../firebase";
+import { useAuth } from "../context/AuthContext";
 
 interface StyleProps {
   color?: string;
   backgroundColor?: string;
 }
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   width: 100vw;
   height: 100vh;
   > div {
@@ -31,7 +28,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const Form = styled.form`
+export const Form = styled.form`
   width: 600px;
   height: 480px;
   display: flex;
@@ -51,19 +48,20 @@ const Form = styled.form`
   }
 `;
 
-const Input = styled.input`
+export const Input = styled.input`
   width: 500px;
   margin-bottom: 25px;
   padding: 3px 2px;
   font: normal normal bold 20px/36px Noto Sans KR;
-  border: none; /* 모든 테두리 제거 */
-  border-bottom: 2px solid #808080; /* 밑줄 스타일 및 색상 설정 */
+  border: none;
+  outline: none;
+  border-bottom: 2px solid #808080;
   &::placeholder {
     color: #808080;
   }
 `;
 
-const Message = styled.span`
+export const Message = styled.span`
   font: normal bold 16px/28px Noto Sans KR;
   color: red;
   left: 0;
@@ -72,7 +70,7 @@ const Message = styled.span`
   text-align: left;
 `;
 
-const Button = styled.button<StyleProps>`
+export const Button = styled.button<StyleProps>`
   margin-bottom: 5px;
   padding: 10px 0;
   border-radius: 2px;
@@ -81,12 +79,17 @@ const Button = styled.button<StyleProps>`
   background-color: ${props => props.backgroundColor || "#fff"};
   border: ${props => props.backgroundColor || "1px solid #d4d4d4"};
   cursor: pointer;
+  translate: transform 0.8s;
   > img {
     float: left;
     margin-left: 25px;
-    margin-right: -50px;
-    width: 25px;
-    height: 25px;
+    margin-right: -53px;
+    width: 28px;
+    height: 28px;
+  }
+  &:hover {
+    transform: scale(1.02);
+    translate: transform 0.8s;
   }
 `;
 
@@ -116,42 +119,75 @@ const Span = styled.span`
 `;
 
 const Login = () => {
-  const handleGoogleLogin = () => {
-    const provider = new GoogleAuthProvider();
-    const auth = getAuth();
-    signInWithPopup(auth, provider)
-      .then(result => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        // Check if credential is not null before accessing accessToken
-        const token = credential ? credential.accessToken : "";
-        console.log(result);
-        // Use object destructuring for user
-        const { user } = result;
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
-        alert("로그인되었습니다");
-      })
-      .catch(error => {
-        console.log(error);
-        // Handle Errors here.
-        const { code, message, customData } = error; // Use object destructuring
-        const { email } = customData; // Use object destructuring
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-      });
+  const { currentUser, login, googleLogin } = useAuth(); // 현재 사용자 정보 가져오기
+  const [email, setEmail] = useState<string | undefined>("");
+  const [password, setPassword] = useState<string | undefined>("");
+
+  const navigate = useNavigate();
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e?.target.value);
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+
+  const handleLogin = async () => {
+    try {
+      if (email !== undefined && password !== undefined) {
+        await login(email, password);
+        const userName = currentUser?.displayName;
+        alert(`로그인되었습니다.`);
+        navigate("/");
+      }
+    } catch (error) {
+      alert("이메일 또는 패스워드가 잘못 입력되었습니다.");
+      console.error("로그인 실패:", error);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      if (email !== undefined && password !== undefined) {
+        await googleLogin();
+        // alert(`${userName} 님, 환영합니다`);
+        navigate("/");
+      }
+    } catch (error) {
+      alert("로그인에 실패하였습니다.");
+      console.error("로그인 실패:", error);
+    }
   };
   return (
     <Wrapper>
       <div>
         <span>Youcandoit</span>
-        <Form>
+        <Form
+          onSubmit={e => {
+            e.preventDefault();
+            handleLogin();
+          }}>
           <div>
-            <Input type="email" placeholder="이메일을 입력하세요" />
-            <Input type="password" placeholder="비밀번호를 입력하세요" />
-            <Message>아이디 또는 비밀번호를 확인해주세요</Message>
-            <Button color="#087ea4" backgroundColor="#e6f7ff" type="button">
+            <Input
+              type="email"
+              placeholder="이메일을 입력하세요"
+              value={email}
+              onChange={handleEmailChange}
+              required
+            />
+            <Input
+              type="password"
+              placeholder="비밀번호를 입력하세요"
+              value={password}
+              onChange={handlePasswordChange}
+              required
+            />
+            {!email ||
+              (!password && (
+                <Message>아이디 또는 비밀번호를 확인해주세요</Message>
+              ))}
+
+            <Button color="#087ea4" backgroundColor="#e6f7ff" type="submit">
               로그인
             </Button>
             <Text>
