@@ -38,12 +38,14 @@ const DetailImage = styled.img`
 
 const DetailUploadBox = styled(UploadBox)`
   width: 43rem;
+  height: 25.5rem;
   padding: 12rem 0;
 `;
 
 const DetailImagePreview = styled(ImagePreview)`
   width: 43rem;
   height: 25.5rem;
+  object-fit: contain;
 `;
 
 const DetailFileNameBox = styled(FileNameBox)`
@@ -212,7 +214,7 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
         );
         await uploadString(storageRef, selectedImage, "data_url");
         alert("이미지가 변경되었습니다.");
-        window.location.href = "/gallery";
+        window.location.href = "/gallery/all";
       }
     } catch (error) {
       console.error("Error : ", error);
@@ -275,15 +277,15 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
               <Button
                 onClick={() => setIsEdit(!isEdit)}
                 color="#000"
-                borderColor="#000"
-                backgroundColor="#fff"
+                bordercolor="#000"
+                background="#fff"
                 type="button">
                 Cancel
               </Button>
               <Button
                 color="#000"
-                borderColor="#000"
-                backgroundColor="#fff"
+                bordercolor="#000"
+                background="#fff"
                 type="button"
                 onClick={deleteImage}>
                 Delete
@@ -291,8 +293,8 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
               <Button
                 onClick={handleImageUpdate}
                 color="#fff"
-                backgroundColor="#000"
-                borderColor="#000"
+                background="#000"
+                bordercolor="#000"
                 type="button">
                 Save
               </Button>
@@ -302,8 +304,8 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
               <Button
                 onClick={onClose}
                 color="#000"
-                borderColor="#000"
-                backgroundColor="#fff"
+                bordercolor="#000"
+                background="#fff"
                 type="button">
                 Cancel
               </Button>
@@ -311,8 +313,8 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
                 <Button
                   onClick={handleIsEdit}
                   color="#fff"
-                  backgroundColor="#000"
-                  borderColor="#000"
+                  background="#000"
+                  bordercolor="#000"
                   type="button">
                   Edit
                 </Button>

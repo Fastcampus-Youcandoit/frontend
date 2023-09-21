@@ -242,7 +242,7 @@ const Signup = () => {
             </InputWrapper>
             <LoginButton
               color="#087ea4"
-              backgroundColor="#e6f7ff"
+              background="#e6f7ff"
               onClick={() => handleSignUp()}
               type="button">
               회원가입

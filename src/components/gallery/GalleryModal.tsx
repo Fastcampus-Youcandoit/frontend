@@ -11,8 +11,8 @@ interface ModalProps {
 
 interface stylesProps {
   color?: string;
-  borderColor?: string;
-  backgroundColor?: string;
+  bordercolor?: string;
+  background?: string;
 }
 
 export const ModalBackground = styled.div`
@@ -68,7 +68,7 @@ export const UploadBox = styled.div`
 export const ImagePreview = styled.img`
   width: 37.5rem;
   height: 20rem;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 30px;
   box-shadow: 0px 3px 6px #00000029;
 `;
@@ -116,11 +116,11 @@ export const Button = styled.button<stylesProps>`
   margin-left: 0.9rem;
   text-align: center;
   font: normal normal bold 1.25rem/1.8rem Noto Sans KR;
-  border: 2px solid ${props => props.borderColor || "#d2d2d2"};
+  border: 2px solid ${props => props.bordercolor || "#d2d2d2"};
   border-radius: 10px;
   cursor: pointer;
   color: ${props => props.color || "#000"};
-  background-color: ${props => props.backgroundColor || "#fff"};
+  background-color: ${props => props.background || "#fff"};
   transition: transform 0.8s;
   &:hover {
     transform: scale(1.08);
@@ -242,7 +242,7 @@ const GalleryModal = ({ isModalChange }: ModalProps) => {
         );
         await uploadString(storageRef, selectedImage, "data_url");
         alert("업로드가 완료되었습니다.");
-        window.location.href = "/gallery";
+        window.location.href = "/gallery/all";
       }
     } catch (error) {
       console.error("Error uploading image: ", error);
@@ -276,8 +276,9 @@ const GalleryModal = ({ isModalChange }: ModalProps) => {
           <Select
             color={selectedCategory}
             value={selectedCategory}
-            onChange={handleCategoryChange}>
-            <option value="" selected disabled hidden>
+            onChange={handleCategoryChange}
+            defaultValue="">
+            <option value="" disabled hidden>
               == 카테고리 선택 ==
             </option>
             <option value="office-photo">내부사진</option>
@@ -302,8 +303,8 @@ const GalleryModal = ({ isModalChange }: ModalProps) => {
         <ButtonBox>
           <Button
             color="#000"
-            borderColor="#000"
-            backgroundColor="#fff"
+            bordercolor="#000"
+            background="#fff"
             type="button"
             onClick={isModalChange}>
             Cancel
@@ -311,8 +312,8 @@ const GalleryModal = ({ isModalChange }: ModalProps) => {
           <Button
             onClick={handleUpload}
             color="#fff"
-            backgroundColor="#000"
-            borderColor="#000"
+            background="#000"
+            bordercolor="#000"
             type="button">
             Upload
           </Button>

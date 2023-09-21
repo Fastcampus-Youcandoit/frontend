@@ -13,7 +13,7 @@ import "../assets/fonts/Font.css";
 
 interface StyleProps {
   color?: string;
-  backgroundColor?: string;
+  background?: string;
 }
 
 export const Wrapper = styled.div`
@@ -82,8 +82,8 @@ export const LoginButton = styled.button<StyleProps>`
   border-radius: 2px;
   font: normal normal bold 22px Noto Sans KR;
   color: ${props => props.color || "#000"};
-  background-color: ${props => props.backgroundColor || "#fff"};
-  border: ${props => props.backgroundColor || "1px solid #d4d4d4"};
+  background-color: ${props => props.background || "#fff"};
+  border: ${props => props.background || "1px solid #d4d4d4"};
   cursor: pointer;
   translate: transform 0.8s;
   > img {
@@ -176,6 +176,7 @@ const Login = () => {
       }
     } catch (error) {
       alert("이메일 또는 패스워드가 잘못 입력되었습니다.");
+      setPassword("");
       console.error("로그인 실패:", error);
     }
   };
@@ -244,10 +245,7 @@ const Login = () => {
                   <Message>이메일과 패스워드 모두 입력해주세요.</Message>
                 ))}
 
-              <LoginButton
-                color="#087ea4"
-                backgroundColor="#e6f7ff"
-                type="submit">
+              <LoginButton color="#087EA4" background="#E6F7FF" type="submit">
                 로그인
               </LoginButton>
               <Text>
@@ -287,7 +285,7 @@ const Login = () => {
               onChange={handleEmailChange}
             />
             <FindButton
-              borderColor="#000"
+              bordercolor="#000"
               type="button"
               onClick={handleFindPassword}>
               SEND
