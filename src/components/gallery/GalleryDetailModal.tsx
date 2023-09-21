@@ -1,11 +1,11 @@
 import { deleteObject, ref, uploadString } from "firebase/storage";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import closeIconUrl from "../../assets/icons/gallery_icon/image_close_icon.png";
 import uploadIconUrl from "../../assets/icons/gallery_icon/image_upload_icon.png";
 import { useAuth } from "../../context/AuthContext";
 import { storage } from "../../firebase";
-import { DetailModalProps, useModalState } from "../../types/gallery";
+import { DetailModalProps } from "../../types/gallery";
 import {
   Button,
   ButtonBox,
@@ -66,19 +66,12 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
   imageUrl,
   onClose,
 }) => {
-  const {
-    selectedFileName,
-    setSelectedFileName,
-    selectedImage,
-    setSelectedImage,
-    isEdit,
-    setIsEdit,
-    imageName,
-    setImageName,
-    categoryName,
-    setCategoryName,
-    imageInputRef,
-  } = useModalState();
+  const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [isEdit, setIsEdit] = useState(false);
+  const [imageName, setImageName] = useState<any | null>(null);
+  const [categoryName, setCategoryName] = useState<any | null>(null);
+  const imageInputRef = useRef<HTMLInputElement>(null);
 
   const { currentUser } = useAuth();
 
@@ -123,7 +116,7 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
         const imageRef = ref(storage, imageName);
         await deleteObject(imageRef);
         alert("선택한 이미지가 삭제되었습니다.");
-        window.location.href = "/gallery";
+        window.location.href = "/gallery/all";
       } catch (error: unknown | Error) {
         const errorMessage = `이미지 삭제에 실패하였습니다. \n\nerror: ${error}`;
         alert(errorMessage);

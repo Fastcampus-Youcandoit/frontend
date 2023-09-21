@@ -1,10 +1,10 @@
 import { ref, uploadString } from "firebase/storage";
-import React, { useCallback } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import styled from "styled-components";
 import closeIconUrl from "../../assets/icons/gallery_icon/image_close_icon.png";
 import uploadIconUrl from "../../assets/icons/gallery_icon/image_upload_icon.png";
 import { storage } from "../../firebase";
-import { ModalProps, StylesProps, useModalState } from "../../types/gallery";
+import { ModalProps, StylesProps } from "../../types/gallery";
 
 export const ModalBackground = styled.div`
   position: fixed;
@@ -133,16 +133,13 @@ export const Select = styled.select<StylesProps>`
 `;
 
 const GalleryModal = ({ isModalChange }: ModalProps) => {
-  const {
-    selectedFileName,
-    setSelectedFileName,
-    selectedImage,
-    setSelectedImage,
-    selectedCategory,
-    setSelectedCategory,
-    modalBackgroundRef,
-    imageInputRef,
-  } = useModalState();
+  const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
+    undefined,
+  );
+  const modalBackgroundRef = useRef<HTMLDivElement>(null);
+  const imageInputRef = useRef<HTMLInputElement>(null);
 
   // click modal background
   const handleClickBackground = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -277,7 +274,7 @@ const GalleryModal = ({ isModalChange }: ModalProps) => {
             </option>
             <option value="office-photo">내부사진</option>
             <option value="business">협력사</option>
-            <option value="jop-posting">채용공고</option>
+            <option value="job-posting">채용공고</option>
           </Select>
           <svg
             xmlns="http://www.w3.org/2000/svg"
