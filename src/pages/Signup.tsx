@@ -39,18 +39,16 @@ const Signup = () => {
   const [nameMessage, setNameMessage] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
   const [passwordCheckMessage, setPasswordCheckMessage] = useState("");
-  const finalCheck = ["", "", "", ""];
 
   // 1.이메일 유효성검사
   // 영문과 이메일 형식
-  const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/;
-
-  const EMAIL_ERROR_MSG = {
-    required: "필수 정보입니다.",
-    invalid: "이메일 형식을 맞춰서 입력해주세요.",
-  };
   const checkEmailValidation = (value: string) => {
-    // 매개변수 유형을 string으로 업데이트
+    const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/;
+
+    const EMAIL_ERROR_MSG = {
+      required: "필수 정보입니다.",
+      invalid: "이메일 형식을 맞춰서 입력해주세요.",
+    };
     let isValidEmail;
     if (value.length === 0) {
       isValidEmail = "required";
@@ -68,12 +66,12 @@ const Signup = () => {
 
   // 2. 이름 유효성 검사
   // 영문 소문자, 대문자, 한글만 가능
-  const NAME_REGEX = /^[가-힣a-zA-Z]{2,}([·•]?[가-힣a-zA-Z]+)*$/;
-  const NAME_ERROR_MSG = {
-    required: "필수 정보입니다.",
-    invalid: "이름 형식이 올바르지 않습니다.",
-  };
   const checkNameValidation = (value: string) => {
+    const NAME_REGEX = /^[가-힣a-zA-Z]{2,}([·•]?[가-힣a-zA-Z]+)*$/;
+    const NAME_ERROR_MSG = {
+      required: "필수 정보입니다.",
+      invalid: "이름 형식이 올바르지 않습니다.",
+    };
     let isValidName;
     if (value.length === 0) {
       isValidName = "required";
@@ -91,15 +89,13 @@ const Signup = () => {
   };
 
   // 3. 비밀번호 유효성 검사
-  const PW_REGEX = /^[a-zA-Z0-9]{8,16}$/;
-  const inputPwEl = document.querySelector(".input-pw");
-  const pwMsgEl = document.querySelector(".pw-msg");
-
-  const PW_ERROR_MSG = {
-    required: "필수 정보입니다.",
-    invalid: "8~16자 영문 소/대문자, 숫자를 입력해주세요.",
-  };
   const checkPwValidation = (value: string) => {
+    const PW_REGEX = /^[a-zA-Z0-9]{8,16}$/;
+
+    const PW_ERROR_MSG = {
+      required: "필수 정보입니다.",
+      invalid: "8~16자 영문 소/대문자, 숫자를 입력해주세요.",
+    };
     let isValidPw;
     if (value.length === 0) {
       isValidPw = "required";
@@ -115,12 +111,11 @@ const Signup = () => {
   };
 
   // 4. 비밀번호 확인 유효성 검사
-  const PW_CHECK_ERROR_MSG = {
-    required: "필수 정보입니다.",
-    invalid: "비밀번호가 일치하지 않습니다.",
-  };
-
   const checkPwCheckValidation = (value: string) => {
+    const PW_CHECK_ERROR_MSG = {
+      required: "필수 정보입니다.",
+      invalid: "비밀번호가 일치하지 않습니다.",
+    };
     let isValidPwCheck;
     if (value.length === 0) {
       isValidPwCheck = "required";
@@ -137,7 +132,8 @@ const Signup = () => {
     }
   };
 
-  function createUser(authInstance: Auth) {
+  // 회원가입
+  const createUser = (authInstance: Auth) => {
     createUserWithEmailAndPassword(authInstance, email, password)
       .then(userCredential => {
         const { user } = userCredential;
@@ -164,7 +160,7 @@ const Signup = () => {
           alert("중복된 이메일이 존재합니다.");
         }
       });
-  }
+  };
 
   // 전체 유효성검사
   const handleSignUp = () => {
@@ -196,8 +192,8 @@ const Signup = () => {
                 placeholder="이메일을 입력하세요"
                 value={email}
                 autoFocus
-                onChange={e => setEmail(e.target.value)}
-                onBlur={e => checkEmailValidation(e.target.value)}
+                onChange={e => setEmail(e?.target.value)}
+                onBlur={e => checkEmailValidation(e?.target.value)}
                 required
               />
               <Message>{emailMessage}</Message>
@@ -209,8 +205,8 @@ const Signup = () => {
                 type="text"
                 placeholder="이름을 입력해주세요"
                 value={name}
-                onChange={e => setName(e.target.value)}
-                onBlur={e => checkNameValidation(e.target.value)}
+                onChange={e => setName(e?.target.value)}
+                onBlur={e => checkNameValidation(e?.target.value)}
               />
               <Message>{nameMessage}</Message>
             </InputWrapper>
@@ -221,8 +217,8 @@ const Signup = () => {
                 type="password"
                 placeholder="8~16자 영문 소/대문자, 숫자를 입력해주세요."
                 value={password}
-                onChange={e => setPassword(e.target.value)}
-                onBlur={e => checkPwValidation(e.target.value)}
+                onChange={e => setPassword(e?.target.value)}
+                onBlur={e => checkPwValidation(e?.target.value)}
               />
               <Message>{passwordMessage}</Message>
             </InputWrapper>
@@ -234,8 +230,8 @@ const Signup = () => {
                 type="password"
                 placeholder="비밀번호를 똑같이 입력해주세요."
                 value={passwordCheck}
-                onChange={e => setPasswordCheck(e.target.value)}
-                onBlur={e => checkPwCheckValidation(e.target.value)}
+                onChange={e => setPasswordCheck(e?.target.value)}
+                onBlur={e => checkPwCheckValidation(e?.target.value)}
               />
               <Message>{passwordCheckMessage}</Message>
             </InputWrapper>

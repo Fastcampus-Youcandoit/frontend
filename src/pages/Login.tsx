@@ -122,10 +122,57 @@ const Login = () => {
   const { currentUser, login, googleLogin } = useAuth(); // 현재 사용자 정보 가져오기
   const [email, setEmail] = useState<string | undefined>("");
   const [password, setPassword] = useState<string | undefined>("");
+  const [emailMessage, setEmailMessage] = useState("");
+  const [passwordMessage, setPasswordMessage] = useState("");
 
   const navigate = useNavigate();
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e?.target.value);
+  };
+  // 1.이메일 유효성검사
+  // 영문과 이메일 형식
+  const checkEmailValidation = (value: string) => {
+    const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/;
+
+    const EMAIL_ERROR_MSG = {
+      required: "필수 정보입니다.",
+      invalid: "이메일 형식을 맞춰서 입력해주세요.",
+    };
+    let isValidEmail;
+    if (value.length === 0) {
+      isValidEmail = "required";
+    } else {
+      isValidEmail = EMAIL_REGEX.test(value) ? true : "invalid";
+    }
+    if (isValidEmail !== true) {
+      setEmailMessage(
+        EMAIL_ERROR_MSG[isValidEmail as keyof typeof EMAIL_ERROR_MSG],
+      );
+    } else {
+      setEmailMessage("");
+    }
+  };
+
+  // 3. 비밀번호 유효성 검사
+  const checkPwValidation = (value: string) => {
+    const PW_REGEX = /^[a-zA-Z0-9]{8,16}$/;
+
+    const PW_ERROR_MSG = {
+      required: "필수 정보입니다.",
+      invalid: "8~16자 영문 소/대문자, 숫자를 입력해주세요.",
+    };
+    let isValidPw;
+    if (value.length === 0) {
+      isValidPw = "required";
+    } else {
+      isValidPw = PW_REGEX.test(value) ? true : "invalid";
+    }
+
+    if (isValidPw !== true) {
+      setPasswordMessage(PW_ERROR_MSG[isValidPw as keyof typeof PW_ERROR_MSG]);
+    } else {
+      setPasswordMessage("");
+    }
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -134,7 +181,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      if (email !== undefined && password !== undefined) {
+      if (email !== (undefined && "") && password !== (undefined && "")) {
         await login(email, password);
         const userName = currentUser?.displayName;
         alert(`로그인되었습니다.`);
@@ -162,32 +209,35 @@ const Login = () => {
     <Wrapper>
       <div>
         <span>Youcandoit</span>
-        <Form
-          onSubmit={e => {
-            e.preventDefault();
-            handleLogin();
-          }}>
+        <Form>
           <div>
             <Input
               type="email"
               placeholder="이메일을 입력하세요"
               value={email}
               onChange={handleEmailChange}
+              onBlur={e => checkEmailValidation(e?.target.value)}
               required
             />
+            <Message>{emailMessage}</Message>
             <Input
               type="password"
               placeholder="비밀번호를 입력하세요"
               value={password}
               onChange={handlePasswordChange}
+              onBlur={e => checkPwValidation(e?.target.value)}
               required
             />
-            {!email ||
-              (!password && (
-                <Message>아이디 또는 비밀번호를 확인해주세요</Message>
-              ))}
+            <Message>{passwordMessage}</Message>
 
-            <Button color="#087ea4" backgroundColor="#e6f7ff" type="submit">
+            <Button
+              onClick={e => {
+                e.preventDefault();
+                handleLogin();
+              }}
+              color="#087ea4"
+              backgroundColor="#e6f7ff"
+              type="submit">
               로그인
             </Button>
             <Text>
