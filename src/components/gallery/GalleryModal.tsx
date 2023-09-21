@@ -1,11 +1,10 @@
-import React, { useRef, useState, useCallback } from "react";
-import styled from "styled-components";
 import { ref, uploadString } from "firebase/storage";
-import { storage } from "../../firebase";
+import React, { useCallback } from "react";
+import styled from "styled-components";
 import closeIconUrl from "../../assets/icons/gallery_icon/image_close_icon.png";
 import uploadIconUrl from "../../assets/icons/gallery_icon/image_upload_icon.png";
-import { ModalProps, stylesProps } from "../../types/Gallery";
-import { useModalState } from "../../types/Gallery";
+import { storage } from "../../firebase";
+import { ModalProps, StylesProps, useModalState } from "../../types/gallery";
 
 export const ModalBackground = styled.div`
   position: fixed;
@@ -103,7 +102,7 @@ export const ButtonBox = styled.div`
   margin: auto 1.25rem 1.25rem auto;
 `;
 
-export const Button = styled.button<stylesProps>`
+export const Button = styled.button<StylesProps>`
   padding: 0.37rem 1rem;
   margin-left: 0.9rem;
   text-align: center;
@@ -112,7 +111,7 @@ export const Button = styled.button<stylesProps>`
   border-radius: 10px;
   cursor: pointer;
   color: ${props => props.color || "#000"};
-  background-color: ${props => props.background || "#fff"};
+  background-color: ${props => props.$backgroundColor || "#fff"};
   transition: transform 0.8s;
   &:hover {
     transform: scale(1.08);
@@ -120,7 +119,7 @@ export const Button = styled.button<stylesProps>`
   }
 `;
 
-export const Select = styled.select<stylesProps>`
+export const Select = styled.select<StylesProps>`
   margin-right: 0.5rem;
   color: ${props => (props.color ? "#000" : "#808080")};
   padding: 0.1rem 0.2rem;
@@ -299,7 +298,7 @@ const GalleryModal = ({ isModalChange }: ModalProps) => {
           <Button
             color="#000"
             bordercolor="#000"
-            background="#fff"
+            $backgroundColor="#fff"
             type="button"
             onClick={isModalChange}>
             Cancel
@@ -307,7 +306,7 @@ const GalleryModal = ({ isModalChange }: ModalProps) => {
           <Button
             onClick={handleUpload}
             color="#fff"
-            background="#000"
+            $backgroundColor="#000"
             bordercolor="#000"
             type="button">
             Upload

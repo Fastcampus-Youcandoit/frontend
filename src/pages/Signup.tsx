@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import {
+  Auth,
   createUserWithEmailAndPassword,
   updateProfile,
-  Auth,
 } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import { auth } from "../firebase";
-import { Wrapper, HomeLink, Form, Input, LoginButton, Message } from "./Login";
 import { useLogState } from "../types/userLog";
+import { Form, HomeLink, Input, LoginButton, Message, Wrapper } from "./Login";
 
 const StyledForm = styled(Form)`
   height: 35rem;
@@ -51,7 +50,7 @@ const Signup = () => {
     passwordCheckMessage,
     setPasswordCheckMessage,
   } = useLogState();
-  const finalCheck = ["", "", "", ""];
+
   const navigate = useNavigate();
 
   // 1.이메일 유효성검사
@@ -252,7 +251,7 @@ const Signup = () => {
             </InputWrapper>
             <LoginButton
               color="#087ea4"
-              backgroundColor="#e6f7ff"
+              $backgroundColor="#e6f7ff"
               onClick={() => handleSignUp()}
               type="button">
               회원가입

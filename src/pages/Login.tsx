@@ -2,13 +2,9 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import "../assets/fonts/Font.css";
 import googleIcon from "../assets/icons/login_icon/google_icon.png.png";
-import {
-  Button,
-  ModalBackground,
-  ModalBox,
-} from "../components/gallery/GalleryModal";
+import { ModalBackground, ModalBox } from "../components/gallery/GalleryModal";
 import { useAuth } from "../context/AuthContext";
-import { StyleProps, useLogState } from "../types/userLog";
+import { StylesProps, useLogState } from "../types/userLog";
 
 export const Wrapper = styled.div`
   width: 100vw;
@@ -70,14 +66,14 @@ export const Message = styled.span`
   text-align: left;
 `;
 
-export const LoginButton = styled.button<StyleProps>`
+export const LoginButton = styled.button<StylesProps>`
   margin-bottom: 5px;
   padding: 10px 0;
   border-radius: 2px;
   font: normal normal bold 22px Noto Sans KR;
   color: ${props => props.color || "#000"};
-  background-color: ${props => props.backgroundColor || "#fff"};
-  border: ${props => props.backgroundColor || "1px solid #d4d4d4"};
+  background-color: ${props => props.$backgroundColor || "#fff"};
+  border: ${props => props.$backgroundColor || "1px solid #d4d4d4"};
   cursor: pointer;
   translate: transform 0.8s;
   > img {
@@ -247,7 +243,7 @@ const Login = () => {
 
               <LoginButton
                 color="#087EA4"
-                backgroundColor="#E6F7FF"
+                $backgroundColor="#E6F7FF"
                 type="submit">
                 로그인
               </LoginButton>

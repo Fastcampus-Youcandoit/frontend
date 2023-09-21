@@ -52,8 +52,7 @@ const NoticeList = styled.div`
   justify-content: center;
 `;
 
-const NoticeListItem = styled.div<{ isSelected: boolean }>`
-  // Define the isSelected prop here
+const NoticeListItem = styled.div<{ $isSelected: boolean }>`
   display: flex;
   justify-content: space-between;
   padding: 10px 0;
@@ -61,7 +60,7 @@ const NoticeListItem = styled.div<{ isSelected: boolean }>`
   align-items: center;
   cursor: pointer;
   transition: margin-top 0.5s ease-in-out;
-  margin-top: ${props => (props.isSelected ? "10px" : "0")};
+  margin-top: ${props => (props.$isSelected ? "10px" : "0")};
   transition: margin-top 0.7s ease;
 `;
 
@@ -137,7 +136,7 @@ const Notice: React.FC = () => {
           <NoticeList key={notice.id}>
             <NoticeListItem
               onClick={() => handleNoticeClick(notice.id)}
-              isSelected={noticeId === notice.id}>
+              $isSelected={noticeId === notice.id}>
               <NoticeLeft>
                 <NoticeId>{i + 1}</NoticeId>
                 <NoticeTitle>{notice.title}</NoticeTitle>

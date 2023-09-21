@@ -4,10 +4,10 @@ export interface ModalProps {
   isModalChange: () => void;
 }
 
-export interface stylesProps {
+export interface StylesProps {
   color?: string;
   bordercolor?: string;
-  background?: string;
+  $backgroundColor?: string;
 }
 
 export interface DetailModalProps {

@@ -19,7 +19,7 @@ import {
   ModalUploadIcon,
 } from "./GalleryModal";
 import { useAuth } from "../../context/AuthContext";
-import { DetailModalProps, useModalState } from "../../types/Gallery";
+import { DetailModalProps, useModalState } from "../../types/gallery";
 
 const DetailModalBox = styled(ModalBox)`
   width: 55rem;
@@ -278,14 +278,14 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
                 onClick={() => setIsEdit(!isEdit)}
                 color="#000"
                 bordercolor="#000"
-                background="#fff"
+                $backgroundColor="#fff"
                 type="button">
                 Cancel
               </Button>
               <Button
                 color="#000"
                 bordercolor="#000"
-                background="#fff"
+                $backgroundColor="#fff"
                 type="button"
                 onClick={deleteImage}>
                 Delete
@@ -293,7 +293,7 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
               <Button
                 onClick={handleImageUpdate}
                 color="#fff"
-                background="#000"
+                $backgroundColor="#000"
                 bordercolor="#000"
                 type="button">
                 Save
@@ -305,7 +305,7 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
                 onClick={onClose}
                 color="#000"
                 bordercolor="#000"
-                background="#fff"
+                $backgroundColor="#fff"
                 type="button">
                 Cancel
               </Button>
@@ -313,7 +313,7 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
                 <Button
                   onClick={handleIsEdit}
                   color="#fff"
-                  background="#000"
+                  $backgroundColor="#000"
                   bordercolor="#000"
                   type="button">
                   Edit

@@ -1,13 +1,13 @@
-import { useEffect, useRef, useState } from "react";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { doc, getDoc, setDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { useEffect, useRef, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
+import styled from "styled-components";
+import checkIcon from "../../assets/icons/wiki_icon/wiki_check_icon.png";
+import writeIcon from "../../assets/icons/wiki_icon/wiki_write_icon.png";
 import { db } from "../../firebase";
 import MarkdownEditor from "./MarkdownEditor";
 import MarkdownViewer from "./MarkdownViewer";
-import writeIcon from "../../assets/icons/wiki_icon/wiki_write_icon.png";
-import checkIcon from "../../assets/icons/wiki_icon/wiki_check_icon.png";
 
 // styled-components
 const WikiContentBox = styled.div`
@@ -70,7 +70,6 @@ const WikiComponent = () => {
   const params = useParams<Record<string, string | undefined>>();
   const pageName = params.pageName || "company-rules";
 
-  const navigate = useNavigate();
   const location = useLocation();
 
   const previousLocation = useRef(location.pathname);

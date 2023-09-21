@@ -160,17 +160,17 @@ const HomeGallery = () => {
   };
 
   useEffect(() => {
-    try {
-      fetchAllImages();
-    } catch (error) {
-      console.log(`Error fetching image URLs: ${error}`);
-    }
+    fetchAllImages();
+
+    return () => setCurrentImageFile(null);
   }, []);
 
   useEffect(() => {
     if (buttonNumber === 0) setCurrentImageFile("business");
     else if (buttonNumber === 1) setCurrentImageFile("jobPosting");
     else setCurrentImageFile("officePhoto");
+
+    return () => setButtonNumber(0);
   }, [buttonNumber]);
 
   return (

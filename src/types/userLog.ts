@@ -1,8 +1,8 @@
 import { useState, useRef } from "react";
 
-export interface StyleProps {
+export interface StylesProps {
   color?: string;
-  backgroundColor?: string;
+  $backgroundColor?: string;
 }
 
 export function useLogState() {
