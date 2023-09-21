@@ -33,14 +33,20 @@ const HeaderItems = styled.nav`
 `;
 
 export const HeaderItem = styled.div`
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-family: "SUITE-bold";
   height: 100%;
   display: flex;
   align-items: center;
   cursor: pointer;
-  gap: 0.2rem;
+  gap: 0.3rem;
   border-radius: 10px;
+  transition: all 0.3s ease 0s;
+
+  @media (max-width: 1024px) {
+    font-size: 0.9rem;
+    transition: all 0.3s;
+  }
 `;
 
 export const IconImg = styled.img`
@@ -61,11 +67,17 @@ const StyledLink = styled(Link)`
 
 const Name = styled.button`
   margin-right: 3px;
-  font-family: "SUITE-ExtraBold";
-  font-size: 1.08rem;
+  font-family: "SUITE-bold";
+  font-size: 1rem;
   background: none;
   border: none;
   cursor: pointer;
+  transition: all 0.5s;
+
+  @media (max-width: 1024px) {
+    font-size: 0.9rem;
+    transition: all 0.3s;
+  }
 `;
 
 const Logout = styled.button`

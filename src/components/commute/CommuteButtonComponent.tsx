@@ -6,6 +6,8 @@ import { db } from "../../firebase";
 import { Span, CommuteButton, WorkOnMark } from "./StyleComponentCommute";
 import { IconImg } from "../common/Header";
 import commuteIcon from "../../assets/icons/header_icon/header_commute_black_icon.png";
+import commuteRed from "../../assets/icons/header_icon/commute_red_icon.png";
+import commuteBlue from "../../assets/icons/header_icon/commute_blue_icon.png";
 
 const CommuteButtonComponent = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -84,18 +86,13 @@ const CommuteButtonComponent = () => {
   return (
     <>
       <CommuteButton onClick={() => setModalOpen(true)} type="button">
-        <WorkOnMark
-          src={
-            workonoff
-              ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF_Z2hn-5fYzTEf-40v3rW2LGO9Qma4FE5FA&usqp=CAU"
-              : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqtoS2rwPaT4aKpGPERdpEN1_rcfojGCNOrCjxOpWOA-HAmODktSNwOEXHHw_rHpQ-8is&usqp=CAU"
-          }
-        />
+        <WorkOnMark src={workonoff ? commuteBlue : commuteRed} />
         <IconImg src={commuteIcon} alt="commute icon" />
         <Span className="commute_span">
           {workonoff ? workOnTime : "commute"}
         </Span>
       </CommuteButton>
+
       {modalOpen && (
         <CommuteModal
           workonoff={workonoff}

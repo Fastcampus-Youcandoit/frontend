@@ -13,11 +13,17 @@ interface NoticeType {
 
 const SectionContainer = styled.section`
   width: 50%;
-  height: 20rem;
+  height: calc(width / 16 * 9);
   border: 1.2px solid #d2d2d2;
   border-radius: 10px;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
   padding: 1.5rem;
+  transition: all 0.5s;
+
+  @media (max-width: 1024px) {
+    width: 100%;
+    transition: all 0.5s;
+  }
 `;
 
 const SectionHeader = styled.div`
@@ -25,7 +31,7 @@ const SectionHeader = styled.div`
   height: 10%;
   justify-content: space-between;
   border-bottom: 1.2px solid #d2d2d2;
-  font-family: "SUITE-Bold";
+  font-family: "NotoSansKR-Medium";
   padding-bottom: 0.5rem;
 `;
 
@@ -41,7 +47,6 @@ const SectionButtonBox = styled.div`
 const SectionButton = styled.button`
   border-radius: 5px;
   border: none;
-  height: rem;
   cursor: pointer;
   font-family: "NotoSansKR-Medium";
 `;
@@ -56,7 +61,7 @@ const ContentItemsBox = styled.ul`
 
 const ContentItem = styled.li`
   width: 100%;
-  height: 20%;
+  height: 5.5rem;
   border-bottom: 1px solid #d2d2d2;
   display: flex;
   justify-content: space-between;
@@ -65,10 +70,6 @@ const ContentItem = styled.li`
   padding: 0 0.3rem;
   cursor: pointer;
 `;
-
-const Title = styled.div``;
-
-const Date = styled.div``;
 
 const StyledLink = styled(Link)`
   height: 100%;
@@ -79,7 +80,7 @@ const HomeNotice = () => {
   const [notices, setNotices] = useState<NoticeType[] | null>(null);
 
   const fetchData = async () => {
-    const q = query(collection(db, "notice"), limit(5));
+    const q = query(collection(db, "notice"), limit(6));
     const noticesData: any[] = [];
     try {
       const querySnapshot = await getDocs(q);
@@ -116,8 +117,8 @@ const HomeNotice = () => {
                 key={notice.id}
                 state={{ noticeId: notice.id }}>
                 <ContentItem>
-                  <Title>{notice.title}</Title>
-                  <Date>{notice.date}</Date>
+                  <div>{notice.title}</div>
+                  <div>{notice.date}</div>
                 </ContentItem>
               </StyledLink>
             ))}

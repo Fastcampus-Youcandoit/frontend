@@ -1,17 +1,21 @@
 import styled from "styled-components";
 
 export const Span = styled.span`
-  font-size: 1.08rem;
-  // padding-bottom: 0.2rem;
-  margin-left: 5px;
   width: 4rem;
+  font-size: 1.1rem;
+  margin: 0 0 4px 5px;
+  font-family: "SUITE-Bold";
+  transition: all 0.5s;
+
+  @media (max-width: 1024px) {
+    font-size: 0.9rem;
+    transition: all 0.5s;
+  }
 `;
 
 export const WorkOnMark = styled.img`
-  width: 1rem;
-  background-color: black;
-  position: relative;
-  right: 1rem;
+  width: 0.6rem;
+  margin-right: 0.4rem;
 `;
 
 export const CommuteButton = styled.button`
@@ -21,7 +25,6 @@ export const CommuteButton = styled.button`
   // font-size: inherit;
   // padding: 0 2rem;
   // box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -31,7 +34,7 @@ export const CommuteButton = styled.button`
   transition: all 0.3s ease 0s;
 
   &:hover {
-    transform: scale(1.04);
+    transform: scale(1);
   }
 `;
 
@@ -67,7 +70,6 @@ export const ModalLayout = styled.div`
 export const Header = styled.div`
   margin-bottom: 1.7rem;
   font-weight: bolder;
-
   display: flex;
   width: 100%;
   justify-content: space-between;
