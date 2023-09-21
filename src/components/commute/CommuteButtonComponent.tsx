@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { getDocs, collection, getDoc, doc } from "firebase/firestore";
+import { getDoc, doc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import CommuteModal from "./CommuteModal";
 import { db } from "../../firebase";
