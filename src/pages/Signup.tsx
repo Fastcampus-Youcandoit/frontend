@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import {
   createUserWithEmailAndPassword,
@@ -6,7 +7,7 @@ import {
   Auth,
 } from "firebase/auth";
 import { auth } from "../firebase";
-import { Wrapper, Form, Input, Button, Message } from "./Login";
+import { Wrapper, Form, Input, LoginButton, Message } from "./Login";
 
 const StyledForm = styled(Form)`
   height: 35rem;
@@ -39,6 +40,8 @@ const Signup = () => {
   const [nameMessage, setNameMessage] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
   const [passwordCheckMessage, setPasswordCheckMessage] = useState("");
+  const finalCheck = ["", "", "", ""];
+  const navigate = useNavigate();
 
   // 1.이메일 유효성검사
   // 영문과 이메일 형식
@@ -141,14 +144,13 @@ const Signup = () => {
           updateProfile(user, {
             displayName: name,
           }).then(() => {
-            alert(`${user.displayName}, 환영합니다`);
-            // console.log(user);
-            // console.log(userCredential);
+            alert(`${user.displayName} 님, 환영합니다`);
             setName("");
             setEmail("");
             setPassword("");
             setPassword("");
             setPasswordCheck("");
+            navigate("/");
           });
         }
       })
@@ -235,13 +237,13 @@ const Signup = () => {
               />
               <Message>{passwordCheckMessage}</Message>
             </InputWrapper>
-            <Button
+            <LoginButton
               color="#087ea4"
               backgroundColor="#e6f7ff"
               onClick={() => handleSignUp()}
               type="button">
               회원가입
-            </Button>
+            </LoginButton>
           </div>
         </StyledForm>
       </div>
