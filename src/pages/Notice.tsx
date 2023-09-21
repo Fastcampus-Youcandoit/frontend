@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { useLocation } from "react-router-dom";
@@ -10,7 +10,7 @@ import NoticeDetail from "../components/notice/NoticeDetail";
 
 const NoticeBox = styled.div`
   width: 100vw;
-  max-height: 80vh;
+  height: 80vh;
   padding: 25px 50px;
   overflow-y: scroll;
 `;
@@ -47,15 +47,20 @@ const NoticeList = styled.div`
   min-height: 7vh;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 `;
 
-const NoticeListItem = styled.div`
+const NoticeListItem = styled.div<{ isSelected: boolean }>`
+  // Define the isSelected prop here
   display: flex;
   justify-content: space-between;
   padding: 10px 0;
   flex-grow: 1;
   align-items: center;
   cursor: pointer;
+  transition: margin-top 0.5s ease-in-out;
+  margin-top: ${props => (props.isSelected ? "10px" : "0")};
+  transition: margin-top 0.7s ease;
 `;
 
 const NoticeLeft = styled.div`
@@ -110,7 +115,7 @@ const Notice: React.FC = () => {
   };
 
   const handleNoticeClick = (id: string) => {
-    setNoticeId(id);
+    setNoticeId(prevNoticeId => (prevNoticeId === id ? null : id));
   };
 
   useEffect(() => {
@@ -131,7 +136,9 @@ const Notice: React.FC = () => {
         <Hr />
         {notices.map((notice: NoticeDetailProps, i) => (
           <NoticeList key={notice.id}>
-            <NoticeListItem onClick={() => handleNoticeClick(notice.id)}>
+            <NoticeListItem
+              onClick={() => handleNoticeClick(notice.id)}
+              isSelected={noticeId === notice.id}>
               <NoticeLeft>
                 <NoticeId>{i + 1}</NoticeId>
                 <NoticeTitle>{notice.title}</NoticeTitle>
