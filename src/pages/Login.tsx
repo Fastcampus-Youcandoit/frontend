@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import "../assets/fonts/Font.css";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import googleIcon from "../assets/icons/login_icon/google_icon.png.png";
-import { auth } from "../firebase";
 import { useAuth } from "../context/AuthContext";
+import {
+  ModalBackground,
+  ModalBox,
+  Button,
+} from "../components/gallery/GalleryModal";
+import "../assets/fonts/Font.css";
 
 interface StyleProps {
   color?: string;
@@ -70,7 +74,7 @@ export const Message = styled.span`
   text-align: left;
 `;
 
-export const Button = styled.button<StyleProps>`
+export const LoginButton = styled.button<StyleProps>`
   margin-bottom: 5px;
   padding: 10px 0;
   border-radius: 2px;
@@ -106,7 +110,13 @@ const Hr = styled.hr`
 `;
 
 const LinkWrapper = styled.div`
-  margin-top: 15px;
+  margin-top: 20px;
+  > button {
+    font-size: 1rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
 `;
 
 const StyledLink = styled(Link)`
@@ -114,16 +124,38 @@ const StyledLink = styled(Link)`
 `;
 
 const Span = styled.span`
-  margin: 0 20px;
+  margin: 0 30px;
   color: #808080;
 `;
 
+const StyledModal = styled(ModalBox)`
+  width: 45rem;
+  height: 20rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const FindMessage = styled.label`
+  font-family: "NotoSansKR-Bold";
+  font-size: 1.4rem;
+  margin-bottom: 4rem;
+`;
+
+const FindButton = styled(Button)`
+  margin-top: 2.5rem;
+  margin-left: auto;
+  margin-right: 1.5rem;
+`;
+
 const Login = () => {
-  const { currentUser, login, googleLogin } = useAuth(); // 현재 사용자 정보 가져오기
+  const { login, resetPassword, googleLogin } = useAuth(); // 현재 사용자 정보 가져오기
   const [email, setEmail] = useState<string | undefined>("");
   const [password, setPassword] = useState<string | undefined>("");
-
+  const [isModal, setIsModal] = useState<boolean>(false);
+  const modalBackgroundRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e?.target.value);
   };
@@ -132,11 +164,11 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
+  // 로그인
   const handleLogin = async () => {
     try {
       if (email !== undefined && password !== undefined) {
         await login(email, password);
-        const userName = currentUser?.displayName;
         alert(`로그인되었습니다.`);
         navigate("/");
       }
@@ -146,11 +178,11 @@ const Login = () => {
     }
   };
 
+  // 구글 로그인
   const handleGoogleLogin = async () => {
     try {
       if (email !== undefined && password !== undefined) {
         await googleLogin();
-        // alert(`${userName} 님, 환영합니다`);
         navigate("/");
       }
     } catch (error) {
@@ -158,58 +190,110 @@ const Login = () => {
       console.error("로그인 실패:", error);
     }
   };
+
+  // 비밀번호 찾기
+  const handleFindPassword = async () => {
+    try {
+      if (email !== undefined) {
+        await resetPassword(email);
+        alert("메일 전송에 성공했습니다.");
+        setIsModal(false);
+      }
+    } catch (error) {
+      alert("메일 전송에 실패했습니다.");
+      console.error("메일 전송 실패:", error);
+    }
+  };
+
+  // click modal background
+  const handleClickBackground = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === modalBackgroundRef.current) {
+      setIsModal(false);
+    }
+  };
+
   return (
-    <Wrapper>
-      <div>
-        <span>Youcandoit</span>
-        <Form
-          onSubmit={e => {
-            e.preventDefault();
-            handleLogin();
-          }}>
-          <div>
+    <>
+      <Wrapper>
+        <div>
+          <span>Youcandoit</span>
+          <Form
+            onSubmit={e => {
+              e.preventDefault();
+              handleLogin();
+            }}>
+            <div>
+              <Input
+                type="email"
+                placeholder="이메일을 입력하세요"
+                value={email}
+                onChange={handleEmailChange}
+                required
+              />
+              <Input
+                type="password"
+                placeholder="비밀번호를 입력하세요"
+                value={password}
+                onChange={handlePasswordChange}
+                required
+              />
+              {!email ||
+                (!password && (
+                  <Message>이메일과 패스워드 모두 입력해주세요.</Message>
+                ))}
+
+              <LoginButton
+                color="#087ea4"
+                backgroundColor="#e6f7ff"
+                type="submit">
+                로그인
+              </LoginButton>
+              <Text>
+                <Hr />
+                {"\u00A0 또는 \u00A0"}
+                <Hr />
+              </Text>
+              <LoginButton onClick={handleGoogleLogin} type="button">
+                <img src={googleIcon} alt="google icon" />
+                Google 로그인
+              </LoginButton>
+              <LinkWrapper>
+                <button type="button" onClick={() => setIsModal(true)}>
+                  비밀번호 찾기
+                </button>
+                <Span>|</Span>
+                <StyledLink to="/signup">회원가입</StyledLink>
+              </LinkWrapper>
+            </div>
+          </Form>
+        </div>
+      </Wrapper>
+
+      {isModal && (
+        <ModalBackground
+          onClick={handleClickBackground}
+          ref={modalBackgroundRef}>
+          <StyledModal>
+            <FindMessage htmlFor="email">
+              비밀번호 재설정 메일을 보내기 위한 이메일을 입력해주세요.
+            </FindMessage>
             <Input
+              id="email"
               type="email"
-              placeholder="이메일을 입력하세요"
+              placeholder="example@example.com"
               value={email}
               onChange={handleEmailChange}
-              required
             />
-            <Input
-              type="password"
-              placeholder="비밀번호를 입력하세요"
-              value={password}
-              onChange={handlePasswordChange}
-              required
-            />
-            {!email ||
-              (!password && (
-                <Message>아이디 또는 비밀번호를 확인해주세요</Message>
-              ))}
-
-            <Button color="#087ea4" backgroundColor="#e6f7ff" type="submit">
-              로그인
-            </Button>
-            <Text>
-              <Hr />
-              {"\u00A0 또는 \u00A0"}
-              <Hr />
-            </Text>
-            <Button onClick={() => handleGoogleLogin()} type="button">
-              <img src={googleIcon} alt="google icon" />
-              Google 로그인
-            </Button>
-            <LinkWrapper>
-              <StyledLink to="/login">비밀번호 찾기</StyledLink>
-              <Span>|</Span>
-              <StyledLink to="/login">아이디 찾기</StyledLink>
-              <Span>|</Span>
-              <StyledLink to="/signup">회원가입</StyledLink>
-            </LinkWrapper>
-          </div>
-        </Form>
-      </div>
-    </Wrapper>
+            <FindButton
+              borderColor="#000"
+              type="button"
+              onClick={handleFindPassword}>
+              SEND
+            </FindButton>
+          </StyledModal>
+        </ModalBackground>
+      )}
+    </>
   );
 };
 

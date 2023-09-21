@@ -10,6 +10,7 @@ import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import { auth } from "../firebase";
 
@@ -20,6 +21,7 @@ type AuthContextType = {
   currentUser: FirebaseUser | null;
   login: (email: string, password: string) => Promise<void>; // 로그인 함수 추가
   logout: () => Promise<void>; // 로그아웃 함수 추가
+  resetPassword: (email: string) => Promise<void>; // 비밀번호 재설정 함수
   googleLogin: () => Promise<void>; // 구글 로그인 함수 추가
 };
 
@@ -51,14 +53,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const value = useMemo(() => {
     return {
       currentUser,
-      googleLogin: async () => {
-        try {
-          const provider = new GoogleAuthProvider();
-          const result = await signInWithPopup(auth, provider);
-        } catch (error) {
-          console.error("Google 로그인 실패:", error);
-        }
-      },
       login: async (email: string, password: string) => {
         try {
           await signInWithEmailAndPassword(auth, email, password);
@@ -75,6 +69,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         } catch (error) {
           console.error("로그아웃 실패:", error);
           throw error;
+        }
+      },
+      resetPassword: async (email: string) => {
+        try {
+          await sendPasswordResetEmail(auth, email);
+        } catch (error) {
+          console.error("비밀번호 재설정 이메일 전송 실패:", error);
+          throw error;
+        }
+      },
+      googleLogin: async () => {
+        try {
+          const provider = new GoogleAuthProvider();
+          const result = await signInWithPopup(auth, provider);
+        } catch (error) {
+          console.error("Google 로그인 실패:", error);
         }
       },
     };
