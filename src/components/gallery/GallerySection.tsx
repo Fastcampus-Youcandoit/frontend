@@ -11,7 +11,8 @@ import { useAuth } from "../../context/AuthContext";
 
 const GalleryBox = styled.div`
   margin-top: 2rem;
-  width: 80%;
+  width: 100%;
+  padding: 0 3rem 0 0;
 `;
 
 const GalleryHeader = styled.div`
@@ -23,7 +24,6 @@ const GalleryHeader = styled.div`
 const UploadButton = styled.button`
   margin: 0;
   padding: 0;
-  margin-right: 2.8rem;
   background: none;
   border: none;
   :hover {

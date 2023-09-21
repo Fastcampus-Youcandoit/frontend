@@ -13,7 +13,7 @@ import { NoticeDetailProps } from "../types/notice";
 const NoticeBox = styled.div`
   width: 100vw;
   height: 80vh;
-  padding: 25px 50px;
+  padding: 2rem 3rem;
   overflow-y: scroll;
 `;
 
@@ -33,8 +33,8 @@ const NoticeMainText = styled.span`
 `;
 
 const WriteIcon = styled.img`
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.8rem;
+  height: 2.8rem;
 `;
 
 const Hr = styled.hr`

@@ -39,6 +39,7 @@ const SectionButtonBox = styled.div`
 `;
 
 const SectionButton = styled.button`
+  height: 100%;
   border-radius: 5px;
   border: none;
   cursor: pointer;
@@ -55,7 +56,7 @@ const ContentItemsBox = styled.ul`
 
 const ContentItem = styled.li`
   width: 100%;
-  height: 5.5rem;
+  height: 4rem;
   border-bottom: 1px solid #d2d2d2;
   display: flex;
   justify-content: space-between;

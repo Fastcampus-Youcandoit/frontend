@@ -83,6 +83,12 @@ const StyledLink = styled(Link)`
   height: 100%;
 `;
 
+const FooterBox = styled.div`
+  @media (max-width: 850px) {
+    display: none;
+  }
+`;
+
 const NoticeEditor = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -198,7 +204,9 @@ const NoticeEditor = () => {
           )}
         </EditorBox>
       </WriteBox>
-      <Footer />
+      <FooterBox>
+        <Footer />
+      </FooterBox>
     </Wrap>
   );
 };

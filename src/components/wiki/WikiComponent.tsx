@@ -13,14 +13,14 @@ import MarkdownViewer from "./MarkdownViewer";
 const WikiContentBox = styled.div`
   width: 100%;
   font-family: "NotoSansKR-Regular";
-  padding: 0 3rem;
+  padding: 0 3rem 0 0;
 `;
 
 const WikiHeader = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-top: 25px;
+  align-items: flex-start;
+  margin-top: 2rem;
 `;
 
 export const WikiMainText = styled.span`
@@ -29,8 +29,8 @@ export const WikiMainText = styled.span`
 `;
 
 const WriteIcon = styled.img`
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.8rem;
+  height: 2.8rem;
 `;
 
 const WikiContent = styled.div`
