@@ -8,19 +8,17 @@ import {
 } from "../components/home";
 
 const HomeWrap = styled.main`
-  width: 100vw;
+  width: 100%;
 `;
 
 const HomeMainSection = styled.section`
-  width: 100%;
-  padding: 1.5rem 4rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  padding: 1.5rem 4rem;
 `;
 
 const SectionItemBox = styled.div`
-  width: 100%;
   display: flex;
   gap: 2rem;
 `;

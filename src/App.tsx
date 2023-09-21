@@ -2,13 +2,10 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./components/common/Header";
 
 // Gallery Componenets
-import Business from "./components/gallery/Business";
-import JobPosting from "./components/gallery/JobPosting";
-import OfficePhoto from "./components/gallery/OfficePhoto";
-import WikiComponent from "./components/wiki/WikiComponent";
-import { Gallery, Home, Wiki } from "./pages";
-import GlobalStyle from "./styles/globalStyle";
 import GallerySection from "./components/gallery/GallerySection";
+import WikiComponent from "./components/wiki/WikiComponent";
+import { Gallery, Home, Notice, NoticeEditor, Wiki } from "./pages";
+import GlobalStyle from "./styles/globalStyle";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import { AuthProvider } from "./context/AuthContext";
@@ -16,8 +13,8 @@ import { AuthProvider } from "./context/AuthContext";
 const App = () => {
   return (
     <BrowserRouter>
-      <GlobalStyle />
       <AuthProvider>
+        <GlobalStyle />
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -36,6 +33,8 @@ const App = () => {
           <Route path="/gallery" element={<Gallery />}>
             <Route path=":pageName" element={<GallerySection />} />
           </Route>
+          <Route path="/notice" element={<Notice />} />
+          <Route path="/notice/edit" element={<NoticeEditor />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

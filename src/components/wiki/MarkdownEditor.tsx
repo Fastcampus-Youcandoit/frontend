@@ -1,5 +1,4 @@
-import styled from "styled-components";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
 import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
 import "@toast-ui/editor/dist/toastui-editor.css";
@@ -18,9 +17,11 @@ const MarkdownEditor = ({
 }: Props) => {
   useEffect(() => {
     if (editorRef.current) {
+      // editorRef guard 문
       const editorInstance = editorRef.current.getInstance(); // ref 내의 getInstance 획득
 
       if (editorInstance) {
+        // editorInstance guard 문
         editorInstance.on("change", async () => {
           const currentValue = editorInstance.getMarkdown();
           onContentChange(currentValue); // 에디터의 내용이 변경될 때마다 부모 컴포넌트에게 알림

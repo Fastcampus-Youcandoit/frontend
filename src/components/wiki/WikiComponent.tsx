@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { useNavigate, useLocation } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import { db } from "../../firebase";
 import MarkdownEditor from "./MarkdownEditor";
@@ -10,6 +9,7 @@ import MarkdownViewer from "./MarkdownViewer";
 import writeIcon from "../../assets/icons/wiki_icon/wiki_write_icon.png";
 import checkIcon from "../../assets/icons/wiki_icon/wiki_check_icon.png";
 
+// styled-components
 const WikiContentBox = styled.div`
   width: 75vw;
   font-family: "NotoSansKR-Regular";
@@ -63,6 +63,7 @@ const ViewerMarginContainer = styled.div`
   margin-left: 15px;
 `;
 
+// WikiComponent
 const WikiComponent = () => {
   const { currentUser } = getAuth();
   const params = useParams<Record<string, string | undefined>>();
@@ -84,12 +85,15 @@ const WikiComponent = () => {
     topics: "온보딩 주제",
   };
 
-  // Markdown Editor & Viewer
+  // Markdown Editor & Viewer Ref
   const markdownRef = useRef(null);
+
+  // useState
   const [editMode, setEditMode] = useState(false);
   const [content, setContent] = useState("");
   const [lastModified, setLastModified] = useState<string | null>(null);
 
+  // Functions for Firebase
   const getContent = async () => {
     const docRef = doc(db, "wiki", pageName);
     const docSnap = await getDoc(docRef);
@@ -117,6 +121,7 @@ const WikiComponent = () => {
     setLastModified(now.toLocaleString()); // 바로 업데이트
   };
 
+  // useEffect
   useEffect(() => {
     if (previousLocation.current !== location.pathname && editMode) {
       setEditMode(false);
