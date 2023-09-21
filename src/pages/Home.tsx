@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Header from "../components/common/Header";
 import Footer from "../components/common/Footer";
 import {
   HomeCalendar,
@@ -26,6 +27,7 @@ const SectionItemBox = styled.div`
 const Home = () => {
   return (
     <HomeWrap>
+      <Header />
       <section>
         <HomeCarousel />
       </section>

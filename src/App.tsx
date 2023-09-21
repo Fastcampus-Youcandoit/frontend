@@ -1,7 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Header from "./components/common/Header";
-
-// Gallery Componenets
 import GallerySection from "./components/gallery/GallerySection";
 import WikiComponent from "./components/wiki/WikiComponent";
 import { Gallery, Home, Notice, NoticeEditor, Wiki } from "./pages";
@@ -15,7 +12,6 @@ const App = () => {
     <BrowserRouter>
       <AuthProvider>
         <GlobalStyle />
-        <Header />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />

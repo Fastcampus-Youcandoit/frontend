@@ -242,7 +242,7 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
             )}
           </DetailUploadBox>
         ) : (
-          <DetailImage src={imageUrl} alt="Image Detail" />
+          <DetailImage src={imageUrl} alt="Image Detail" loading="lazy" />
         )}
 
         <DetailFileNameBox>

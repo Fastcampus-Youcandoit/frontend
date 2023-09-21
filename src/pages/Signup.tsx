@@ -7,7 +7,7 @@ import {
   Auth,
 } from "firebase/auth";
 import { auth } from "../firebase";
-import { Wrapper, Form, Input, LoginButton, Message } from "./Login";
+import { Wrapper, HomeLink, Form, Input, LoginButton, Message } from "./Login";
 
 const StyledForm = styled(Form)`
   height: 35rem;
@@ -22,11 +22,11 @@ const InputWrapper = styled.div`
     width: 100%;
     padding: 3px 2px;
     border: none;
-    border-bottom: 2px solid #808080;
+    border-bottom: 2px solid #b2b2b2;
     outline: none;
     font: normal normal bold 20px/36px Noto Sans KR;
     &::placeholder {
-      color: #808080;
+      color: #b2b2b2;
     }
   }
 `;
@@ -186,7 +186,7 @@ const Signup = () => {
   return (
     <Wrapper>
       <div>
-        <span>Youcandoit</span>
+        <HomeLink to="/">Youcandoit</HomeLink>
         <StyledForm>
           <div>
             <InputWrapper>

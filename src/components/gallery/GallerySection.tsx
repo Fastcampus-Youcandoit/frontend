@@ -45,8 +45,8 @@ const GalleryContainer = styled.div`
 `;
 
 const GalleryItem = styled.img`
-  width: 90%;
-  height: 16rem;
+  width: 22vw;
+  height: 16vw;
   object-fit: cover;
   border-radius: 10px;
   box-shadow: 0px 3px 6px #00000029;

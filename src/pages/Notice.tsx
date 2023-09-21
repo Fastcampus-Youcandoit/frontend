@@ -8,6 +8,7 @@ import Footer from "../components/common/Footer";
 import { db } from "../firebase";
 import NoticeDetail from "../components/notice/NoticeDetail";
 import { useAuth } from "../context/AuthContext";
+import Header from "../components/common/Header";
 
 const NoticeBox = styled.div`
   width: 100vw;
@@ -123,6 +124,7 @@ const Notice: React.FC = () => {
 
   return (
     <>
+      <Header />
       <NoticeBox>
         <NoticeHeader>
           <NoticeMainText>공지사항</NoticeMainText>

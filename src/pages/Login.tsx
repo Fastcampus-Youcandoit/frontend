@@ -26,10 +26,12 @@ export const Wrapper = styled.div`
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    > span {
-      font: normal normal 90px "Cafe24Shiningstar";
-    }
   }
+`;
+
+export const HomeLink = styled(Link)`
+  font: normal normal 90px "Cafe24Shiningstar";
+  color: #000;
 `;
 
 export const Form = styled.form`
@@ -59,9 +61,9 @@ export const Input = styled.input`
   font: normal normal bold 20px/36px Noto Sans KR;
   border: none;
   outline: none;
-  border-bottom: 2px solid #808080;
+  border-bottom: 2px solid #b2b2b2;
   &::placeholder {
-    color: #808080;
+    color: #b2b2b2;
   }
 `;
 
@@ -216,7 +218,7 @@ const Login = () => {
     <>
       <Wrapper>
         <div>
-          <span>Youcandoit</span>
+          <HomeLink to="/">Youcandoit</HomeLink>
           <Form
             onSubmit={e => {
               e.preventDefault();
