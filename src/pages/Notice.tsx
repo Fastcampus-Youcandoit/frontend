@@ -7,6 +7,7 @@ import writeIcon from "../assets/icons/wiki_icon/wiki_write_icon.png";
 import Footer from "../components/common/Footer";
 import { db } from "../firebase";
 import NoticeDetail from "../components/notice/NoticeDetail";
+import { useAuth } from "../context/AuthContext";
 
 const NoticeBox = styled.div`
   width: 100vw;
@@ -90,6 +91,7 @@ interface NoticeDetailProps {
 }
 
 const Notice: React.FC = () => {
+  const { currentUser } = useAuth();
   const location = useLocation();
   const [notices, setNotices] = useState<NoticeDetailProps[]>([]);
   const [noticeId, setNoticeId] = useState<string | null>(null);
@@ -124,9 +126,11 @@ const Notice: React.FC = () => {
       <NoticeBox>
         <NoticeHeader>
           <NoticeMainText>공지사항</NoticeMainText>
-          <Link to="/notice/edit" state={{ id: null }}>
-            <WriteIcon src={writeIcon} alt="공지사항 작성 전 작성 아이콘" />
-          </Link>
+          {currentUser && (
+            <Link to="/notice/edit" state={{ id: null }}>
+              <WriteIcon src={writeIcon} alt="공지사항 작성 전 작성 아이콘" />
+            </Link>
+          )}
         </NoticeHeader>
         <Hr />
         {notices.map((notice: NoticeDetailProps, i) => (

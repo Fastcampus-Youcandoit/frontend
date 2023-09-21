@@ -131,12 +131,6 @@ const Header = () => {
         <HeaderItems>
           <HeaderItem>{currentUser && <CommuteButtonComponent />}</HeaderItem>
           <HeaderItem>
-            <IconImg src={noticeIcon} alt="wiki icon" />
-            <Span>
-              <StyledLink to="/notice">notice</StyledLink>
-            </Span>
-          </HeaderItem>
-          <HeaderItem>
             <IconImg src={noticeIcon} alt="notice icon" />
             <Span>
               <StyledLink to="/notice">notice</StyledLink>

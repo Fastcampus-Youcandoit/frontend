@@ -28,33 +28,32 @@ export const ModalBackground = styled.div`
 `;
 
 export const ModalBox = styled.div`
-  width: 740px;
-  height: 520px;
+  width: 46rem;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   background: #fff;
   border-radius: 20px;
-  padding: 10px;
+  padding: 0.625rem;
   z-index: 99;
 `;
 
 export const CloseButton = styled.button`
-  margin: 20px;
+  margin: 1.25rem;
   margin-left: auto;
   border: none;
   background: none;
   cursor: pointer;
   > img {
-    width: 25px;
-    height: 25px;
+    width: 1.5625rem;
+    height: 1.5625rem;
   }
 `;
 
 export const UploadBox = styled.div`
-  width: 600px;
-  height: 320px;
+  width: 37.5rem;
+  height: 20rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -67,34 +66,34 @@ export const UploadBox = styled.div`
 `;
 
 export const ImagePreview = styled.img`
-  width: 600px;
-  height: 320px;
+  width: 37.5rem;
+  height: 20rem;
   object-fit: cover;
   border-radius: 30px;
   box-shadow: 0px 3px 6px #00000029;
 `;
 
 export const ModalUploadIcon = styled.img`
-  width: 80px;
-  height: 80px;
+  width: 5rem;
+  height: 5rem;
   text-align: center;
 `;
 
 export const UploadDescription = styled.p`
   font: normal normal bold 20px/32px Noto Sans KR;
-  margin-top: 20px;
+  margin-top: 1.25rem;
   > img {
-    width: 25px;
-    height: 25px;
+    width: 1.5rem;
+    height: 1.5rem;
   }
 `;
 
 export const FileNameBox = styled.div`
   display: flex;
   align-items: center;
-  margin: 20px auto 0px 65px;
+  margin: 1.28rem auto 0px 4rem;
   > svg {
-    margin-right: 3px;
+    margin-right: 0.2rem;
   }
 `;
 
@@ -103,21 +102,20 @@ export const Input = styled.input`
 `;
 
 export const FileName = styled.p`
-  margin-left: 5px;
+  margin-left: 0.3rem;
   text-align: center;
-  font: normal normal bold 16px/18px Noto Sans KR;
+  font: normal normal bold 1rem/1.1rem Noto Sans KR;
 `;
 
 export const ButtonBox = styled.div`
-  margin: auto 20px 20px auto;
+  margin: auto 1.25rem 1.25rem auto;
 `;
 
 export const Button = styled.button<stylesProps>`
-  height: 45px;
-  padding: 6px 16px;
-  margin-left: 15px;
+  padding: 0.37rem 1rem;
+  margin-left: 0.9rem;
   text-align: center;
-  font: normal normal bold 20px/30px Noto Sans KR;
+  font: normal normal bold 1.25rem/1.8rem Noto Sans KR;
   border: 2px solid ${props => props.borderColor || "#d2d2d2"};
   border-radius: 10px;
   cursor: pointer;
@@ -131,15 +129,15 @@ export const Button = styled.button<stylesProps>`
 `;
 
 export const Select = styled.select<stylesProps>`
-  margin-right: 8px;
+  margin-right: 0.5rem;
   color: ${props => (props.color ? "#000" : "#808080")};
-  padding: 2px 3px;
+  padding: 0.1rem 0.2rem;
   border: 1px solid #000;
-  font: normal normal bold 15px Noto Sans KR;
+  font: normal normal bold 0.9rem Noto Sans KR;
   border-radius: 3px;
   > option {
     border: inherit;
-    font-size: 14px;
+    font-size: 0.8rem;
   }
 `;
 
@@ -314,6 +312,7 @@ const GalleryModal = ({ isModalChange }: ModalProps) => {
             onClick={handleUpload}
             color="#fff"
             backgroundColor="#000"
+            borderColor="#000"
             type="button">
             Upload
           </Button>

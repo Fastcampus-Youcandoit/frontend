@@ -26,42 +26,42 @@ interface DetailModalProps {
 }
 
 const DetailModalBox = styled(ModalBox)`
-  width: 950px;
-  height: 700px;
+  width: 55rem;
 `;
 
 const DetailImage = styled.img`
-  width: 750px;
-  max-height: 460px;
-  object-fit: cover;
+  width: 45rem;
+  max-height: 28rem;
+  object-fit: contain;
   margin: auto 0;
 `;
 
 const DetailUploadBox = styled(UploadBox)`
-  width: 700px;
-  height: 460px;
+  width: 43rem;
+  padding: 12rem 0;
 `;
 
 const DetailImagePreview = styled(ImagePreview)`
-  width: 700px;
-  height: 460px;
+  width: 43rem;
+  height: 25.5rem;
 `;
 
 const DetailFileNameBox = styled(FileNameBox)`
-  margin: 20px auto 0px 120px;
+  margin: 1.25rem auto 0px 7.5rem;
 `;
 
 const Category = styled.p`
-  margin-left: -25px;
-  margin-top: -30px;
+  margin-left: -3rem;
+  margin-top: 0.2rem;
   text-align: center;
-  font: normal normal bold 12px Noto Sans KR;
+  font: normal normal bold 0.9rem Noto Sans KR;
   color: #808080;
 `;
 
 const EditCategory = styled.p`
+  margin-left: -1.5rem;
   margin-right: 5px;
-  font: normal normal bold 14px/18px Noto Sans KR;
+  font: normal normal bold 0.8rem/1.1rem Noto Sans KR;
 `;
 
 const GalleryDetailModal: React.FC<DetailModalProps> = ({
@@ -292,6 +292,7 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
                 onClick={handleImageUpdate}
                 color="#fff"
                 backgroundColor="#000"
+                borderColor="#000"
                 type="button">
                 Save
               </Button>
@@ -311,6 +312,7 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
                   onClick={handleIsEdit}
                   color="#fff"
                   backgroundColor="#000"
+                  borderColor="#000"
                   type="button">
                   Edit
                 </Button>
