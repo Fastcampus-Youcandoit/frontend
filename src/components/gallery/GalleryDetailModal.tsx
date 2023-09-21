@@ -1,25 +1,25 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import styled from "styled-components";
 import { deleteObject, ref, uploadString } from "firebase/storage";
-import { storage } from "../../firebase";
+import React, { useCallback, useEffect } from "react";
+import styled from "styled-components";
 import closeIconUrl from "../../assets/icons/gallery_icon/image_close_icon.png";
 import uploadIconUrl from "../../assets/icons/gallery_icon/image_upload_icon.png";
+import { useAuth } from "../../context/AuthContext";
+import { storage } from "../../firebase";
+import { DetailModalProps, useModalState } from "../../types/gallery";
 import {
-  ModalBackground,
-  CloseButton,
-  UploadDescription,
-  FileNameBox,
-  Input,
-  FileName,
-  ButtonBox,
   Button,
-  UploadBox,
+  ButtonBox,
+  CloseButton,
+  FileName,
+  FileNameBox,
   ImagePreview,
+  Input,
+  ModalBackground,
   ModalBox,
   ModalUploadIcon,
+  UploadBox,
+  UploadDescription,
 } from "./GalleryModal";
-import { useAuth } from "../../context/AuthContext";
-import { DetailModalProps, useModalState } from "../../types/gallery";
 
 const DetailModalBox = styled(ModalBox)`
   width: 55rem;
