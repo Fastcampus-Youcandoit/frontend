@@ -6,7 +6,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { auth } from "../firebase";
-import { useLogState } from "../types/UserLog";
+import { useLogState } from "../types/userLog";
 import { Form, HomeLink, Input, LoginButton, Message, Wrapper } from "./Login";
 
 const StyledForm = styled(Form)`

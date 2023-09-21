@@ -4,7 +4,7 @@ import "../assets/fonts/Font.css";
 import googleIcon from "../assets/icons/login_icon/google_icon.png.png";
 import { ModalBackground, ModalBox } from "../components/gallery/GalleryModal";
 import { useAuth } from "../context/AuthContext";
-import { StylesProps, useLogState } from "../types/UserLog";
+import { StylesProps, useLogState } from "../types/userLog";
 
 export const Wrapper = styled.div`
   width: 100vw;
