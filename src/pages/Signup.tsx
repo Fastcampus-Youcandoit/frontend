@@ -7,7 +7,8 @@ import {
   Auth,
 } from "firebase/auth";
 import { auth } from "../firebase";
-import { Wrapper, Form, Input, LoginButton, Message } from "./Login";
+import { Wrapper, HomeLink, Form, Input, LoginButton, Message } from "./Login";
+import { useLogState } from "../types/userLog";
 
 const StyledForm = styled(Form)`
   height: 35rem;
@@ -22,24 +23,34 @@ const InputWrapper = styled.div`
     width: 100%;
     padding: 3px 2px;
     border: none;
-    border-bottom: 2px solid #808080;
+    border-bottom: 2px solid #b2b2b2;
     outline: none;
     font: normal normal bold 20px/36px Noto Sans KR;
     &::placeholder {
-      color: #808080;
+      color: #b2b2b2;
     }
   }
 `;
 
 const Signup = () => {
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordCheck, setPasswordCheck] = useState("");
-  const [emailMessage, setEmailMessage] = useState("");
-  const [nameMessage, setNameMessage] = useState("");
-  const [passwordMessage, setPasswordMessage] = useState("");
-  const [passwordCheckMessage, setPasswordCheckMessage] = useState("");
+  const {
+    name,
+    setName,
+    email,
+    setEmail,
+    password,
+    setPassword,
+    passwordCheck,
+    setPasswordCheck,
+    emailMessage,
+    setEmailMessage,
+    nameMessage,
+    setNameMessage,
+    passwordMessage,
+    setPasswordMessage,
+    passwordCheckMessage,
+    setPasswordCheckMessage,
+  } = useLogState();
   const finalCheck = ["", "", "", ""];
   const navigate = useNavigate();
 
@@ -137,31 +148,33 @@ const Signup = () => {
 
   // 회원가입
   const createUser = (authInstance: Auth) => {
-    createUserWithEmailAndPassword(authInstance, email, password)
-      .then(userCredential => {
-        const { user } = userCredential;
-        if (user) {
-          updateProfile(user, {
-            displayName: name,
-          }).then(() => {
-            alert(`${user.displayName} 님, 환영합니다`);
-            setName("");
-            setEmail("");
-            setPassword("");
-            setPassword("");
-            setPasswordCheck("");
-            navigate("/");
-          });
-        }
-      })
-      .catch((error: { code: any }) => {
-        const EMAIL_DUPLICATE_ERROR_CODE = "auth/email-already-in-use";
-        const errorCode = error.code;
+    if (email !== undefined && password !== undefined) {
+      createUserWithEmailAndPassword(authInstance, email, password)
+        .then(userCredential => {
+          const { user } = userCredential;
+          if (user) {
+            updateProfile(user, {
+              displayName: name,
+            }).then(() => {
+              alert(`${user.displayName} 님, 환영합니다`);
+              setName("");
+              setEmail("");
+              setPassword("");
+              setPassword("");
+              setPasswordCheck("");
+              navigate("/");
+            });
+          }
+        })
+        .catch((error: { code: any }) => {
+          const EMAIL_DUPLICATE_ERROR_CODE = "auth/email-already-in-use";
+          const errorCode = error.code;
 
-        if (errorCode === EMAIL_DUPLICATE_ERROR_CODE) {
-          alert("중복된 이메일이 존재합니다.");
-        }
-      });
+          if (errorCode === EMAIL_DUPLICATE_ERROR_CODE) {
+            alert("중복된 이메일이 존재합니다.");
+          }
+        });
+    }
   };
 
   // 전체 유효성검사
@@ -183,7 +196,7 @@ const Signup = () => {
   return (
     <Wrapper>
       <div>
-        <span>Youcandoit</span>
+        <HomeLink to="/">Youcandoit</HomeLink>
         <StyledForm>
           <div>
             <InputWrapper>

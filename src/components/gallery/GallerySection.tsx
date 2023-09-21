@@ -23,33 +23,33 @@ const GalleryHeader = styled.div`
 const UploadButton = styled.button`
   margin: 0;
   padding: 0;
-  margin-right: 45px;
+  margin-right: 2.8rem;
   background: none;
   border: none;
   :hover {
     cursor: pointer;
   }
   > img {
-    width: 45px;
-    height: 45px;
+    width: 2.8rem;
+    height: 2.8rem;
   }
 `;
 
 const GalleryContainer = styled.div`
   width: 100%;
-  margin-top: 10px;
-  margin-right: 18px;
+  margin-top: 0.6rem;
+  margin-right: 1.1rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 38px;
+  grid-gap: 2.3rem;
 `;
 
 const GalleryItem = styled.img`
-  width: 90%;
-  height: 260px;
+  width: 22vw;
+  height: 16vw;
   object-fit: cover;
-  background-color: #808080;
   border-radius: 10px;
+  box-shadow: 0px 3px 6px #00000029;
   cursor: pointer;
   transition: transform 0.8s;
   &:hover {
@@ -139,7 +139,7 @@ const GallerySection = () => {
     return () => {
       setImgUrls([]);
     };
-  }, [params]);
+  }, [pageName]);
 
   const openDetailModal = (imageUrl: string) => {
     setSelectedImageUrl(imageUrl);

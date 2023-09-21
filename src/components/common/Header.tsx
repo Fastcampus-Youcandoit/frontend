@@ -41,10 +41,6 @@ export const HeaderItem = styled.div`
   cursor: pointer;
   gap: 0.2rem;
   border-radius: 10px;
-  // .github {
-  //   width: 2.2rem;
-  //   height: 80%;
-  // }
 `;
 
 export const IconImg = styled.img`
@@ -115,7 +111,7 @@ const Header = () => {
     try {
       if (confirm("로그아웃하시겠습니까?")) {
         await logout(); // 로그아웃 함수 호출
-        alert("로그아웃 되셨습니다.");
+        alert("로그아웃되었습니다.");
         navigate("/");
       }
     } catch (error) {
@@ -130,12 +126,6 @@ const Header = () => {
         </StyledLink>
         <HeaderItems>
           <HeaderItem>{currentUser && <CommuteButtonComponent />}</HeaderItem>
-          <HeaderItem>
-            <IconImg src={noticeIcon} alt="wiki icon" />
-            <Span>
-              <StyledLink to="/notice">notice</StyledLink>
-            </Span>
-          </HeaderItem>
           <HeaderItem>
             <IconImg src={noticeIcon} alt="notice icon" />
             <Span>
