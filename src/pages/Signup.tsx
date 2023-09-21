@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import {
+  Auth,
   createUserWithEmailAndPassword,
   updateProfile,
-  Auth,
 } from "firebase/auth";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import { auth } from "../firebase";
-import { Wrapper, HomeLink, Form, Input, LoginButton, Message } from "./Login";
-import { useLogState } from "../types/UserLog";
+import { Form, HomeLink, Input, LoginButton, Message, Wrapper } from "./Login";
 
 const StyledForm = styled(Form)`
   height: 35rem;
@@ -33,25 +32,14 @@ const InputWrapper = styled.div`
 `;
 
 const Signup = () => {
-  const {
-    name,
-    setName,
-    email,
-    setEmail,
-    password,
-    setPassword,
-    passwordCheck,
-    setPasswordCheck,
-    emailMessage,
-    setEmailMessage,
-    nameMessage,
-    setNameMessage,
-    passwordMessage,
-    setPasswordMessage,
-    passwordCheckMessage,
-    setPasswordCheckMessage,
-  } = useLogState();
-  const finalCheck = ["", "", "", ""];
+  const [email, setEmail] = useState<string | undefined>("");
+  const [password, setPassword] = useState<string | undefined>("");
+  const [name, setName] = useState("");
+  const [passwordCheck, setPasswordCheck] = useState("");
+  const [emailMessage, setEmailMessage] = useState("");
+  const [nameMessage, setNameMessage] = useState("");
+  const [passwordMessage, setPasswordMessage] = useState("");
+  const [passwordCheckMessage, setPasswordCheckMessage] = useState("");
   const navigate = useNavigate();
 
   // 1.이메일 유효성검사
@@ -255,7 +243,7 @@ const Signup = () => {
             </InputWrapper>
             <LoginButton
               color="#087ea4"
-              background="#e6f7ff"
+              $backgroundColor="#e6f7ff"
               onClick={() => handleSignUp()}
               type="button">
               회원가입

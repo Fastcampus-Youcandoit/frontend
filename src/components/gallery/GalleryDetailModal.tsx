@@ -1,25 +1,25 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import styled from "styled-components";
 import { deleteObject, ref, uploadString } from "firebase/storage";
-import { storage } from "../../firebase";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import styled from "styled-components";
 import closeIconUrl from "../../assets/icons/gallery_icon/image_close_icon.png";
 import uploadIconUrl from "../../assets/icons/gallery_icon/image_upload_icon.png";
+import { useAuth } from "../../context/AuthContext";
+import { storage } from "../../firebase";
+import { DetailModalProps } from "../../types/gallery";
 import {
-  ModalBackground,
-  CloseButton,
-  UploadDescription,
-  FileNameBox,
-  Input,
-  FileName,
-  ButtonBox,
   Button,
-  UploadBox,
+  ButtonBox,
+  CloseButton,
+  FileName,
+  FileNameBox,
   ImagePreview,
+  Input,
+  ModalBackground,
   ModalBox,
   ModalUploadIcon,
+  UploadBox,
+  UploadDescription,
 } from "./GalleryModal";
-import { useAuth } from "../../context/AuthContext";
-import { DetailModalProps, useModalState } from "../../types/Gallery";
 
 const DetailModalBox = styled(ModalBox)`
   width: 55rem;
@@ -66,19 +66,12 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
   imageUrl,
   onClose,
 }) => {
-  const {
-    selectedFileName,
-    setSelectedFileName,
-    selectedImage,
-    setSelectedImage,
-    isEdit,
-    setIsEdit,
-    imageName,
-    setImageName,
-    categoryName,
-    setCategoryName,
-    imageInputRef,
-  } = useModalState();
+  const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [isEdit, setIsEdit] = useState(false);
+  const [imageName, setImageName] = useState<any | null>(null);
+  const [categoryName, setCategoryName] = useState<any | null>(null);
+  const imageInputRef = useRef<HTMLInputElement>(null);
 
   const { currentUser } = useAuth();
 
@@ -123,7 +116,7 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
         const imageRef = ref(storage, imageName);
         await deleteObject(imageRef);
         alert("선택한 이미지가 삭제되었습니다.");
-        window.location.href = "/gallery";
+        window.location.href = "/gallery/all";
       } catch (error: unknown | Error) {
         const errorMessage = `이미지 삭제에 실패하였습니다. \n\nerror: ${error}`;
         alert(errorMessage);
@@ -278,14 +271,14 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
                 onClick={() => setIsEdit(!isEdit)}
                 color="#000"
                 bordercolor="#000"
-                background="#fff"
+                $backgroundColor="#fff"
                 type="button">
                 Cancel
               </Button>
               <Button
                 color="#000"
                 bordercolor="#000"
-                background="#fff"
+                $backgroundColor="#fff"
                 type="button"
                 onClick={deleteImage}>
                 Delete
@@ -293,7 +286,7 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
               <Button
                 onClick={handleImageUpdate}
                 color="#fff"
-                background="#000"
+                $backgroundColor="#000"
                 bordercolor="#000"
                 type="button">
                 Save
@@ -305,7 +298,7 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
                 onClick={onClose}
                 color="#000"
                 bordercolor="#000"
-                background="#fff"
+                $backgroundColor="#fff"
                 type="button">
                 Cancel
               </Button>
@@ -313,7 +306,7 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
                 <Button
                   onClick={handleIsEdit}
                   color="#fff"
-                  background="#000"
+                  $backgroundColor="#000"
                   bordercolor="#000"
                   type="button">
                   Edit

@@ -1,16 +1,15 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import "../assets/fonts/Font.css";
 import googleIcon from "../assets/icons/login_icon/google_icon.png.png";
-import { useAuth } from "../context/AuthContext";
 import {
+  Button,
   ModalBackground,
   ModalBox,
-  Button,
 } from "../components/gallery/GalleryModal";
-import "../assets/fonts/Font.css";
-import { useLogState, StyleProps } from "../types/UserLog";
+import { useAuth } from "../context/AuthContext";
+import { StylesProps } from "../types/userLog";
 
 export const Wrapper = styled.div`
   width: 100vw;
@@ -72,14 +71,14 @@ export const Message = styled.span`
   text-align: left;
 `;
 
-export const LoginButton = styled.button<StyleProps>`
+export const LoginButton = styled.button<StylesProps>`
   margin-bottom: 5px;
   padding: 10px 0;
   border-radius: 2px;
   font: normal normal bold 22px Noto Sans KR;
   color: ${props => props.color || "#000"};
-  background-color: ${props => props.background || "#fff"};
-  border: ${props => props.background || "1px solid #d4d4d4"};
+  background-color: ${props => props.$backgroundColor || "#fff"};
+  border: ${props => props.$backgroundColor || "1px solid #d4d4d4"};
   cursor: pointer;
   translate: transform 0.8s;
   > img {
@@ -147,15 +146,10 @@ const FindButton = styled(Button)`
 `;
 
 const Login = () => {
-  const {
-    email,
-    setEmail,
-    password,
-    setPassword,
-    isModal,
-    setIsModal,
-    modalBackgroundRef,
-  } = useLogState();
+  const [email, setEmail] = useState<string | undefined>("");
+  const [password, setPassword] = useState<string | undefined>("");
+  const [isModal, setIsModal] = useState<boolean>(false);
+  const modalBackgroundRef = useRef<HTMLDivElement>(null);
   const { login, resetPassword, googleLogin } = useAuth(); // 현재 사용자 정보 가져오기
   const navigate = useNavigate();
 
@@ -201,6 +195,7 @@ const Login = () => {
       if (email !== undefined) {
         await resetPassword(email);
         alert("메일 전송에 성공했습니다.");
+        setEmail("");
         setIsModal(false);
       }
     } catch (error) {
@@ -246,7 +241,10 @@ const Login = () => {
                   <Message>이메일과 패스워드 모두 입력해주세요.</Message>
                 ))}
 
-              <LoginButton color="#087EA4" background="#E6F7FF" type="submit">
+              <LoginButton
+                color="#087EA4"
+                $backgroundColor="#E6F7FF"
+                type="submit">
                 로그인
               </LoginButton>
               <Text>
@@ -259,7 +257,12 @@ const Login = () => {
                 Google 로그인
               </LoginButton>
               <LinkWrapper>
-                <button type="button" onClick={() => setIsModal(true)}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEmail("");
+                    setIsModal(true);
+                  }}>
                   비밀번호 찾기
                 </button>
                 <Span>|</Span>
