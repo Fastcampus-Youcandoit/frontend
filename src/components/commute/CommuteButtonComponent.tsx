@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
-import { getDoc, doc } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import CommuteModal from "./CommuteModal";
-import { db } from "../../firebase";
-import { Span, CommuteButton, WorkOnMark } from "./StyleComponentCommute";
-import { IconImg } from "../common/Header";
-import commuteIcon from "../../assets/icons/header_icon/header_commute_black_icon.png";
-import commuteRed from "../../assets/icons/header_icon/commute_red_icon.png";
+import { doc, getDoc } from "firebase/firestore";
+import { useEffect, useRef, useState } from "react";
 import commuteBlue from "../../assets/icons/header_icon/commute_blue_icon.png";
+import commuteRed from "../../assets/icons/header_icon/commute_red_icon.png";
+import commuteIcon from "../../assets/icons/header_icon/header_commute_black_icon.png";
+import { db } from "../../firebase";
+import { IconImg } from "../common/Header";
+import CommuteModal from "./CommuteModal";
+import { CommuteButton, Span, WorkOnMark } from "./StyleComponentCommute";
 
 const CommuteButtonComponent = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);

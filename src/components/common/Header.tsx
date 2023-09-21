@@ -16,6 +16,7 @@ import { useAuth } from "../../context/AuthContext";
 const HeaderBox = styled.header`
   height: 9vh;
   padding: 0 2rem;
+  border-bottom: 1px solid #707070;
 `;
 
 const HeaderNav = styled.nav`
@@ -187,10 +188,6 @@ const Header = () => {
               </Span>
             </HeaderItem>
           )}
-
-          {/* <HeaderItem>
-            <IconImg src={github} alt="github icon" className="github" />
-          </HeaderItem> */}
         </HeaderItems>
       </HeaderNav>
     </HeaderBox>

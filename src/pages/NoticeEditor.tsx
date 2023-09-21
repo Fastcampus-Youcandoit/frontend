@@ -9,11 +9,8 @@ import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import write from "../assets/icons/notice_icon/notice_write_icon.png";
 import Footer from "../components/common/Footer";
 import { db } from "../firebase";
-
-interface ButtonProps {
-  bgcolor: string;
-  pd: string;
-}
+import { ButtonProps } from "../types/notice";
+import { useAuth } from "../context/AuthContext";
 
 const Wrap = styled.div`
   height: 91vh;
@@ -54,8 +51,8 @@ const HeaderButton = styled.button<ButtonProps>`
   font-family: "NotoSansKR-medium";
   color: #fff;
   border-radius: 5px;
-  padding: ${props => props.pd};
-  background-color: ${props => props.bgcolor};
+  padding: ${props => props.$pd};
+  background-color: ${props => props.$bgColor};
 `;
 
 const WriteButtonIcon = styled.img`
@@ -89,6 +86,7 @@ const StyledLink = styled(Link)`
 const NoticeEditor = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { currentUser } = useAuth();
   const editorRef: React.MutableRefObject<any> = useRef();
   const [noticeTitle, setNoticeTitle] = useState<string>("");
   const [noticeContent, setNoticeContent] = useState<string>("");
@@ -101,11 +99,14 @@ const NoticeEditor = () => {
 
   const fetchNotice = async () => {
     const noticeDate: Date = new Date();
-    const currentDate = `${noticeDate.getFullYear()} ${noticeDate.getMonth()}/${noticeDate.getDate()} ${noticeDate.getHours()}:${noticeDate.getMinutes()}`;
+    const currentDate = `${noticeDate.getFullYear()} ${
+      noticeDate.getMonth() + 1
+    }/${noticeDate.getDate()} ${noticeDate.getHours()}:${noticeDate.getMinutes()}`;
     const data = {
       title: noticeTitle,
       content: noticeContent,
       date: currentDate,
+      author: currentUser?.displayName,
     };
 
     try {
@@ -155,14 +156,14 @@ const NoticeEditor = () => {
           </HeaderTitle>
           <HeaderButtonBox>
             <StyledLink to="/notice">
-              <HeaderButton type="button" bgcolor="#000" pd="0 0.7rem">
+              <HeaderButton type="button" $bgColor="#000" $pd="0 0.7rem">
                 취소
               </HeaderButton>
             </StyledLink>
             <HeaderButton
               type="button"
-              bgcolor="#fff"
-              pd="0"
+              $bgColor="#fff"
+              $pd="0"
               onClick={handleSaveClick}>
               <WriteButtonIcon src={write} alt="write-icon" />
             </HeaderButton>

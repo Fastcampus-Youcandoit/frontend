@@ -1,11 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import GallerySection from "./components/gallery/GallerySection";
 import WikiComponent from "./components/wiki/WikiComponent";
-import { Gallery, Home, Notice, NoticeEditor, Wiki } from "./pages";
-import GlobalStyle from "./styles/globalStyle";
+import { AuthProvider } from "./context/AuthContext";
+import { Gallery, Home, NotFound, Notice, NoticeEditor, Wiki } from "./pages";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import { AuthProvider } from "./context/AuthContext";
+import GlobalStyle from "./styles/globalStyle";
 
 const App = () => {
   return (
@@ -31,6 +31,7 @@ const App = () => {
           </Route>
           <Route path="/notice" element={<Notice />} />
           <Route path="/notice/edit" element={<NoticeEditor />} />
+          <Route path="/*" element={<NotFound />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

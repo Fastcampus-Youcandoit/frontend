@@ -7,6 +7,7 @@ import {
   HomeGallery,
   HomeNotice,
 } from "../components/home";
+import Header from "../components/common/Header";
 
 const HomeWrap = styled.main`
   width: 100%;

@@ -4,6 +4,8 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { db } from "../../firebase";
+import { DetailType } from "../../types/notice";
+import { useAuth } from "../../context/AuthContext";
 
 const ContentBox = styled.div`
   border: 1px solid #d2d2d2;
@@ -12,8 +14,8 @@ const ContentBox = styled.div`
   margin: 8px 20px 8px 45px;
 `;
 
-const NoticeDetailStyle = styled.div<{ isSelected: boolean }>`
-  display: ${props => (props.isSelected ? "block" : "none")};
+const NoticeDetailStyle = styled.div<{ $isSelected: boolean }>`
+  display: ${props => (props.$isSelected ? "block" : "none")};
 `;
 
 const NoticeListButton = styled.div`
@@ -45,19 +47,14 @@ const NoticeDeleteButton = styled.button`
   font-family: "NotoSansKR-Medium";
 `;
 
-interface DetailType {
-  content: string;
-  noticeId: string;
-  fetchData: () => void;
-  isSelected: boolean;
-}
-
 const NoticeDetail = ({
   content,
   noticeId,
   fetchData,
-  isSelected,
+  $isSelected,
 }: DetailType) => {
+  const { currentUser } = useAuth();
+
   const deleteNotice = async () => {
     try {
       await deleteDoc(doc(db, "notice", noticeId));
@@ -72,20 +69,22 @@ const NoticeDetail = ({
   };
 
   return (
-    <NoticeDetailStyle isSelected={isSelected}>
+    <NoticeDetailStyle $isSelected={$isSelected}>
       {content && (
         <ContentBox>
           <Viewer initialValue={content} />
         </ContentBox>
       )}
-      <NoticeListButton>
-        <Link to="/notice/edit" state={{ id: noticeId }}>
-          <NoticeEditButton>수정</NoticeEditButton>
-        </Link>
-        <NoticeDeleteButton onClick={handleDeleteButton}>
-          삭제
-        </NoticeDeleteButton>
-      </NoticeListButton>
+      {currentUser?.displayName && (
+        <NoticeListButton>
+          <Link to="/notice/edit" state={{ id: noticeId }}>
+            <NoticeEditButton>수정</NoticeEditButton>
+          </Link>
+          <NoticeDeleteButton onClick={handleDeleteButton}>
+            삭제
+          </NoticeDeleteButton>
+        </NoticeListButton>
+      )}
     </NoticeDetailStyle>
   );
 };
