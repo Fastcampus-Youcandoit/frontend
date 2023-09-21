@@ -19,11 +19,7 @@ import {
   ModalUploadIcon,
 } from "./GalleryModal";
 import { useAuth } from "../../context/AuthContext";
-
-interface DetailModalProps {
-  imageUrl: string;
-  onClose: () => void;
-}
+import { DetailModalProps, useModalState } from "../../types/Gallery";
 
 const DetailModalBox = styled(ModalBox)`
   width: 55rem;
@@ -70,17 +66,21 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
   imageUrl,
   onClose,
 }) => {
+  const {
+    selectedFileName,
+    setSelectedFileName,
+    selectedImage,
+    setSelectedImage,
+    isEdit,
+    setIsEdit,
+    imageName,
+    setImageName,
+    categoryName,
+    setCategoryName,
+    imageInputRef,
+  } = useModalState();
+
   const { currentUser } = useAuth();
-
-  const [isEdit, setIsEdit] = useState(false);
-
-  const [imageName, setImageName] = useState<any | null>(null);
-  const [categoryName, setCategoryName] = useState<any | null>(null);
-
-  const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
-  const imageInputRef = useRef<HTMLInputElement>(null);
 
   // get image name
   const getImageName = () => {

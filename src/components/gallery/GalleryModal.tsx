@@ -4,16 +4,8 @@ import { ref, uploadString } from "firebase/storage";
 import { storage } from "../../firebase";
 import closeIconUrl from "../../assets/icons/gallery_icon/image_close_icon.png";
 import uploadIconUrl from "../../assets/icons/gallery_icon/image_upload_icon.png";
-
-interface ModalProps {
-  isModalChange: () => void;
-}
-
-interface stylesProps {
-  color?: string;
-  bordercolor?: string;
-  background?: string;
-}
+import { ModalProps, stylesProps } from "../../types/Gallery";
+import { useModalState } from "../../types/Gallery";
 
 export const ModalBackground = styled.div`
   position: fixed;
@@ -142,13 +134,16 @@ export const Select = styled.select<stylesProps>`
 `;
 
 const GalleryModal = ({ isModalChange }: ModalProps) => {
-  const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
-    undefined,
-  );
-  const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const modalBackgroundRef = useRef<HTMLDivElement>(null);
-  const imageInputRef = useRef<HTMLInputElement>(null);
+  const {
+    selectedFileName,
+    setSelectedFileName,
+    selectedImage,
+    setSelectedImage,
+    selectedCategory,
+    setSelectedCategory,
+    modalBackgroundRef,
+    imageInputRef,
+  } = useModalState();
 
   // click modal background
   const handleClickBackground = (e: React.MouseEvent<HTMLDivElement>) => {
