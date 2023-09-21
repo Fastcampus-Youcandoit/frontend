@@ -11,7 +11,7 @@ import {
   CurrentTime,
   Clock,
   Buttons,
-  WorkOnOff,
+  WorkOn,
   OkayButtonDiv,
   OkayButton,
 } from "./StyleComponentCommute";
@@ -127,19 +127,19 @@ const CommuteModal: React.FC<CommuteModalProps> = ({
         <CurrentTimeLayout>
           <CurrentTime>
             {workonoff && <span>On</span>}
-            <Clock workonoff={workonoff}>{clock}</Clock>
+            <Clock $workonoff={workonoff}>{clock}</Clock>
           </CurrentTime>
           <Buttons className="modal-workOn-buttons">
             <button type="button" disabled>
               {workonoff ? `${workingHours}시간째 근무중` : "출근전"}
             </button>
-            <WorkOnOff workonoff={workonoff} onClick={handleSetOnOff}>
+            <WorkOn $workonoff={workonoff} onClick={handleSetOnOff}>
               {workonoff ? "퇴근" : "출근"}
-            </WorkOnOff>
+            </WorkOn>
           </Buttons>
         </CurrentTimeLayout>
         <OkayButtonDiv>
-          <OkayButton onClick={handleOkayButton} workonoff={workonoff}>
+          <OkayButton onClick={handleOkayButton} $workonoff={workonoff}>
             OK
           </OkayButton>
         </OkayButtonDiv>

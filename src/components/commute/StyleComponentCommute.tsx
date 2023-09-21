@@ -111,10 +111,10 @@ export const CurrentTime = styled.div`
   }
 `;
 
-export const Clock = styled.div<{ workonoff: boolean }>`
+export const Clock = styled.div<{ $workonoff: boolean | string }>`
   font-size: 4rem;
   font-weight: 900;
-  color: ${props => (props.workonoff ? "#087ea4" : "black")};
+  color: ${props => (props.$workonoff ? "#087ea4" : "black")};
 `;
 
 export const Buttons = styled.div`
@@ -129,9 +129,9 @@ export const Buttons = styled.div`
   }
 `;
 
-export const WorkOnOff = styled.button<{ workonoff: boolean }>`
-  background-color: ${props => (props.workonoff ? "#e6f7ff" : "white")};
-  border: ${props => (props.workonoff ? "none" : "1px solid #dcdcdc;")};
+export const WorkOn = styled.button<{ $workonoff: boolean | string }>`
+  background-color: ${props => (props.$workonoff ? "#e6f7ff" : "white")};
+  border: ${props => (props.$workonoff ? "none" : "1px solid #dcdcdc;")};
   border-radius: 5px;
   width: 110px;
   font-size: 1rem;
@@ -139,7 +139,7 @@ export const WorkOnOff = styled.button<{ workonoff: boolean }>`
   font-weight: 800;
   cursor: pointer;
   transition: all 0.3s ease 0s;
-  color: ${props => (props.workonoff ? "#087ea4" : "black")};
+  color: ${props => (props.$workonoff ? "#087ea4" : "black")};
   &:hover {
     transform: scale(1.05);
   }
@@ -152,9 +152,9 @@ export const OkayButtonDiv = styled.div`
   margin-top: 2.2rem;
 `;
 
-export const OkayButton = styled.button<{ workonoff: boolean }>`
-  color: ${props => (props.workonoff ? "#087ea4" : "white")};
-  background-color: ${props => (props.workonoff ? "#e6f7ff" : "black")};
+export const OkayButton = styled.button<{ $workonoff: boolean | string }>`
+  color: ${props => (props.$workonoff ? "#087ea4" : "white")};
+  background-color: ${props => (props.$workonoff ? "#e6f7ff" : "black")};
   border-radius: 5px;
   border: none;
   font-size: 1.3rem;
