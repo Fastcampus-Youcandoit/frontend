@@ -3,12 +3,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { useState } from "react";
 import uuid from "react-uuid";
 import { db } from "../../firebase";
-import { EventData } from "./Calendar";
-
-interface CalendarModalProps {
-  isModalChange: () => void;
-  handleFatchEvent: () => void;
-}
+import { CalendarModalProps, EventData } from "../../types/home";
 
 const ModalArea = styled.div`
   position: fixed;

@@ -19,6 +19,11 @@
 }
 
 @font-face {
+  font-family: "SUITE-ExtraBold";
+  src: url("./SUITE/SUITE-ExtraBold.ttf");
+}
+
+@font-face {
   font-family: "SUITE-Bold";
   src: url("./SUITE/SUITE-Bold.ttf");
 }
@@ -36,4 +41,11 @@
 @font-face {
   font-family: "SUITE-Light";
   src: url("./SUITE/SUITE-Light.ttf");
+}
+
+@font-face {
+  font-family: "Cafe24Shiningstar";
+  src: url("./Cafe24Shiningstar.ttf");
+  font-weight: normal;
+  font-style: normal;
 }

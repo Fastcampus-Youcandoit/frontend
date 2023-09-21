@@ -14,6 +14,7 @@ const GlobalStyle = createGlobalStyle`
         margin: 0;
         box-sizing: border-box;
     }
+    iframe#webpack-dev-server-client-overlay{display:none!important}
 `;
 
 export default GlobalStyle;

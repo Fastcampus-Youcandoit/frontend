@@ -1,35 +1,40 @@
 import styled from "styled-components";
 
 export const Span = styled.span`
-  font-size: 1.3rem;
-  padding-bottom: 0.2rem;
   width: 4rem;
-  color: black;
+  font-size: 1.1rem;
+  margin: 0 0 4px 5px;
+  font-family: "SUITE-Bold";
+  transition: all 0.5s;
+
+  @media (max-width: 1024px) {
+    font-size: 0.9rem;
+    transition: all 0.5s;
+  }
 `;
 
 export const WorkOnMark = styled.img`
-  width: 1rem;
-  background-color: black;
-  position: relative;
-  right: 1rem;
+  width: 0.6rem;
+  margin-right: 0.4rem;
 `;
 
 export const CommuteButton = styled.button`
-  background-color: #f6f7f9;
-  height: 100%;
-  border-radius: 10px;
-  font-size: 1rem;
-  padding: 0 2rem;
+  // background-color: #f6f7f9;
+  // height: 100%;
+  // border-radius: 10px;
+  // font-size: inherit;
+  // padding: 0 2rem;
+  // box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   display: flex;
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  background: none;
   border: none;
   transition: all 0.3s ease 0s;
 
   &:hover {
-    transform: scale(1.04);
+    transform: scale(1);
   }
 `;
 
@@ -59,13 +64,12 @@ export const ModalLayout = styled.div`
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.4);
-  z-index: 1;
+  z-index: 2000;
 `;
 
 export const Header = styled.div`
   margin-bottom: 1.7rem;
   font-weight: bolder;
-
   display: flex;
   width: 100%;
   justify-content: space-between;
@@ -107,10 +111,10 @@ export const CurrentTime = styled.div`
   }
 `;
 
-export const Clock = styled.div<{ workonoff: boolean }>`
+export const Clock = styled.div<{ $workonoff: boolean | string }>`
   font-size: 4rem;
   font-weight: 900;
-  color: ${props => (props.workonoff ? "#087ea4" : "black")};
+  color: ${props => (props.$workonoff ? "#087ea4" : "black")};
 `;
 
 export const Buttons = styled.div`
@@ -125,9 +129,9 @@ export const Buttons = styled.div`
   }
 `;
 
-export const WorkOnOff = styled.button<{ workonoff: boolean }>`
-  background-color: ${props => (props.workonoff ? "#e6f7ff" : "white")};
-  border: ${props => (props.workonoff ? "none" : "1px solid #dcdcdc;")};
+export const WorkOn = styled.button<{ $workonoff: boolean | string }>`
+  background-color: ${props => (props.$workonoff ? "#e6f7ff" : "white")};
+  border: ${props => (props.$workonoff ? "none" : "1px solid #dcdcdc;")};
   border-radius: 5px;
   width: 110px;
   font-size: 1rem;
@@ -135,7 +139,7 @@ export const WorkOnOff = styled.button<{ workonoff: boolean }>`
   font-weight: 800;
   cursor: pointer;
   transition: all 0.3s ease 0s;
-  color: ${props => (props.workonoff ? "#087ea4" : "black")};
+  color: ${props => (props.$workonoff ? "#087ea4" : "black")};
   &:hover {
     transform: scale(1.05);
   }
@@ -148,9 +152,9 @@ export const OkayButtonDiv = styled.div`
   margin-top: 2.2rem;
 `;
 
-export const OkayButton = styled.button<{ workonoff: boolean }>`
-  color: ${props => (props.workonoff ? "#087ea4" : "white")};
-  background-color: ${props => (props.workonoff ? "#e6f7ff" : "black")};
+export const OkayButton = styled.button<{ $workonoff: boolean | string }>`
+  color: ${props => (props.$workonoff ? "#087ea4" : "white")};
+  background-color: ${props => (props.$workonoff ? "#e6f7ff" : "black")};
   border-radius: 5px;
   border: none;
   font-size: 1.3rem;

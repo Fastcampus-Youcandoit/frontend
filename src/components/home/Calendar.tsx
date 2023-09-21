@@ -6,22 +6,18 @@ import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { db } from "../../firebase";
+import { EventData } from "../../types/home";
 import AddEventModal from "./AddEventModal";
 import EventDetailModal from "./EventDetailModal";
-
-export type EventData = {
-  id: string;
-  date: string;
-  title: string;
-};
+import { useAuth } from "../../context/AuthContext";
 
 const CalendarBox = styled.div`
   position: relative;
   width: 100%;
-  height: 70vh;
+  height: 90vh;
   border: 1.2px solid #d2d2d2;
   border-radius: 10px;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
   padding: 1.5rem;
 
   .fc .fc-toolbar-title::after {
@@ -77,9 +73,8 @@ const CalendarBox = styled.div`
     color: #000;
   }
 
-  // 오늘 날짜 배경색
   .fc .fc-daygrid-day.fc-day-today {
-    background-color: #fff;
+    background-color: #e9ecef;
   }
 
   .fc .fc-daygrid-day-frame {
@@ -109,6 +104,7 @@ const HomeCalendar = () => {
   const [isFetched, setIsFetched] = useState<boolean>(false);
   const [events, setEvents] = useState<EventData[] | []>([]);
   const [selectedDay, setSelectedDay] = useState<string>("");
+  const { currentUser } = useAuth();
 
   const handelAddModal = () => {
     setIsModal(!isAddModal);
@@ -118,7 +114,7 @@ const HomeCalendar = () => {
     setIsDetailModal(!isDetailModal);
   };
 
-  const handleDayClick = async (day: string) => {
+  const handleDayClick = (day: string) => {
     setSelectedDay(day);
     handelDetailModal();
   };
@@ -127,15 +123,16 @@ const HomeCalendar = () => {
     setIsFetched(!isFetched);
   };
 
+  const fetchData = async () => {
+    const querySnapshot = await getDocs(collection(db, "events"));
+    const data: any[] = [];
+    querySnapshot.forEach(doc => {
+      data.push({ id: doc.id, ...doc.data() });
+    });
+    setEvents(data);
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      const querySnapshot = await getDocs(collection(db, "events"));
-      const data: any[] = [];
-      querySnapshot.forEach(doc => {
-        data.push({ id: doc.id, ...doc.data() });
-      });
-      setEvents(data);
-    };
     fetchData();
   }, [isFetched]);
 
@@ -162,9 +159,11 @@ const HomeCalendar = () => {
         selectable
         dateClick={info => handleDayClick(info.dateStr)}
       />
-      <AddContentButton type="button" onClick={handelAddModal}>
-        일정 추가하기
-      </AddContentButton>
+      {currentUser?.displayName && (
+        <AddContentButton type="button" onClick={handelAddModal}>
+          일정 추가하기
+        </AddContentButton>
+      )}
     </CalendarBox>
   );
 };

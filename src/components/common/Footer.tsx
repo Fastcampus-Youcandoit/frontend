@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import github from "../../assets/icons/header_icon/header_github_black_icon.png";
+import github from "../../assets/icons/footer_icon/footer_github_black_icon.png";
 import logo from "../../assets/icons/header_icon/logo.png";
 import "../../assets/fonts/Font.css";
 

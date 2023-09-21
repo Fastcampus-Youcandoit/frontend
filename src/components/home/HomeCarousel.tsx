@@ -7,7 +7,8 @@ const CrouselWrap = styled.div`
   z-index: 0;
   .carousel {
     img {
-      height: 33vh;
+      width: 100%;
+      height: calc(100% / 16 * 9);
     }
 
     .carousel .control-dots {

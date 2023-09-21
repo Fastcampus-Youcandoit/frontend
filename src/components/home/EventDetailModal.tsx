@@ -1,28 +1,16 @@
-import styled from "styled-components";
-import { useEffect, useState } from "react";
 import {
   collection,
+  deleteDoc,
+  doc,
   getDocs,
   query,
-  doc,
-  where,
   updateDoc,
-  deleteDoc,
+  where,
 } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import styled from "styled-components";
 import { db } from "../../firebase";
-
-interface CalendarModalProps {
-  isModalChange: () => void;
-  selectedDay: string;
-  handleFatchEvent: () => void;
-}
-
-interface SelectEvents {
-  id: string;
-  date: string;
-  title: string;
-  eventId: string;
-}
+import { CalendarDetailModalProps, SelectEvents } from "../../types/home";
 
 const ModalArea = styled.div`
   position: fixed;
@@ -77,10 +65,10 @@ const CheckButton = styled.input`
 
 const DateTitle = styled.h2`
   width: 100%;
-  height: 3rem;
+  height: 2rem;
   font-family: "NotoSansKR-regular";
-  border: 1px solid #adb5bd;
-  border-radius: 5px;
+  border-radius: 10px;
+  background-color: #a5d8ff;
   padding: 0 0.5rem;
   display: flex;
   align-items: center;
@@ -127,7 +115,7 @@ const EventDetailModal = ({
   isModalChange,
   selectedDay,
   handleFatchEvent,
-}: CalendarModalProps) => {
+}: CalendarDetailModalProps) => {
   const [selectedEvents, setSelectedEvents] = useState<SelectEvents[] | []>([]);
   const [selectedEvent, setSelectedEvent] = useState<SelectEvents>({
     eventId: "",
@@ -138,7 +126,6 @@ const EventDetailModal = ({
 
   const [checkedValue, setCheckedValue] = useState<string[]>([]);
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [isEdited, setIsEdited] = useState<boolean>(false);
   const handleCheckChange = (value: string) => {
     const newCheckedValue = checkedValue.includes(value) ? [] : [value];
     const selectedData = selectedEvents.filter(
@@ -146,6 +133,17 @@ const EventDetailModal = ({
     );
     setCheckedValue(newCheckedValue);
     setSelectedEvent(selectedData[0]);
+  };
+
+  const fetchData = async () => {
+    const dayRef = collection(db, "events");
+    const q = query(dayRef, where("date", "==", selectedDay));
+    const data: any[] = [];
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach(event => {
+      data.push({ eventId: event.id, ...event.data() });
+    });
+    setSelectedEvents(data);
   };
 
   const updateEventData = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -166,7 +164,6 @@ const EventDetailModal = ({
         title,
         date,
       });
-      setIsEdited(!isEdited);
       setIsEditing(false);
     } catch (error) {
       console.log(error);
@@ -178,7 +175,6 @@ const EventDetailModal = ({
     if (shouldDelete) {
       try {
         await deleteDoc(doc(db, "events", selectedEvent.eventId));
-        setIsEdited(!isEdited);
         setIsEditing(false);
       } catch (error) {
         console.log(error);
@@ -193,22 +189,15 @@ const EventDetailModal = ({
   };
 
   const handleEditModal = () => {
-    if (isEdited) handleFatchEvent();
+    handleFatchEvent();
     isModalChange();
   };
+
   useEffect(() => {
-    const fetchData = async () => {
-      const dayRef = collection(db, "events");
-      const q = query(dayRef, where("date", "==", selectedDay));
-      const data: any[] = [];
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach(event => {
-        data.push({ eventId: event.id, ...event.data() });
-      });
-      setSelectedEvents(data);
-    };
     fetchData();
-  }, [selectedDay, isEdited]);
+
+    return () => setCheckedValue([]);
+  }, [selectedDay, isEditing]);
 
   return (
     <ModalArea>

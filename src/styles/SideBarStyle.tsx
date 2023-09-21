@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const SideBarBox = styled.div`
-  width: 370px;
+  width: 30rem;
   height: 90vh;
   margin: 15px 50px 0 0;
   font-family: "NotoSansKR-Regular";
@@ -17,7 +17,7 @@ const Section = styled.p`
   align-items: center;
 `;
 
-const SideBarMainText = styled.a`
+const SideBarMainText = styled.div`
   height: 4rem;
   background-color: #fff;
   padding-left: 2.5rem;
@@ -42,7 +42,7 @@ const MainText = styled.span`
   font-family: "NotoSansKR-Medium";
 `;
 
-const Text = styled.a`
+const Text = styled.div`
   height: 3.5rem;
   font-size: 18px;
   padding-left: 5.5rem;

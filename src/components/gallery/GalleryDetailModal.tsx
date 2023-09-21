@@ -18,64 +18,69 @@ import {
   ModalBox,
   ModalUploadIcon,
 } from "./GalleryModal";
-
-interface DetailModalProps {
-  imageUrl: string;
-  onClose: () => void;
-}
+import { useAuth } from "../../context/AuthContext";
+import { DetailModalProps, useModalState } from "../../types/gallery";
 
 const DetailModalBox = styled(ModalBox)`
-  width: 950px;
-  height: 700px;
+  width: 55rem;
 `;
 
 const DetailImage = styled.img`
-  width: 750px;
-  max-height: 460px;
-  object-fit: cover;
+  width: 45rem;
+  max-height: 28rem;
+  object-fit: contain;
   margin: auto 0;
 `;
 
 const DetailUploadBox = styled(UploadBox)`
-  width: 700px;
-  height: 460px;
+  width: 43rem;
+  height: 25.5rem;
+  padding: 12rem 0;
 `;
 
 const DetailImagePreview = styled(ImagePreview)`
-  width: 700px;
-  height: 460px;
+  width: 43rem;
+  height: 25.5rem;
+  object-fit: contain;
 `;
 
 const DetailFileNameBox = styled(FileNameBox)`
-  margin: 20px auto 0px 120px;
+  margin: 1.25rem auto 0px 7.5rem;
 `;
 
 const Category = styled.p`
-  margin-left: -25px;
-  margin-top: -30px;
+  margin-left: -3rem;
+  margin-top: 0.2rem;
   text-align: center;
-  font: normal normal bold 12px Noto Sans KR;
+  font: normal normal bold 0.9rem Noto Sans KR;
   color: #808080;
 `;
 
 const EditCategory = styled.p`
+  margin-left: -1.5rem;
   margin-right: 5px;
-  font: normal normal bold 14px/18px Noto Sans KR;
+  font: normal normal bold 0.8rem/1.1rem Noto Sans KR;
 `;
 
 const GalleryDetailModal: React.FC<DetailModalProps> = ({
   imageUrl,
   onClose,
 }) => {
-  const [isEdit, setIsEdit] = useState(false);
+  const {
+    selectedFileName,
+    setSelectedFileName,
+    selectedImage,
+    setSelectedImage,
+    isEdit,
+    setIsEdit,
+    imageName,
+    setImageName,
+    categoryName,
+    setCategoryName,
+    imageInputRef,
+  } = useModalState();
 
-  const [imageName, setImageName] = useState<any | null>(null);
-  const [categoryName, setCategoryName] = useState<any | null>(null);
-
-  const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
-  const imageInputRef = useRef<HTMLInputElement>(null);
+  const { currentUser } = useAuth();
 
   // get image name
   const getImageName = () => {
@@ -209,7 +214,7 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
         );
         await uploadString(storageRef, selectedImage, "data_url");
         alert("이미지가 변경되었습니다.");
-        window.location.href = "/gallery";
+        window.location.href = "/gallery/all";
       }
     } catch (error) {
       console.error("Error : ", error);
@@ -239,7 +244,7 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
             )}
           </DetailUploadBox>
         ) : (
-          <DetailImage src={imageUrl} alt="Image Detail" />
+          <DetailImage src={imageUrl} alt="Image Detail" loading="lazy" />
         )}
 
         <DetailFileNameBox>
@@ -272,15 +277,15 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
               <Button
                 onClick={() => setIsEdit(!isEdit)}
                 color="#000"
-                borderColor="#000"
-                backgroundColor="#fff"
+                bordercolor="#000"
+                $backgroundColor="#fff"
                 type="button">
                 Cancel
               </Button>
               <Button
                 color="#000"
-                borderColor="#000"
-                backgroundColor="#fff"
+                bordercolor="#000"
+                $backgroundColor="#fff"
                 type="button"
                 onClick={deleteImage}>
                 Delete
@@ -288,7 +293,8 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
               <Button
                 onClick={handleImageUpdate}
                 color="#fff"
-                backgroundColor="#000"
+                $backgroundColor="#000"
+                bordercolor="#000"
                 type="button">
                 Save
               </Button>
@@ -298,18 +304,21 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
               <Button
                 onClick={onClose}
                 color="#000"
-                borderColor="#000"
-                backgroundColor="#fff"
+                bordercolor="#000"
+                $backgroundColor="#fff"
                 type="button">
                 Cancel
               </Button>
-              <Button
-                onClick={handleIsEdit}
-                color="#fff"
-                backgroundColor="#000"
-                type="button">
-                Edit
-              </Button>
+              {currentUser && (
+                <Button
+                  onClick={handleIsEdit}
+                  color="#fff"
+                  $backgroundColor="#000"
+                  bordercolor="#000"
+                  type="button">
+                  Edit
+                </Button>
+              )}
             </>
           )}
         </ButtonBox>
