@@ -2,7 +2,7 @@ export interface ModalProps {
   isModalChange: () => void;
 }
 
-export interface StylesProps {
+export interface GalleryProps {
   color?: string;
   bordercolor?: string;
   $backgroundColor?: string;
