@@ -11,8 +11,9 @@ import checkIcon from "../../assets/icons/wiki_icon/wiki_check_icon.png";
 
 // styled-components
 const WikiContentBox = styled.div`
-  width: 75vw;
+  width: 100%;
   font-family: "NotoSansKR-Regular";
+  padding: 0 3rem;
 `;
 
 const WikiHeader = styled.div`

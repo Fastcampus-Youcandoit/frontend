@@ -18,10 +18,10 @@ export type EventData = {
 const CalendarBox = styled.div`
   position: relative;
   width: 100%;
-  height: 70vh;
+  height: 90vh;
   border: 1.2px solid #d2d2d2;
   border-radius: 10px;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
   padding: 1.5rem;
 
   .fc .fc-toolbar-title::after {

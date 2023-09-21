@@ -21,6 +21,31 @@ const HomeMainSection = styled.section`
 const SectionItemBox = styled.div`
   display: flex;
   gap: 2rem;
+  transition: all 0.5s;
+
+  @media (max-width: 1024px) {
+    width: 100%;
+    flex-wrap: wrap;
+    transition: all 0.5s;
+  }
+`;
+
+const HomeCalendarBox = styled.div`
+  @media (max-width: 1024px) {
+    display: none;
+  }
+`;
+
+const FooterBox = styled.div`
+  @media (max-width: 1024px) {
+    display: none;
+  }
+`;
+
+const MobileFooterBox = styled.div`
+  @media (max-width: 1024px) {
+    height: 2rem;
+  }
 `;
 
 const Home = () => {
@@ -34,9 +59,14 @@ const Home = () => {
           <HomeNotice />
           <HomeGallery />
         </SectionItemBox>
-        <HomeCalendar />
+        <HomeCalendarBox>
+          <HomeCalendar />
+        </HomeCalendarBox>
       </HomeMainSection>
-      <Footer />
+      <FooterBox>
+        <Footer />
+      </FooterBox>
+      <MobileFooterBox />
     </HomeWrap>
   );
 };
