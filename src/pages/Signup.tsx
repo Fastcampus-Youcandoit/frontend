@@ -3,10 +3,10 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { auth } from "../firebase";
-import { useLogState } from "../types/userLog";
 import { Form, HomeLink, Input, LoginButton, Message, Wrapper } from "./Login";
 
 const StyledForm = styled(Form)`
@@ -32,25 +32,14 @@ const InputWrapper = styled.div`
 `;
 
 const Signup = () => {
-  const {
-    name,
-    setName,
-    email,
-    setEmail,
-    password,
-    setPassword,
-    passwordCheck,
-    setPasswordCheck,
-    emailMessage,
-    setEmailMessage,
-    nameMessage,
-    setNameMessage,
-    passwordMessage,
-    setPasswordMessage,
-    passwordCheckMessage,
-    setPasswordCheckMessage,
-  } = useLogState();
-
+  const [email, setEmail] = useState<string | undefined>("");
+  const [password, setPassword] = useState<string | undefined>("");
+  const [name, setName] = useState("");
+  const [passwordCheck, setPasswordCheck] = useState("");
+  const [emailMessage, setEmailMessage] = useState("");
+  const [nameMessage, setNameMessage] = useState("");
+  const [passwordMessage, setPasswordMessage] = useState("");
+  const [passwordCheckMessage, setPasswordCheckMessage] = useState("");
   const navigate = useNavigate();
 
   // 1.이메일 유효성검사

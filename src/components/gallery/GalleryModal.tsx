@@ -1,10 +1,10 @@
 import { ref, uploadString } from "firebase/storage";
-import React, { useCallback } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import styled from "styled-components";
 import closeIconUrl from "../../assets/icons/gallery_icon/image_close_icon.png";
 import uploadIconUrl from "../../assets/icons/gallery_icon/image_upload_icon.png";
 import { storage } from "../../firebase";
-import { ModalProps, StylesProps, useModalState } from "../../types/Gallery";
+import { GalleryProps, ModalProps } from "../../types/gallery";
 
 export const ModalBackground = styled.div`
   position: fixed;
@@ -102,7 +102,7 @@ export const ButtonBox = styled.div`
   margin: auto 1.25rem 1.25rem auto;
 `;
 
-export const Button = styled.button<StylesProps>`
+export const Button = styled.button<GalleryProps>`
   padding: 0.37rem 1rem;
   margin-left: 0.9rem;
   text-align: center;
@@ -119,7 +119,7 @@ export const Button = styled.button<StylesProps>`
   }
 `;
 
-export const Select = styled.select<StylesProps>`
+export const Select = styled.select<GalleryProps>`
   margin-right: 0.5rem;
   color: ${props => (props.color ? "#000" : "#808080")};
   padding: 0.1rem 0.2rem;
@@ -133,16 +133,13 @@ export const Select = styled.select<StylesProps>`
 `;
 
 const GalleryModal = ({ isModalChange }: ModalProps) => {
-  const {
-    selectedFileName,
-    setSelectedFileName,
-    selectedImage,
-    setSelectedImage,
-    selectedCategory,
-    setSelectedCategory,
-    modalBackgroundRef,
-    imageInputRef,
-  } = useModalState();
+  const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
+    undefined,
+  );
+  const modalBackgroundRef = useRef<HTMLDivElement>(null);
+  const imageInputRef = useRef<HTMLInputElement>(null);
 
   // click modal background
   const handleClickBackground = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -277,7 +274,7 @@ const GalleryModal = ({ isModalChange }: ModalProps) => {
             </option>
             <option value="office-photo">내부사진</option>
             <option value="business">협력사</option>
-            <option value="jop-posting">채용공고</option>
+            <option value="job-posting">채용공고</option>
           </Select>
           <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -1,10 +1,15 @@
+import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import "../assets/fonts/Font.css";
 import googleIcon from "../assets/icons/login_icon/google_icon.png.png";
-import { ModalBackground, ModalBox } from "../components/gallery/GalleryModal";
+import {
+  Button,
+  ModalBackground,
+  ModalBox,
+} from "../components/gallery/GalleryModal";
 import { useAuth } from "../context/AuthContext";
-import { StylesProps, useLogState } from "../types/userLog";
+import { StylesProps } from "../types/userLog";
 
 export const Wrapper = styled.div`
   width: 100vw;
@@ -142,15 +147,10 @@ const FindButton = styled.button<{ bordercolor: string }>`
 `;
 
 const Login = () => {
-  const {
-    email,
-    setEmail,
-    password,
-    setPassword,
-    isModal,
-    setIsModal,
-    modalBackgroundRef,
-  } = useLogState();
+  const [email, setEmail] = useState<string | undefined>("");
+  const [password, setPassword] = useState<string | undefined>("");
+  const [isModal, setIsModal] = useState<boolean>(false);
+  const modalBackgroundRef = useRef<HTMLDivElement>(null);
   const { login, resetPassword, googleLogin } = useAuth(); // 현재 사용자 정보 가져오기
   const navigate = useNavigate();
 
@@ -196,6 +196,7 @@ const Login = () => {
       if (email !== undefined) {
         await resetPassword(email);
         alert("메일 전송에 성공했습니다.");
+        setEmail("");
         setIsModal(false);
       }
     } catch (error) {
@@ -257,7 +258,12 @@ const Login = () => {
                 Google 로그인
               </LoginButton>
               <LinkWrapper>
-                <button type="button" onClick={() => setIsModal(true)}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEmail("");
+                    setIsModal(true);
+                  }}>
                   비밀번호 찾기
                 </button>
                 <Span>|</Span>
