@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, memo } from "react";
+import { useEffect, useState } from "react";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import "@toast-ui/editor/dist/toastui-editor-viewer.css";
 import { Viewer } from "@toast-ui/react-editor";
@@ -9,9 +9,10 @@ interface Props {
 }
 
 const MarkdownViewer = ({ content = "", viewerRef }: Props) => {
-  const [temp, setTemp] = useState(0);
+  const [temp, setTemp] = useState(0); // 강제 렌더링 용도
 
   useEffect(() => {
+    // 강제 렌더링 로직
     setTemp(x => x + 1);
     setTimeout(() => {
       setTemp(x => x + 1);

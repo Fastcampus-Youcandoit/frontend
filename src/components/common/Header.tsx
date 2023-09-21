@@ -14,13 +14,11 @@ import Logo from "./Logo";
 import { useAuth } from "../../context/AuthContext";
 
 const HeaderBox = styled.header`
-  width: 100vw;
   height: 9vh;
   padding: 0 2rem;
 `;
 
 const HeaderNav = styled.nav`
-  width: 100%;
   height: 100%;
   display: flex;
   justify-content: space-between;
@@ -134,6 +132,12 @@ const Header = () => {
           <HeaderItem>{currentUser && <CommuteButtonComponent />}</HeaderItem>
           <HeaderItem>
             <IconImg src={noticeIcon} alt="wiki icon" />
+            <Span>
+              <StyledLink to="/notice">notice</StyledLink>
+            </Span>
+          </HeaderItem>
+          <HeaderItem>
+            <IconImg src={noticeIcon} alt="notice icon" />
             <Span>
               <StyledLink to="/notice">notice</StyledLink>
             </Span>
