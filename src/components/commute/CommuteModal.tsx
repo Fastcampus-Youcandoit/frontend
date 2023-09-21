@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { doc, deleteDoc, setDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import { deleteDoc, doc, setDoc } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
 import { db } from "../../firebase";
 import {
+  Buttons,
+  Clock,
+  CurrentTime,
+  CurrentTimeLayout,
+  Header,
   Modal,
   ModalLayout,
-  Header,
-  TodayDate,
-  CurrentTimeLayout,
-  CurrentTime,
-  Clock,
-  Buttons,
-  WorkOnOff,
-  OkayButtonDiv,
   OkayButton,
+  OkayButtonDiv,
+  TodayDate,
+  WorkOnOff,
 } from "./StyleComponentCommute";
 
 // props type 설정
