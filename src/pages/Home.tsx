@@ -6,6 +6,7 @@ import {
   HomeGallery,
   HomeNotice,
 } from "../components/home";
+import Header from "../components/common/Header";
 
 const HomeWrap = styled.main`
   width: 100%;
@@ -26,6 +27,7 @@ const SectionItemBox = styled.div`
 const Home = () => {
   return (
     <HomeWrap>
+      <Header />
       <section>
         <HomeCarousel />
       </section>

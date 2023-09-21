@@ -1,15 +1,10 @@
-import styled from "styled-components";
+import { getDownloadURL, list, ref } from "firebase/storage";
 import { useEffect, useState } from "react";
-import { list, ref, getDownloadURL } from "firebase/storage";
+import styled from "styled-components";
 import chevronL from "../../assets/images/chevron/chevron_left.png";
 import chevronR from "../../assets/images/chevron/chevron_right.png";
 import { storage } from "../../firebase";
-
-interface ImageFilesType {
-  business: string[];
-  jobPosting: string[];
-  officePhoto: string[];
-}
+import { ImageFilesType } from "../../types/home";
 
 const SectionContainer = styled.section`
   width: 50%;

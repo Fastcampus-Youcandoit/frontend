@@ -1,15 +1,9 @@
-import styled from "styled-components";
 import { collection, getDocs, limit, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 import { db } from "../../firebase";
-
-interface NoticeType {
-  id: string;
-  title: string;
-  date: string;
-  content: string;
-}
+import { NoticeType } from "../../types/home";
 
 const SectionContainer = styled.section`
   width: 50%;
@@ -66,10 +60,6 @@ const ContentItem = styled.li`
   cursor: pointer;
 `;
 
-const Title = styled.div``;
-
-const Date = styled.div``;
-
 const StyledLink = styled(Link)`
   height: 100%;
   color: #000;
@@ -78,8 +68,8 @@ const StyledLink = styled(Link)`
 const HomeNotice = () => {
   const [notices, setNotices] = useState<NoticeType[] | null>(null);
 
+  const q = query(collection(db, "notice"), limit(5));
   const fetchData = async () => {
-    const q = query(collection(db, "notice"), limit(5));
     const noticesData: any[] = [];
     try {
       const querySnapshot = await getDocs(q);
@@ -116,8 +106,8 @@ const HomeNotice = () => {
                 key={notice.id}
                 state={{ noticeId: notice.id }}>
                 <ContentItem>
-                  <Title>{notice.title}</Title>
-                  <Date>{notice.date}</Date>
+                  <div>{notice.title}</div>
+                  <div>{notice.author}</div>
                 </ContentItem>
               </StyledLink>
             ))}

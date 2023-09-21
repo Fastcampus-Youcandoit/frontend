@@ -6,14 +6,10 @@ import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { db } from "../../firebase";
+import { EventData } from "../../types/home";
 import AddEventModal from "./AddEventModal";
 import EventDetailModal from "./EventDetailModal";
-
-export type EventData = {
-  id: string;
-  date: string;
-  title: string;
-};
+import { useAuth } from "../../context/AuthContext";
 
 const CalendarBox = styled.div`
   position: relative;
@@ -77,9 +73,8 @@ const CalendarBox = styled.div`
     color: #000;
   }
 
-  // 오늘 날짜 배경색
   .fc .fc-daygrid-day.fc-day-today {
-    background-color: #fff;
+    background-color: #e9ecef;
   }
 
   .fc .fc-daygrid-day-frame {
@@ -109,6 +104,7 @@ const HomeCalendar = () => {
   const [isFetched, setIsFetched] = useState<boolean>(false);
   const [events, setEvents] = useState<EventData[] | []>([]);
   const [selectedDay, setSelectedDay] = useState<string>("");
+  const { currentUser } = useAuth();
 
   const handelAddModal = () => {
     setIsModal(!isAddModal);
@@ -127,15 +123,16 @@ const HomeCalendar = () => {
     setIsFetched(!isFetched);
   };
 
+  const fetchData = async () => {
+    const querySnapshot = await getDocs(collection(db, "events"));
+    const data: any[] = [];
+    querySnapshot.forEach(doc => {
+      data.push({ id: doc.id, ...doc.data() });
+    });
+    setEvents(data);
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      const querySnapshot = await getDocs(collection(db, "events"));
-      const data: any[] = [];
-      querySnapshot.forEach(doc => {
-        data.push({ id: doc.id, ...doc.data() });
-      });
-      setEvents(data);
-    };
     fetchData();
   }, [isFetched]);
 
@@ -162,9 +159,11 @@ const HomeCalendar = () => {
         selectable
         dateClick={info => handleDayClick(info.dateStr)}
       />
-      <AddContentButton type="button" onClick={handelAddModal}>
-        일정 추가하기
-      </AddContentButton>
+      {currentUser?.displayName && (
+        <AddContentButton type="button" onClick={handelAddModal}>
+          일정 추가하기
+        </AddContentButton>
+      )}
     </CalendarBox>
   );
 };
