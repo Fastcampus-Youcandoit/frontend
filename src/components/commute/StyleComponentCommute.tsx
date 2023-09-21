@@ -19,12 +19,6 @@ export const WorkOnMark = styled.img`
 `;
 
 export const CommuteButton = styled.button`
-  // background-color: #f6f7f9;
-  // height: 100%;
-  // border-radius: 10px;
-  // font-size: inherit;
-  // padding: 0 2rem;
-  // box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -34,7 +28,7 @@ export const CommuteButton = styled.button`
   transition: all 0.3s ease 0s;
 
   &:hover {
-    transform: scale(1);
+    transform: scale(1.05); /* "transform" 및 스케일 속성 수정 */
   }
 `;
 
