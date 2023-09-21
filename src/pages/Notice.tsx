@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
-import { useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import styled from "styled-components";
 import writeIcon from "../assets/icons/wiki_icon/wiki_write_icon.png";
 import Footer from "../components/common/Footer";
-import { db } from "../firebase";
 import NoticeDetail from "../components/notice/NoticeDetail";
+import { db } from "../firebase";
+import { NoticeDetailProps } from "../types/notice";
+import { useAuth } from "../context/AuthContext";
+import Header from "../components/common/Header";
 
 const NoticeBox = styled.div`
   width: 100vw;
@@ -82,17 +84,11 @@ const NoticeTitle = styled.span`
   margin-left: 25px;
 `;
 
-interface NoticeDetailProps {
-  id: string;
-  title: string;
-  date: string;
-  content: string;
-}
-
 const Notice: React.FC = () => {
   const location = useLocation();
   const [notices, setNotices] = useState<NoticeDetailProps[]>([]);
   const [noticeId, setNoticeId] = useState<string | null>(null);
+  const { currentUser } = useAuth();
 
   const fetchData = async () => {
     try {
@@ -103,7 +99,7 @@ const Notice: React.FC = () => {
       });
 
       setNotices(noticesData);
-      if (location.state.noticeId) setNoticeId(location.state.noticeId);
+      if (location.state?.noticeId) setNoticeId(location.state.noticeId);
     } catch (error) {
       console.log(error);
     }
@@ -121,12 +117,15 @@ const Notice: React.FC = () => {
 
   return (
     <>
+      <Header />
       <NoticeBox>
         <NoticeHeader>
           <NoticeMainText>공지사항</NoticeMainText>
-          <Link to="/notice/edit" state={{ id: null }}>
-            <WriteIcon src={writeIcon} alt="공지사항 작성 전 작성 아이콘" />
-          </Link>
+          {currentUser?.displayName && (
+            <Link to="/notice/edit" state={{ id: null }}>
+              <WriteIcon src={writeIcon} alt="공지사항 작성 전 작성 아이콘" />
+            </Link>
+          )}
         </NoticeHeader>
         <Hr />
         {notices.map((notice: NoticeDetailProps, i) => (
@@ -137,6 +136,7 @@ const Notice: React.FC = () => {
                 <NoticeTitle>{notice.title}</NoticeTitle>
               </NoticeLeft>
               <NoticeRight>
+                <span>{notice.author}</span>
                 <span>{notice.date}</span>
               </NoticeRight>
             </NoticeListItem>
@@ -144,7 +144,7 @@ const Notice: React.FC = () => {
               noticeId={notice.id}
               content={notice.content}
               fetchData={fetchData}
-              isSelected={noticeId === notice.id}
+              $isSelected={noticeId === notice.id}
             />
           </NoticeList>
         ))}
