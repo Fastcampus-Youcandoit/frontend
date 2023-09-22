@@ -163,14 +163,14 @@ export const OkayButton = styled(Button)<{
   color: string;
   $borderColor: string;
   $backgroundColor: string;
-  workonoff: boolean;
+  $workonoff: boolean | string;
 }>`
-  color: ${props => (props.workonoff ? "#087ea4" : props.color)};
+  color: ${props => (props.$workonoff ? "#087ea4" : props.color)};
   background-color: ${props =>
-    props.workonoff ? "#e6f7ff" : props.$backgroundColor};
+    props.$workonoff ? "#e6f7ff" : props.$backgroundColor};
   border-radius: 10px;
   border: ${props => {
-    if (props.workonoff) {
+    if (props.$workonoff) {
       return "none";
     }
     if (props.$borderColor) {

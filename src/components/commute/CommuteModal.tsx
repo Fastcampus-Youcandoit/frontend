@@ -18,14 +18,8 @@ import {
   TodayDate,
   WorkOnOff,
 } from "./StyleComponentCommute";
-
+import { CommuteModalProps } from "../../types/commute";
 // props type 설정
-interface CommuteModalProps {
-  workonoff: boolean;
-  setWorkonoff: React.Dispatch<React.SetStateAction<boolean>>;
-  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  workingHours: string;
-}
 
 // 현재 날짜를 가져옵니다.
 const getTodayDate = () => {
@@ -63,6 +57,7 @@ const CommuteModal: React.FC<CommuteModalProps> = ({
   setWorkonoff,
   setModalOpen,
   workingHours,
+  modalOpen,
 }) => {
   const formattedDate = getTodayDate();
   let currentTime: Date;
@@ -116,13 +111,12 @@ const CommuteModal: React.FC<CommuteModalProps> = ({
       }
     }
   };
-
   // okaybutton 클릭
   const handleOkayButton = () => {
     setModalOpen(false);
   };
 
-  return (
+  return modalOpen ? (
     <ModalLayout>
       <Modal>
         <HeaderWrapper>
@@ -152,7 +146,7 @@ const CommuteModal: React.FC<CommuteModalProps> = ({
         <OkayButtonDiv>
           <OkayButton
             onClick={handleOkayButton}
-            workonoff={workonoff}
+            $workonoff={workonoff}
             color="#000"
             $borderColor="#d2d2d2"
             $backgroundColor="#fff">
@@ -160,7 +154,7 @@ const CommuteModal: React.FC<CommuteModalProps> = ({
           </OkayButton>
           <OkayButton
             onClick={handleOkayButton}
-            workonoff={workonoff}
+            $workonoff={workonoff}
             color="#fff"
             $borderColor="#000"
             $backgroundColor="#000">
@@ -169,7 +163,6 @@ const CommuteModal: React.FC<CommuteModalProps> = ({
         </OkayButtonDiv>
       </Modal>
     </ModalLayout>
-  );
+  ) : null;
 };
-
 export default CommuteModal;

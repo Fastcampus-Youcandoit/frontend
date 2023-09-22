@@ -11,6 +11,7 @@ import { useAuth } from "../../context/AuthContext";
 import CommuteButtonComponent from "../commute/CommuteButtonComponent";
 import Logo from "./Logo";
 import Menu from "../../assets/icons/header_icon/hamburger_icon.png";
+import CommuteModal from "../commute/CommuteModal";
 
 const HeaderBox = styled.header`
   height: 9vh;
@@ -45,7 +46,7 @@ export const HeaderItem = styled.div`
   border-radius: 10px;
   transition: all 0.3s ease 0s;
 
-  &:not(#commute):hover {
+  &:not(.commute):hover {
     transform: scale(1.05);
   }
 
@@ -159,7 +160,9 @@ const Header = () => {
   const [isDrop, setIsDrop] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
-
+  const [modalOpen, setModalOpen] = useState(false);
+  const [workingHours, setWorkingHours] = useState<string>("0");
+  const [workonoff, setWorkonoff] = useState<boolean>(false);
   useEffect(() => {
     const clickEvent = (e: MouseEvent) => {
       if (
@@ -197,8 +200,16 @@ const Header = () => {
         </StyledLink>
         <HeaderItems>
           <DisAppear>
-            <HeaderItem>
-              {currentUser && <CommuteButtonComponent $isIcon />}
+            <HeaderItem className="commute">
+              {currentUser && (
+                <CommuteButtonComponent
+                  setWorkingHours={setWorkingHours}
+                  workonoff={workonoff}
+                  setModalOpen={setModalOpen}
+                  setWorkonoff={setWorkonoff}
+                  $isIcon
+                />
+              )}
             </HeaderItem>
             {HEADER_MENU_ITEMS.map(item => (
               <HeaderItem key={item.id}>
@@ -224,9 +235,15 @@ const Header = () => {
                   {isDrop && (
                     <DropDownBox>
                       <DropDownItemBox>
-                        <HeaderItem>
+                        <HeaderItem className="commute">
                           {currentUser && (
-                            <CommuteButtonComponent $isIcon={false} />
+                            <CommuteButtonComponent
+                              setWorkingHours={setWorkingHours}
+                              workonoff={workonoff}
+                              setWorkonoff={setWorkonoff}
+                              setModalOpen={setModalOpen}
+                              $isIcon
+                            />
                           )}
                         </HeaderItem>
                         {HEADER_MENU_ITEMS.map(item => (
@@ -278,6 +295,13 @@ const Header = () => {
           )}
         </HeaderItems>
       </HeaderNav>
+      <CommuteModal
+        modalOpen={modalOpen}
+        workonoff={workonoff}
+        setWorkonoff={setWorkonoff}
+        setModalOpen={setModalOpen}
+        workingHours={workingHours}
+      />
     </HeaderBox>
   );
 };
