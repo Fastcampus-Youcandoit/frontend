@@ -198,17 +198,9 @@ const FindButtonWrapper = styled.div`
   margin-left: auto;
 `;
 
-<<<<<<< HEAD
-const FindButton = styled.button<{ bordercolor: string }>`
-  margin-top: 2.5rem;
-  margin-left: auto;
-  margin-right: 1.5rem;
-  border: 2px solid ${props => props.bordercolor || "#d2d2d2"};
-=======
 const FindButton = styled(Button)`
   margin-left: 1.2rem;
   box-shadow: 0px 2px 5px #00000029;
->>>>>>> 926badf191a50e4fcadc28503cc56cd98d6a45cf
 `;
 
 const Login = () => {
