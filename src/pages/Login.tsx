@@ -83,10 +83,9 @@ export const LoginButton = styled.button<StylesProps>`
   font-size: 22px;
   line-height: 30px;
   color: ${props => props.color || "#000"};
-  background-color: ${props => props.$backgroundColor || "#fff"};
-  border: ${props => props.$backgroundColor || "1px solid #d4d4d4"};
+  background-color: ${props => props.background || "#fff"};
+  border: ${props => props.background || "1px solid #d4d4d4"};
   cursor: pointer;
-  translate: transform 0.8s;
   > img {
     float: left;
     margin-left: 25px;
@@ -96,7 +95,7 @@ export const LoginButton = styled.button<StylesProps>`
   }
   &:hover {
     transform: scale(1.02);
-    translate: transform 0.8s;
+    transition: transform 0.8s;
   }
 `;
 
@@ -314,10 +313,7 @@ const Login = () => {
                   <Message>이메일과 패스워드 모두 입력해주세요.</Message>
                 ))}
 
-              <LoginButton
-                color="#087EA4"
-                $backgroundColor="#E6F7FF"
-                type="submit">
+              <LoginButton background="#e6f7ff" color="#087EA4" type="submit">
                 로그인
               </LoginButton>
               <Text>

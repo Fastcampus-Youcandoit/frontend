@@ -13,11 +13,11 @@ import { ButtonProps } from "../types/notice";
 import { useAuth } from "../context/AuthContext";
 
 const Wrap = styled.div`
-  height: 91vh;
+  height: 100vh;
 `;
 
 const WriteBox = styled.div`
-  height: calc(100% - 8vh);
+  height: 92vh;
   padding: 0 4rem 4rem 4rem;
 `;
 
@@ -38,7 +38,12 @@ const HeaderButtonBox = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
-  height: 40%;
+  height: 35%;
+
+  @media (max-width: 425px) {
+    height: 30%;
+    transition: all 0.5s;
+  }
 `;
 
 const HeaderButton = styled.button<ButtonProps>`
@@ -53,6 +58,12 @@ const HeaderButton = styled.button<ButtonProps>`
   border-radius: 5px;
   padding: ${props => props.$pd};
   background-color: ${props => props.$bgColor};
+  cursor: pointer;
+  transition: transform 0.8s;
+  &:hover {
+    transform: scale(1.1);
+    transition: transform 0.8s;
+  }
 `;
 
 const WriteButtonIcon = styled.img`
@@ -81,6 +92,12 @@ const EditorBox = styled.div`
 
 const StyledLink = styled(Link)`
   height: 100%;
+`;
+
+const FooterBox = styled.div`
+  @media (max-width: 850px) {
+    display: none;
+  }
 `;
 
 const NoticeEditor = () => {
@@ -198,7 +215,9 @@ const NoticeEditor = () => {
           )}
         </EditorBox>
       </WriteBox>
-      <Footer />
+      <FooterBox>
+        <Footer />
+      </FooterBox>
     </Wrap>
   );
 };

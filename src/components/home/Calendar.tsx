@@ -96,6 +96,11 @@ const AddContentButton = styled.button`
   border-radius: 5px;
   cursor: pointer;
   font-family: "NotoSansKR-Medium";
+  transition: transform 0.8s;
+  &:hover {
+    transform: scale(1.1);
+    transition: transform 0.8s;
+  }
 `;
 
 const HomeCalendar = () => {

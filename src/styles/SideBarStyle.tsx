@@ -1,10 +1,15 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const SideBarBox = styled.div`
-  width: 30rem;
+  min-width: 24vw;
   height: 90vh;
   margin: 15px 50px 0 0;
   font-family: "NotoSansKR-Regular";
+
+  @media (max-width: 1024px) {
+    margin: 16px 32px 16px 0;
+  }
 `;
 
 const SideBarItem = styled.div`
@@ -55,6 +60,10 @@ const Text = styled.div`
   &:hover {
     background-color: #f6f7f9;
   }
+
+  @media (max-width: 1024px) {
+    width: 17rem;
+  }
 `;
 
 const CompanyIcon = styled.img`
@@ -73,6 +82,13 @@ const BottomIcon = styled.img`
   }
 `;
 
+const GalleryMainText = styled.span`
+  font-size: 21px;
+  margin-left: 20px;
+  font-family: "NotoSansKR-Medium";
+  color: #087ea4;
+`;
+
 export {
   SideBarBox,
   SideBarItem,
@@ -82,4 +98,6 @@ export {
   Text,
   CompanyIcon,
   BottomIcon,
+  Link,
+  GalleryMainText,
 };

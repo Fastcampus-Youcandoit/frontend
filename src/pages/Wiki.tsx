@@ -7,12 +7,20 @@ const WikiWrapper = styled.div`
   display: flex;
 `;
 
+const WikiSideBarBoxForDeskTop = styled.div`
+  @media (max-width: 1024px) {
+    display: none;
+  }
+`;
+
 const Wiki = () => {
   return (
     <>
       <Header />
       <WikiWrapper>
-        <WikiSideBar />
+        <WikiSideBarBoxForDeskTop>
+          <WikiSideBar closeDropdown={() => console.log("WikiSideBar!")} />
+        </WikiSideBarBoxForDeskTop>
         <Outlet />
       </WikiWrapper>
     </>
