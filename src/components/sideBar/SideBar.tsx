@@ -19,9 +19,14 @@ import {
   Text,
   CompanyIcon,
   BottomIcon,
+  GalleryMainText,
 } from "../../styles/SideBarStyle";
 
-const WikiSideBar = () => {
+interface WikiSideBarProps {
+  closeDropdown: () => void;
+}
+
+const WikiSideBar = ({ closeDropdown }: WikiSideBarProps) => {
   const navigate = useNavigate();
   const [CompanyTextVisible, setCompanyTextVisible] = useState(true);
   const [ProjectTextVisible, setProjectTextVisible] = useState(false);
@@ -74,13 +79,17 @@ const WikiSideBar = () => {
       </SideBarItem>
       {CompanyTextVisible && (
         <>
-          <Link to="/wiki/office-life/company-rules">
+          <Link to="/wiki/office-life/company-rules" onClick={closeDropdown}>
             <Text>회사내규</Text>
           </Link>
-          <Link to="/wiki/office-life/team-introduction">
+          <Link
+            to="/wiki/office-life/team-introduction"
+            onClick={closeDropdown}>
             <Text>팀소개</Text>
           </Link>
-          <Link to="/wiki/office-life/organization-chart">
+          <Link
+            to="/wiki/office-life/organization-chart"
+            onClick={closeDropdown}>
             <Text>조직도</Text>
           </Link>
         </>
@@ -109,13 +118,13 @@ const WikiSideBar = () => {
       </SideBarItem>
       {ProjectTextVisible && (
         <>
-          <Link to="/wiki/project/in-progress">
+          <Link to="/wiki/project/in-progress" onClick={closeDropdown}>
             <Text>진행중인 프로젝트</Text>
           </Link>
-          <Link to="/wiki/project/upcoming">
+          <Link to="/wiki/project/upcoming" onClick={closeDropdown}>
             <Text>예정된 프로젝트</Text>
           </Link>
-          <Link to="/wiki/project/completed">
+          <Link to="/wiki/project/completed" onClick={closeDropdown}>
             <Text>완료된 프로젝트</Text>
           </Link>
         </>
@@ -144,10 +153,10 @@ const WikiSideBar = () => {
       </SideBarItem>
       {OnboardingTextVisible && (
         <>
-          <Link to="/wiki/onboarding/reading-list">
+          <Link to="/wiki/onboarding/reading-list" onClick={closeDropdown}>
             <Text>신입사원 필독서</Text>
           </Link>
-          <Link to="/wiki/onboarding/topics">
+          <Link to="/wiki/onboarding/topics" onClick={closeDropdown}>
             <Text>온보딩 주제</Text>
           </Link>
         </>
@@ -177,7 +186,7 @@ const GallerySideBar = () => {
               alt="사진첩 아이콘"
             />
             <Link to="/gallery/all">
-              <MainText>사진첩</MainText>
+              <GalleryMainText>사진첩</GalleryMainText>
             </Link>
           </Section>
           <BottomIcon

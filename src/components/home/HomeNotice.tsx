@@ -12,7 +12,6 @@ const SectionContainer = styled.section`
   border-radius: 10px;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
   padding: 1.5rem;
-  transition: all 0.5s;
 
   @media (max-width: 1024px) {
     width: 100%;
@@ -26,10 +25,15 @@ const SectionHeader = styled.div`
   justify-content: space-between;
   border-bottom: 1.2px solid #d2d2d2;
   font-family: "NotoSansKR-Medium";
-  padding-bottom: 0.5rem;
+  padding-bottom: 1rem;
 `;
 
-const SectionHeaderTitle = styled.div`
+const SectionHeaderBox = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const SectionHeaderTitle = styled.span`
   font-size: 1.2rem;
 `;
 
@@ -39,10 +43,16 @@ const SectionButtonBox = styled.div`
 `;
 
 const SectionButton = styled.button`
+  height: 100%;
   border-radius: 5px;
   border: none;
-  cursor: pointer;
   font-family: "NotoSansKR-Medium";
+  cursor: pointer;
+  transition: transform 0.8s;
+  &:hover {
+    transform: scale(1.1);
+    transition: transform 0.8s;
+  }
 `;
 
 const ContentsBox = styled.div`
@@ -55,14 +65,48 @@ const ContentItemsBox = styled.ul`
 
 const ContentItem = styled.li`
   width: 100%;
-  height: 5.5rem;
+  height: 4.5rem;
   border-bottom: 1px solid #d2d2d2;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-family: "NotoSansKR-Medium";
-  padding: 0 0.3rem;
+  padding: 0 1rem 0 0;
   cursor: pointer;
+  transition: all 0.5s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media (min-width: 1919px) {
+    height: 5.5rem;
+    transition: all 0.5s;
+  }
+
+  @media (min-width: 1600px) {
+    height: 5rem;
+    transition: all 0.5s;
+  }
+
+  @media (max-width: 1440px) {
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 1300px) {
+    font-size: 0.8rem;
+  }
+`;
+
+const NoticeTitle = styled.span`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+const NoticeAuthor = styled.span`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const StyledLink = styled(Link)`
@@ -95,7 +139,9 @@ const HomeNotice = () => {
   return (
     <SectionContainer>
       <SectionHeader>
-        <SectionHeaderTitle>공지사항</SectionHeaderTitle>
+        <SectionHeaderBox>
+          <SectionHeaderTitle>공지사항</SectionHeaderTitle>
+        </SectionHeaderBox>
         <SectionButtonBox>
           <StyledLink to="/notice" state={{ noticeId: null }}>
             <SectionButton type="button">전체보기</SectionButton>
@@ -111,8 +157,8 @@ const HomeNotice = () => {
                 key={notice.id}
                 state={{ noticeId: notice.id }}>
                 <ContentItem>
-                  <div>{notice.title}</div>
-                  <div>{notice.author}</div>
+                  <NoticeTitle>{notice.title}</NoticeTitle>
+                  <NoticeAuthor>{notice.author}</NoticeAuthor>
                 </ContentItem>
               </StyledLink>
             ))}

@@ -107,12 +107,12 @@ export const Button = styled.button<GalleryProps>`
   margin-left: 0.9rem;
   text-align: center;
   font: normal normal bold 1.25rem/1.8rem Noto Sans KR;
-  border: 2px solid ${props => props.bordercolor || "#d2d2d2"};
   border-radius: 10px;
   cursor: pointer;
+  transition: transform 0.8s;
+  border: 2px solid ${props => props.bordercolor || "#d2d2d2"};
   color: ${props => props.color || "#000"};
   background-color: ${props => props.$backgroundColor || "#fff"};
-  transition: transform 0.8s;
   &:hover {
     transform: scale(1.08);
     transition: transform 0.8s;

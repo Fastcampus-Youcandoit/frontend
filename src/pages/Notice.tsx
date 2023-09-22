@@ -12,8 +12,8 @@ import { NoticeDetailProps } from "../types/notice";
 
 const NoticeBox = styled.div`
   width: 100vw;
-  height: 80vh;
-  padding: 25px 50px;
+  height: 83vh;
+  padding: 2rem 3rem;
   overflow-y: scroll;
 `;
 
@@ -33,8 +33,14 @@ const NoticeMainText = styled.span`
 `;
 
 const WriteIcon = styled.img`
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.8rem;
+  height: 2.8rem;
+  cursor: pointer;
+  transition: transform 0.8s;
+  &:hover {
+    transform: scale(1.1);
+    transition: transform 0.8s;
+  }
 `;
 
 const Hr = styled.hr`
@@ -65,11 +71,20 @@ const NoticeListItem = styled.div<{ $isSelected: boolean }>`
 `;
 
 const NoticeLeft = styled.div`
-  width: 400px;
-  font-size: 18px;
+  width: 90%;
+  font-size: 1rem;
   font-family: "NotoSansKR-Regular";
   display: flex;
   justify-content: flex-start;
+  transition: all 0.5s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media (max-width: 815px) {
+    font-size: 0.8rem;
+    transition: all 0.5s;
+  }
 `;
 
 const NoticeRight = styled.div`
@@ -78,6 +93,15 @@ const NoticeRight = styled.div`
   font-size: 15px;
   display: flex;
   justify-content: space-evenly;
+  transition: all 0.5s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media (max-width: 815px) {
+    font-size: 0.8rem;
+    transition: all 0.5s;
+  }
 `;
 
 const NoticeId = styled.span`
@@ -86,6 +110,12 @@ const NoticeId = styled.span`
 
 const NoticeTitle = styled.span`
   margin-left: 25px;
+`;
+
+const FooterBox = styled.div`
+  @media (max-width: 815px) {
+    display: none;
+  }
 `;
 
 const Notice: React.FC = () => {
@@ -156,7 +186,9 @@ const Notice: React.FC = () => {
         ))}
         <Hr />
       </NoticeBox>
-      <Footer />
+      <FooterBox>
+        <Footer />
+      </FooterBox>
     </>
   );
 };

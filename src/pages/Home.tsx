@@ -17,6 +17,10 @@ const HomeMainSection = styled.section`
   flex-direction: column;
   gap: 2rem;
   padding: 1.5rem 4rem;
+
+  @media (max-width: 1024px) {
+    padding: 1.5rem 2rem;
+  }
 `;
 
 const SectionItemBox = styled.div`
