@@ -54,21 +54,21 @@ const EventBox = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem;
 `;
 
 const CheckButton = styled.input`
   cursor: pointer;
-  width: 1.2rem;
-  height: 1.2rem;
+  width: 1.5rem;
+  height: 1.5rem;
 `;
 
 const DateTitle = styled.h2`
   width: 100%;
-  height: 2rem;
+  height: 2.5rem;
   font-family: "NotoSansKR-regular";
-  border-radius: 10px;
-  background-color: #a5d8ff;
+  border-radius: 5px;
+  border: 1.2px solid #d2d2d2;
   padding: 0 0.5rem;
   display: flex;
   align-items: center;
@@ -79,10 +79,11 @@ const ModalButtonBox = styled.div`
   gap: 1.5rem;
 `;
 
-const ModalButton = styled.button`
+const ModalButton = styled.button<{ $backgroundColor: string }>`
   cursor: pointer;
   color: black;
-  background-color: #dee2e6;
+  background-color: ${props =>
+    props.$backgroundColor ? props.$backgroundColor : "#dee2e6"};
   border: none;
   font-size: 0.8rem;
   font-family: "NotoSansKR-medium";
@@ -218,10 +219,16 @@ const EventDetailModal = ({
               </EventBox>
             ))}
             <ModalButtonBox>
-              <ModalButton type="button" onClick={handleEditClick}>
+              <ModalButton
+                type="button"
+                onClick={handleEditClick}
+                $backgroundColor="#3997b6">
                 선택 일정 수정
               </ModalButton>
-              <ModalButton type="button" onClick={handleEditModal}>
+              <ModalButton
+                type="button"
+                onClick={handleEditModal}
+                $backgroundColor="">
                 뒤로가기
               </ModalButton>
             </ModalButtonBox>
@@ -245,13 +252,22 @@ const EventDetailModal = ({
               />
             </EventBox>
             <ModalButtonBox>
-              <ModalButton type="button" onClick={fetchUpdatedEvent}>
+              <ModalButton
+                type="button"
+                onClick={fetchUpdatedEvent}
+                $backgroundColor="#3997b6">
                 일정 저장
               </ModalButton>
-              <ModalButton type="button" onClick={deleteSelectedEvent}>
+              <ModalButton
+                type="button"
+                onClick={deleteSelectedEvent}
+                $backgroundColor="#f1f3f5">
                 일정 삭제
               </ModalButton>
-              <ModalButton type="button" onClick={() => setIsEditing(false)}>
+              <ModalButton
+                type="button"
+                onClick={() => setIsEditing(false)}
+                $backgroundColor="">
                 수정 취소
               </ModalButton>
             </ModalButtonBox>

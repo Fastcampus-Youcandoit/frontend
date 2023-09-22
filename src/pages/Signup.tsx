@@ -3,11 +3,12 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { auth } from "../firebase";
-import { useLogState } from "../types/userLog";
 import { Form, HomeLink, Input, LoginButton, Message, Wrapper } from "./Login";
+import "../assets/fonts/Font.css";
 
 const StyledForm = styled(Form)`
   height: 35rem;
@@ -24,7 +25,9 @@ const InputWrapper = styled.div`
     border: none;
     border-bottom: 2px solid #b2b2b2;
     outline: none;
-    font: normal normal bold 20px/36px Noto Sans KR;
+    font-family: "NotoSansKR-Medium";
+    font-size: 1rem;
+    font-size: 1.25rem;
     &::placeholder {
       color: #b2b2b2;
     }
@@ -32,25 +35,14 @@ const InputWrapper = styled.div`
 `;
 
 const Signup = () => {
-  const {
-    name,
-    setName,
-    email,
-    setEmail,
-    password,
-    setPassword,
-    passwordCheck,
-    setPasswordCheck,
-    emailMessage,
-    setEmailMessage,
-    nameMessage,
-    setNameMessage,
-    passwordMessage,
-    setPasswordMessage,
-    passwordCheckMessage,
-    setPasswordCheckMessage,
-  } = useLogState();
-
+  const [email, setEmail] = useState<string | undefined>("");
+  const [password, setPassword] = useState<string | undefined>("");
+  const [name, setName] = useState("");
+  const [passwordCheck, setPasswordCheck] = useState("");
+  const [emailMessage, setEmailMessage] = useState("");
+  const [nameMessage, setNameMessage] = useState("");
+  const [passwordMessage, setPasswordMessage] = useState("");
+  const [passwordCheckMessage, setPasswordCheckMessage] = useState("");
   const navigate = useNavigate();
 
   // 1.이메일 유효성검사
@@ -251,7 +243,7 @@ const Signup = () => {
             </InputWrapper>
             <LoginButton
               color="#087ea4"
-              $backgroundColor="#e6f7ff"
+              background="#e6f7ff"
               onClick={() => handleSignUp()}
               type="button">
               회원가입
