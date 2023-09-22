@@ -4,7 +4,7 @@ import styled from "styled-components";
 import closeIconUrl from "../../assets/icons/gallery_icon/image_close_icon.png";
 import uploadIconUrl from "../../assets/icons/gallery_icon/image_upload_icon.png";
 import { storage } from "../../firebase";
-import { ModalProps, StylesProps, useModalState } from "../../types/gallery";
+import { ModalProps, StylesProps, useModalState } from "../../types/Gallery";
 
 export const ModalBackground = styled.div`
   position: fixed;

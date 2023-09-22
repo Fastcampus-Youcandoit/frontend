@@ -19,7 +19,7 @@ import {
   ModalUploadIcon,
 } from "./GalleryModal";
 import { useAuth } from "../../context/AuthContext";
-import { DetailModalProps, useModalState } from "../../types/gallery";
+import { DetailModalProps, useModalState } from "../../types/Gallery";
 
 const DetailModalBox = styled(ModalBox)`
   width: 55rem;
