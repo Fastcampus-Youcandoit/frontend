@@ -1,46 +1,26 @@
-# Getting Started with Create React App
+<div align="center">
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# **Youcandoit**
 
-## Available Scripts
+ [Youcandoit](https://dancing-queijadas-788f4f.netlify.app)
 
-In the project directory, you can run:
 
-### `npm start`
+  <img src="https://github.com/Fastcampus-Youcandoit/frontend/assets/117037249/ac6bb6af-6aeb-44e8-b812-394ee627878e" alt="image" width="500" />
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+    "Youcandoit은 직원들을 위한 위키 사이트입니다"
 
-### `npm test`
+</div>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+<br>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🏠 Members
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 프론트엔드
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+|어준혁(리더)|박지성|이연수|장영민|채민석|
+|:-:|:-:|:-:|:-:|:-:|
+|<img src="https://github.com/Fastcampus-Youcandoit/frontend/assets/117037249/15f4ae16-28ef-40d1-b9ce-d978884e8d81" alt="Eojoonhyuk" width="100" height="100">|<img src="https://github.com/Fastcampus-Youcandoit/frontend/assets/117037249/c1f038bc-93ae-4d7e-b0c3-d939f71f0293" alt="flamozzi" width="100" height="100">|<img src="https://github.com/Fastcampus-Youcandoit/frontend/assets/117037249/3580cf59-d8be-4f03-9fac-7ce8a06a8c18" alt="suehub" width="100" height="100">|<img src="https://github.com/Fastcampus-Youcandoit/frontend/assets/117037249/d668842a-3a3a-416b-a262-210719d225ec" alt="yeongmins" width="100" height="100">|<img src="https://github.com/Fastcampus-Youcandoit/frontend/assets/117037249/d4856748-092f-498f-a23f-2dd04088b96c" alt="chaeminseok" width="100" height="100">|
+|[Eojoonhyuk](https://github.com/Eojoonhyuk)|[flamozzi](https://github.com/flamozzi)|[suehub](https://github.com/suehub)|[yeongmins](https://github.com/yeongmins)|[chaeminseok](https://github.com/chaeminseok)|
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
