@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import writeIcon from "../assets/icons/wiki_icon/wiki_write_icon.png";
-import Footer from "../components/common/Footer";
 import Header from "../components/common/Header";
 import NoticeDetail from "../components/notice/NoticeDetail";
 import { useAuth } from "../context/AuthContext";
