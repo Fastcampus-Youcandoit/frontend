@@ -1,11 +1,10 @@
 import styled from "styled-components";
 
 export const Span = styled.span`
-  width: 4rem;
   font-size: 1.1rem;
-  margin: 0 0 4px 5px;
   font-family: "SUITE-Bold";
   transition: all 0.5s;
+  padding-bottom: 0.2rem;
 
   @media (max-width: 1024px) {
     font-size: 0.9rem;
@@ -18,7 +17,7 @@ export const WorkOnMark = styled.img`
   margin-right: 0.4rem;
 `;
 
-export const CommuteButton = styled.button`
+export const CommuteButton = styled.button<{ $isIcon: boolean }>`
   // background-color: #f6f7f9;
   // height: 100%;
   // border-radius: 10px;
@@ -26,12 +25,17 @@ export const CommuteButton = styled.button`
   // padding: 0 2rem;
   // box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: center;
+  margin-left: 1rem;
   cursor: pointer;
+  flex-direction: ${props => (props.$isIcon ? "row" : "row-reverse")};
   background: none;
   border: none;
+  gap: 0.2rem;
+  padding: 0;
   transition: all 0.3s ease 0s;
+  width: 100%;
 
   &:hover {
     transform: scale(1);

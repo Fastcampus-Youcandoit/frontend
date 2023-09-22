@@ -8,8 +8,9 @@ import { db } from "../../firebase";
 import { IconImg } from "../common/Header";
 import CommuteModal from "./CommuteModal";
 import { CommuteButton, Span, WorkOnMark } from "./StyleComponentCommute";
+import { CommuteIcon } from "../../types/commute";
 
-const CommuteButtonComponent = () => {
+const CommuteButtonComponent = ({ $isIcon }: CommuteIcon) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [workonoff, setWorkonoff] = useState<boolean>(false);
   const [workOnTime, setWorkOnTime] = useState<string>("00:00:00");
@@ -85,12 +86,10 @@ const CommuteButtonComponent = () => {
 
   return (
     <>
-      <CommuteButton onClick={() => setModalOpen(true)} type="button">
+      <CommuteButton type="button" $isIcon={$isIcon}>
         <WorkOnMark src={workonoff ? commuteBlue : commuteRed} />
-        <IconImg src={commuteIcon} alt="commute icon" />
-        <Span className="commute_span">
-          {workonoff ? workOnTime : "commute"}
-        </Span>
+        {$isIcon && <IconImg src={commuteIcon} alt="commute icon" />}
+        <Span>{workonoff ? workOnTime : "commute"}</Span>
       </CommuteButton>
 
       {modalOpen && (
