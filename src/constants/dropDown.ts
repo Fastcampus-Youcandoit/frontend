@@ -1,8 +1,6 @@
 import gelleryBlack from "../assets/icons/header_icon/header_gellery_black_icon.png";
 import wikiBlack from "../assets/icons/header_icon/header_wiki_black_icon.png";
 import noticeIcon from "../assets/icons/header_icon/header_notice_icon.png";
-import loginIcon from "../../assets/icons/header_icon/header_login_icon.png";
-import logoutIcon from "../../assets/icons/header_icon/header_logout_icon.png";
 
 export const HEADER_MENU_ITEMS = [
   {
@@ -14,7 +12,7 @@ export const HEADER_MENU_ITEMS = [
   },
   {
     id: 1,
-    path: "/wiki",
+    path: "/wiki/office-life/company-rules",
     icon: wikiBlack,
     alt: "wiki icon",
     name: "wiki",

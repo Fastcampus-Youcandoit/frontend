@@ -26,8 +26,11 @@ const SectionHeader = styled.div`
   justify-content: space-between;
   border-bottom: 1.2px solid #d2d2d2;
   font-family: "SUITE-Bold";
-  padding-bottom: 0.5rem;
+  padding-bottom: 1rem;
   height: 10%;
+  @media screen and (max-width: 1023px) {
+    padding-bottom: 2rem;
+  }
 `;
 
 const HeaderContentContainer = styled.div`

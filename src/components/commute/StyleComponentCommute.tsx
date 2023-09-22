@@ -28,7 +28,7 @@ export const CommuteButton = styled.button<{ $isIcon: boolean }>`
   flex-direction: ${props => (props.$isIcon ? "row" : "row-reverse")};
   background: none;
   border: none;
-  gap: 0.2rem;
+  gap: 1.2rem;
   padding: 0;
   transition: all 0.3s ease 0s;
   width: 100%;

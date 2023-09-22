@@ -45,10 +45,6 @@ export const HeaderItem = styled.div`
   border-radius: 10px;
   transition: all 0.3s ease 0s;
 
-  &:not(#commute):hover {
-    transform: scale(1.05);
-  }
-
   @media (max-width: 1024px) {
     font-size: 0.9rem;
     transition: all 0.3s;
@@ -156,6 +152,7 @@ const UnloginedBox = styled.div`
 
 const MenuImg = styled.img`
   width: 100%;
+  cursor: pointer;
 `;
 
 const Header = () => {
@@ -229,7 +226,7 @@ const Header = () => {
                   {isDrop && (
                     <DropDownBox>
                       <DropDownItemBox>
-                        <HeaderItem>
+                        <HeaderItem className="commute">
                           {currentUser && (
                             <CommuteButtonComponent $isIcon={false} />
                           )}
