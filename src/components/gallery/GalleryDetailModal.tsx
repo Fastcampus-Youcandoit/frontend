@@ -20,28 +20,45 @@ import {
   UploadBox,
   UploadDescription,
 } from "./GalleryModal";
+import "../../assets/fonts/Font.css";
 
 const DetailModalBox = styled(ModalBox)`
-  width: 55rem;
+  width: 55vw;
+  > div {
+    width: 55vw;
+    margin: 0 auto;
+    padding: 0.8rem;
+    box-sizing: border-box;
+  }
+  @media (max-width: 768px) {
+    width: 75vw;
+  }
 `;
 
-const DetailImage = styled.img`
-  width: 45rem;
-  max-height: 28rem;
-  object-fit: contain;
-  margin: auto 0;
+const DetailImage = styled.div`
+  width: 50vw;
+  display: flex;
+  margin: 0 auto;
+  justify-content: center;
+
+  > img {
+    object-fit: contain;
+  }
 `;
 
 const DetailUploadBox = styled(UploadBox)`
-  width: 43rem;
-  height: 25.5rem;
-  padding: 12rem 0;
+  width: 48vw;
+  height: 28vw;
+  margin: 0 auto;
+  @media (max-width: 768px) {
+    width: 61.5vw;
+    height: 41.7vw;
+  }
 `;
 
 const DetailImagePreview = styled(ImagePreview)`
-  width: 43rem;
-  height: 25.5rem;
-  object-fit: contain;
+  width: 48.2vw;
+  height: 28vw;
 `;
 
 const DetailFileNameBox = styled(FileNameBox)`
@@ -49,17 +66,18 @@ const DetailFileNameBox = styled(FileNameBox)`
 `;
 
 const Category = styled.p`
-  margin-left: -3rem;
   margin-top: 0.2rem;
-  text-align: center;
-  font: normal normal bold 0.9rem Noto Sans KR;
+  text-align: left;
+  font-size: 0.9rem;
+  font-family: "NotoSansKR-Medium";
   color: #808080;
 `;
 
 const EditCategory = styled.p`
   margin-left: -1.5rem;
   margin-right: 5px;
-  font: normal normal bold 0.8rem/1.1rem Noto Sans KR;
+  font-family: "NotoSansKR-Medium";
+  font-size: 0.8rem;
 `;
 
 const GalleryDetailModal: React.FC<DetailModalProps> = ({
@@ -220,101 +238,109 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
         <CloseButton onClick={onClose}>
           <img src={closeIconUrl} alt="close icon" />
         </CloseButton>
-        {isEdit ? (
-          <DetailUploadBox
-            onClick={handleInputFile}
-            onDrop={handleDrag}
-            onDragOver={e => e.preventDefault()}>
-            {selectedImage ? (
-              <DetailImagePreview src={selectedImage} alt="미리보기" />
-            ) : (
-              <>
-                <ModalUploadIcon src={uploadIconUrl} alt="upload icon" />
-                <UploadDescription>
-                  파일 업로드를 위해 클릭하거나 드래그하세요.
-                </UploadDescription>
-              </>
-            )}
-          </DetailUploadBox>
-        ) : (
-          <DetailImage src={imageUrl} alt="Image Detail" loading="lazy" />
-        )}
-
-        <DetailFileNameBox>
-          {isEdit && <EditCategory>{categoryName} | </EditCategory>}
-          {isEdit && (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="1em"
-              viewBox="0 0 448 512">
-              <path d="M364.2 83.8c-24.4-24.4-64-24.4-88.4 0l-184 184c-42.1 42.1-42.1 110.3 0 152.4s110.3 42.1 152.4 0l152-152c10.9-10.9 28.7-10.9 39.6 0s10.9 28.7 0 39.6l-152 152c-64 64-167.6 64-231.6 0s-64-167.6 0-231.6l184-184c46.3-46.3 121.3-46.3 167.6 0s46.3 121.3 0 167.6l-176 176c-28.6 28.6-75 28.6-103.6 0s-28.6-75 0-103.6l144-144c10.9-10.9 28.7-10.9 39.6 0s10.9 28.7 0 39.6l-144 144c-6.7 6.7-6.7 17.7 0 24.4s17.7 6.7 24.4 0l176-176c24.4-24.4 24.4-64 0-88.4z" />
-            </svg>
-          )}
-          <Input
-            type="file"
-            ref={imageInputRef}
-            onChange={handleFileChange}
-            accept=".png,.jpg,.jpeg,.gif"
-          />
-
+        <div>
           {isEdit ? (
-            <FileName>{selectedFileName || "이미지.png"}</FileName>
-          ) : (
-            <Category>CATEGORY | {categoryName}</Category>
-          )}
-        </DetailFileNameBox>
-
-        <ButtonBox>
-          {isEdit ? (
-            <>
-              <Button
-                onClick={() => setIsEdit(!isEdit)}
-                color="#000"
-                bordercolor="#000"
-                $backgroundColor="#fff"
-                type="button">
-                Cancel
-              </Button>
-              <Button
-                color="#000"
-                bordercolor="#000"
-                $backgroundColor="#fff"
-                type="button"
-                onClick={deleteImage}>
-                Delete
-              </Button>
-              <Button
-                onClick={handleImageUpdate}
-                color="#fff"
-                $backgroundColor="#000"
-                bordercolor="#000"
-                type="button">
-                Save
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button
-                onClick={onClose}
-                color="#000"
-                bordercolor="#000"
-                $backgroundColor="#fff"
-                type="button">
-                Cancel
-              </Button>
-              {currentUser && (
-                <Button
-                  onClick={handleIsEdit}
-                  color="#fff"
-                  $backgroundColor="#000"
-                  bordercolor="#000"
-                  type="button">
-                  Edit
-                </Button>
+            <DetailUploadBox
+              onClick={handleInputFile}
+              onDrop={handleDrag}
+              onDragOver={e => e.preventDefault()}>
+              {selectedImage ? (
+                <DetailImagePreview src={selectedImage} alt="미리보기" />
+              ) : (
+                <>
+                  <ModalUploadIcon src={uploadIconUrl} alt="upload icon" />
+                  <UploadDescription>
+                    파일 업로드를 위해 클릭하거나 드래그하세요.
+                  </UploadDescription>
+                </>
               )}
-            </>
+            </DetailUploadBox>
+          ) : (
+            <DetailImage>
+              <img src={imageUrl} alt="Detail img" loading="lazy" />
+            </DetailImage>
           )}
-        </ButtonBox>
+
+          <DetailFileNameBox>
+            {isEdit && <EditCategory>{categoryName} | </EditCategory>}
+            <FileName>
+              {isEdit && (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="1em"
+                  viewBox="0 0 448 512">
+                  <path d="M364.2 83.8c-24.4-24.4-64-24.4-88.4 0l-184 184c-42.1 42.1-42.1 110.3 0 152.4s110.3 42.1 152.4 0l152-152c10.9-10.9 28.7-10.9 39.6 0s10.9 28.7 0 39.6l-152 152c-64 64-167.6 64-231.6 0s-64-167.6 0-231.6l184-184c46.3-46.3 121.3-46.3 167.6 0s46.3 121.3 0 167.6l-176 176c-28.6 28.6-75 28.6-103.6 0s-28.6-75 0-103.6l144-144c10.9-10.9 28.7-10.9 39.6 0s10.9 28.7 0 39.6l-144 144c-6.7 6.7-6.7 17.7 0 24.4s17.7 6.7 24.4 0l176-176c24.4-24.4 24.4-64 0-88.4z" />
+                </svg>
+              )}
+              <Input
+                type="file"
+                ref={imageInputRef}
+                onChange={handleFileChange}
+                accept=".png,.jpg,.jpeg,.gif"
+              />
+
+              {isEdit ? (
+                <span>{selectedFileName || "이미지.png"}</span>
+              ) : (
+                <Category>CATEGORY | {categoryName}</Category>
+              )}
+            </FileName>
+          </DetailFileNameBox>
+
+          <ButtonBox>
+            <div>
+              {isEdit ? (
+                <>
+                  <Button
+                    onClick={() => setIsEdit(!isEdit)}
+                    color="#000"
+                    bordercolor="#000"
+                    $backgroundColor="#fff"
+                    type="button">
+                    Cancel
+                  </Button>
+                  <Button
+                    color="#000"
+                    bordercolor="#000"
+                    $backgroundColor="#fff"
+                    type="button"
+                    onClick={deleteImage}>
+                    Delete
+                  </Button>
+                  <Button
+                    onClick={handleImageUpdate}
+                    color="#fff"
+                    $backgroundColor="#000"
+                    bordercolor="#000"
+                    type="button">
+                    Save
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    onClick={onClose}
+                    color="#000"
+                    bordercolor="#000"
+                    $backgroundColor="#fff"
+                    type="button">
+                    Cancel
+                  </Button>
+                  {currentUser && (
+                    <Button
+                      onClick={handleIsEdit}
+                      color="#fff"
+                      $backgroundColor="#000"
+                      bordercolor="#000"
+                      type="button">
+                      Edit
+                    </Button>
+                  )}
+                </>
+              )}
+            </div>
+          </ButtonBox>
+        </div>
       </DetailModalBox>
     </ModalBackground>
   );

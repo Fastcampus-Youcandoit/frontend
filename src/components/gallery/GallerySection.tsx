@@ -68,6 +68,14 @@ const GalleryContainer = styled.div`
   border: 1px solid #d2d2d2;
   border-radius: 5px;
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+  @media (max-width: 1024px) {
+    display: flex;
+    flex-direction: column;
+    padding-top: 3rem;
+  }
+  @media (max-width: 768px) {
+    padding-top: 2rem;
+  }
 `;
 
 const GalleryItem = styled.img`
@@ -81,6 +89,12 @@ const GalleryItem = styled.img`
   &:hover {
     transform: scale(1.02);
     transition: transform 0.8s;
+  }
+  @media (max-width: 1024px) {
+    width: 72vw;
+  }
+  @media (max-width: 768px) {
+    width: 64vw;
   }
 `;
 
