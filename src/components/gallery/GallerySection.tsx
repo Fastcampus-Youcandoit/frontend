@@ -271,7 +271,9 @@ const GallerySection = () => {
           </div>
           <DropdownSideBar>{isDrop && <GallerySideBar />}</DropdownSideBar>
         </GallerykSideBarBoxForMobile>
-        <GalleryHeaderText>모든 사진</GalleryHeaderText>
+        <GalleryHeaderText>
+          {pageTitleMapping[pageName] || "모든 사진"}
+        </GalleryHeaderText>
         {currentUser && (
           <UploadButton type="button" onClick={isModalChange}>
             <img src={uploadIconUrl} alt="img upload icon" />
