@@ -57,14 +57,14 @@ export const HeaderItem = styled.div`
 
 export const IconImg = styled.img`
   width: 1rem;
-  height 1rem;
+  height: 1rem;
   .dropdown {
     width: 0.8rem;
   }
 
   @media (max-width: 1024px) {
     width: 0.9rem;
-    height 0.9rem;
+    height: 0.9rem;
   }
 `;
 
