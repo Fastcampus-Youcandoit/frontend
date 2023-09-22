@@ -44,7 +44,7 @@ const MarkdownEditor = ({
       placeholder="내용을 입력해주세요."
       initialValue={content}
       initialEditType="markdown"
-      // previewStyle={window.innerWidth > 1000 ? "vertical" : "tab"}
+      previewStyle={window.innerWidth > 1000 ? "vertical" : "tab"}
       hideModeSwitch
       height="100%"
       usageStatistics={false}

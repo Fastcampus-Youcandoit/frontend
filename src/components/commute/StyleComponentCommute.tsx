@@ -4,7 +4,7 @@ import { Button } from "../gallery/GalleryModal";
 
 export const Span = styled.span`
   font-size: 1.08rem;
-  margin-left: 5px;
+  margin-right: 0.5rem;
   width: 4rem;
 `;
 
@@ -17,13 +17,12 @@ export const CommuteButton = styled.button<{ $isIcon: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 1rem;
   cursor: pointer;
   flex-direction: ${props => (props.$isIcon ? "row" : "row-reverse")};
   background: none;
   border: none;
-  gap: 1rem;
   padding: 0;
+  gap: 0.2rem;
   transition: all 0.3s ease 0s;
   width: 100%;
 

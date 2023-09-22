@@ -20,8 +20,6 @@ const NoticeHeader = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 5px;
-  position: sticky;
-  top: 0;
   background-color: white;
   z-index: 1;
 `;
@@ -109,12 +107,6 @@ const NoticeId = styled.span`
 
 const NoticeTitle = styled.span`
   margin-left: 25px;
-`;
-
-const FooterBox = styled.div`
-  @media (max-width: 815px) {
-    display: none;
-  }
 `;
 
 const Notice: React.FC = () => {

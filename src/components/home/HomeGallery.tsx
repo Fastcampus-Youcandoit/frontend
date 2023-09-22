@@ -112,7 +112,6 @@ const HomeGallery = () => {
   });
 
   const [buttonNumber, setButtonNumber] = useState<number>(0);
-  console.log(buttonNumber);
   const [currentImageFile, setCurrentImageFile] = useState<
     "business" | "jobPosting" | "officePhoto" | null
   >(null);
