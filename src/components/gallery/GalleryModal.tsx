@@ -30,7 +30,6 @@ export const ModalBox = styled.div`
   z-index: 99;
   > div {
     padding: 0.625rem;
-    box-sizing: border-box;
   }
   @media (max-width: 768px) {
     width: 70vw;
@@ -126,7 +125,6 @@ export const FileNameBox = styled.div`
   margin: 1rem auto;
   padding-left: 0.02rem;
   align-items: center;
-  box-sizing: border-box;
 
   @media (max-width: 768px) {
     width: 55vw;
@@ -140,7 +138,6 @@ export const FileNameBox = styled.div`
 export const FileName = styled.div`
   display: flex;
   margin-right: auto;
-  box-sizing: border-box;
   > svg {
     margin-right: 0.2rem;
   }
@@ -149,7 +146,6 @@ export const FileName = styled.div`
     text-align: center;
     font-family: "NotoSansKR-Medium";
     font-size: 1rem;
-    box-sizing: border-box;
   }
 
   @media (max-width: 475px) {
