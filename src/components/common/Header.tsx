@@ -52,8 +52,14 @@ export const HeaderItem = styled.div`
 
 export const IconImg = styled.img`
   width: 1rem;
+  height 1rem;
   .dropdown {
     width: 0.8rem;
+  }
+
+  @media (max-width: 1024px) {
+    width: 0.9rem;
+    height 0.9rem;
   }
 `;
 
@@ -67,7 +73,6 @@ const StyledLink = styled(Link)`
 `;
 
 const Name = styled.button`
-  margin-right: 3px;
   font-family: "SUITE-bold";
   font-size: 1rem;
   background: none;
@@ -81,10 +86,21 @@ const Name = styled.button`
   }
 `;
 
+const LogoutControlBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  position: relative;
+`;
+
+const LogoutControlDivBox = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const Logout = styled.button`
   position: absolute;
-  top: 60px;
-  margin-left: -8px;
+  top: 1.5rem;
   padding: 15px;
   background-color: #fff;
   border: none;
@@ -160,25 +176,27 @@ const Header = () => {
 
           {currentUser ? (
             <HeaderItem>
-              <div ref={dropdownRef}>
-                <Name type="button" onClick={() => setIsDrop(!isDrop)}>
-                  {userName} 님
-                </Name>
-                <IconImg
-                  className="dropdown"
-                  src={dropDownIcon}
-                  alt="dropdown icon"
-                />
-              </div>
+              <LogoutControlBox>
+                <LogoutControlDivBox ref={dropdownRef}>
+                  <Name type="button" onClick={() => setIsDrop(!isDrop)}>
+                    {userName} 님
+                  </Name>
+                  <IconImg
+                    className="dropdown"
+                    src={dropDownIcon}
+                    alt="dropdown icon"
+                  />
+                </LogoutControlDivBox>
 
-              {isDrop && (
-                <Logout type="button" onClick={handleLogout}>
-                  <HeaderItem>
-                    <IconImg src={logoutIcon} alt="logout icon" />
-                    logout
-                  </HeaderItem>
-                </Logout>
-              )}
+                {isDrop && (
+                  <Logout type="button" onClick={handleLogout}>
+                    <HeaderItem>
+                      <IconImg src={logoutIcon} alt="logout icon" />
+                      logout
+                    </HeaderItem>
+                  </Logout>
+                )}
+              </LogoutControlBox>
             </HeaderItem>
           ) : (
             <HeaderItem>

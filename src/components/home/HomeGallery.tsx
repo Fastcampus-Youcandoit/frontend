@@ -95,7 +95,7 @@ const Image = styled.img`
     object-fit: scale-down;
     background-color: white;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4);
-    transform: scale(1.25);
+    transform: scale(1.12);
     transition: transform 0.5s;
   }
 `;

@@ -1,18 +1,23 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { getDownloadURL, listAll, ref } from "firebase/storage";
 import { storage } from "../../firebase";
 import uploadIconUrl from "../../assets/icons/gallery_icon/image_upload_icon.png";
 import GalleryModal from "./GalleryModal";
 import GalleryDetailModal from "./GalleryDetailModal";
-import { WikiMainText } from "../wiki/WikiComponent";
+import dropdownIcon from "../../assets/icons/header_icon/header_dropdown_icon.png";
 import { useAuth } from "../../context/AuthContext";
+import { GallerySideBar } from "../sideBar/SideBar";
 
 const GalleryBox = styled.div`
   margin-top: 2rem;
   width: 100%;
-  padding: 0 3rem 0 0;
+  padding-right: 3rem;
+
+  @media (max-width: 1024px) {
+    padding: 0 3rem;
+  }
 `;
 
 const GalleryHeader = styled.div`
@@ -37,24 +42,69 @@ const UploadButton = styled.button`
 
 const GalleryContainer = styled.div`
   width: 100%;
-  margin-top: 0.6rem;
-  margin-right: 1.1rem;
+  background-color: #f7f7f7;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 2.3rem;
+  align-items: center;
+  justify-content: center;
+  grid-template-columns: repeat(3, 0fr);
+  grid-gap: 2rem;
+  padding: 2rem;
+  margin-top: 0.6rem;
+  border: 1px solid #d2d2d2;
+  border-radius: 5px;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
 `;
 
 const GalleryItem = styled.img`
-  width: 22vw;
-  height: 16vw;
+  width: 19vw;
+  background-color: white;
   object-fit: cover;
+  cursor: pointer;
   border-radius: 10px;
   box-shadow: 0px 3px 6px #00000029;
-  cursor: pointer;
   transition: transform 0.8s;
   &:hover {
     transform: scale(1.02);
     transition: transform 0.8s;
+  }
+`;
+
+const GallerykSideBarBoxForMobile = styled.div`
+  display: none;
+  @media (max-width: 1024px) {
+    display: block;
+  }
+`;
+
+const SideBarToggle = styled.button`
+    width: 100%;
+    font-family: "NotoSansKR-Medium";
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.5s;
+    display: flex;
+    align-items: center;
+    padding: inherit;
+}`;
+
+const DropdownSideBar = styled.div`
+  height: 24rem;
+  position: absolute;
+  background-color: #fff;
+  z-index: 99;
+  box-shadow: 0px 3px 6px #00000029;
+  border-radius: 15px;
+  left: 2rem;
+  top: 9.4rem;
+`;
+
+export const IconImg = styled.img`
+  width: 1rem;
+  margin-left: 0.5rem;
+  .dropdown {
+    width: 0.8rem;
   }
 `;
 
@@ -66,6 +116,10 @@ const GallerySection = () => {
   const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(null);
   const params = useParams<Record<string, string | undefined>>();
   const pageName = params.pageName || "";
+
+  const [isDrop, setIsDrop] = useState<boolean>(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const toggleRef = useRef<HTMLButtonElement | null>(null);
 
   const pageTitleMapping: Record<string, string> = {
     "office-photo": "내부 사진",
@@ -149,10 +203,45 @@ const GallerySection = () => {
     setSelectedImageUrl(null);
   };
 
+  useEffect(() => {
+    const clickEvent = (e: MouseEvent) => {
+      if (toggleRef.current && toggleRef.current.contains(e.target as Node)) {
+        return;
+      }
+
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
+        setIsDrop(false);
+      }
+    };
+
+    window.addEventListener("click", clickEvent);
+
+    return () => window.removeEventListener("click", clickEvent);
+  }, []);
+
   return (
     <GalleryBox>
       <GalleryHeader>
-        <WikiMainText>{pageTitleMapping[pageName] || "전체 사진"}</WikiMainText>
+        <GallerykSideBarBoxForMobile>
+          <div ref={dropdownRef}>
+            <SideBarToggle
+              ref={toggleRef}
+              onClick={e => {
+                setIsDrop(!isDrop);
+              }}>
+              {pageTitleMapping[pageName] || "사진첩"}
+              <IconImg
+                className="dropdown"
+                src={dropdownIcon}
+                alt="dropdown icon"
+              />
+            </SideBarToggle>
+          </div>
+          <DropdownSideBar>{isDrop && <GallerySideBar />}</DropdownSideBar>
+        </GallerykSideBarBoxForMobile>
         {currentUser && (
           <UploadButton type="button" onClick={isModalChange}>
             <img src={uploadIconUrl} alt="img upload icon" />

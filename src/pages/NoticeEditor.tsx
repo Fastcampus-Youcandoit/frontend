@@ -13,11 +13,11 @@ import { ButtonProps } from "../types/notice";
 import { useAuth } from "../context/AuthContext";
 
 const Wrap = styled.div`
-  height: 91vh;
+  height: 100vh;
 `;
 
 const WriteBox = styled.div`
-  height: calc(100% - 8vh);
+  height: 92vh;
   padding: 0 4rem 4rem 4rem;
 `;
 
@@ -39,6 +39,12 @@ const HeaderButtonBox = styled.div`
   align-items: center;
   gap: 1rem;
   height: 40%;
+  transition: all 0.5s;
+
+  @media (max-width: 425px) {
+    height: 30%;
+    transition: all 0.5s;
+  }
 `;
 
 const HeaderButton = styled.button<ButtonProps>`
