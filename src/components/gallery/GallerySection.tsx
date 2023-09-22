@@ -74,7 +74,7 @@ const GalleryContainer = styled.div`
     padding-top: 3rem;
   }
   @media (max-width: 768px) {
-    padding-top: 1.8rem;
+    padding-top: 2rem;
   }
 `;
 
@@ -94,7 +94,7 @@ const GalleryItem = styled.img`
     width: 72vw;
   }
   @media (max-width: 768px) {
-    width: 65vw;
+    width: 64vw;
   }
 `;
 
