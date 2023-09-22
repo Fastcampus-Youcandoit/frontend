@@ -9,7 +9,7 @@ import {
   ModalBox,
 } from "../components/gallery/GalleryModal";
 import { useAuth } from "../context/AuthContext";
-import { StylesProps } from "../types/userLog";
+import { StyleProps } from "../types/userLog";
 
 export const Wrapper = styled.div`
   width: 100vw;
@@ -75,7 +75,7 @@ export const Message = styled.span`
   text-align: left;
 `;
 
-export const LoginButton = styled.button<StylesProps>`
+export const LoginButton = styled.button<StyleProps>`
   margin-bottom: 5px;
   padding: 10px 0;
   border-radius: 2px;
@@ -305,7 +305,7 @@ const Login = () => {
                   <Message>이메일과 패스워드 모두 입력해주세요.</Message>
                 ))}
 
-              <LoginButton background="#e6f7ff" color="#087EA4" type="submit">
+              <LoginButton color="#087EA4" background="#E6F7FF" type="submit">
                 로그인
               </LoginButton>
               <Text>
