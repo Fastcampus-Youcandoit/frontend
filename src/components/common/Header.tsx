@@ -44,6 +44,10 @@ export const HeaderItem = styled.div`
   border-radius: 10px;
   transition: all 0.3s ease 0s;
 
+  &:not(#commute):hover {
+    transform: scale(1.05);
+  }
+
   @media (max-width: 1024px) {
     font-size: 0.9rem;
     transition: all 0.3s;
@@ -138,7 +142,9 @@ const Header = () => {
           <Logo />
         </StyledLink>
         <HeaderItems>
-          <HeaderItem>{currentUser && <CommuteButtonComponent />}</HeaderItem>
+          <HeaderItem id="commute">
+            {currentUser && <CommuteButtonComponent />}
+          </HeaderItem>
           <HeaderItem>
             <IconImg src={noticeIcon} alt="notice icon" />
             <Span>
