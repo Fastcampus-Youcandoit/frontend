@@ -1,19 +1,22 @@
 import { getAuth } from "firebase/auth";
 import { deleteDoc, doc, setDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
+import closeIconUrl from "../../assets/icons/gallery_icon/image_close_icon.png";
 import { db } from "../../firebase";
+import { CloseButton } from "../gallery/GalleryModal";
 import {
   Buttons,
   Clock,
   CurrentTime,
   CurrentTimeLayout,
+  HeaderWrapper,
   Header,
   Modal,
   ModalLayout,
   OkayButton,
   OkayButtonDiv,
   TodayDate,
-  WorkOn,
+  WorkOnOff,
 } from "./StyleComponentCommute";
 
 // props type 설정
@@ -122,8 +125,16 @@ const CommuteModal: React.FC<CommuteModalProps> = ({
   return (
     <ModalLayout>
       <Modal>
-        <Header>출&middot;퇴근</Header>
-        <TodayDate> {formattedDate}</TodayDate>
+        <HeaderWrapper>
+          <div>
+            <Header>출&middot;퇴근</Header>
+            <TodayDate> {formattedDate}</TodayDate>
+          </div>
+          <CloseButton type="button" onClick={handleOkayButton}>
+            <img src={closeIconUrl} alt="close icon" />
+          </CloseButton>
+        </HeaderWrapper>
+
         <CurrentTimeLayout>
           <CurrentTime>
             {workonoff && <span>On</span>}
@@ -133,13 +144,26 @@ const CommuteModal: React.FC<CommuteModalProps> = ({
             <button type="button" disabled>
               {workonoff ? `${workingHours}시간째 근무중` : "출근전"}
             </button>
-            <WorkOn $workonoff={workonoff} onClick={handleSetOnOff}>
+            <WorkOnOff $workonoff={workonoff} onClick={handleSetOnOff}>
               {workonoff ? "퇴근" : "출근"}
-            </WorkOn>
+            </WorkOnOff>
           </Buttons>
         </CurrentTimeLayout>
         <OkayButtonDiv>
-          <OkayButton onClick={handleOkayButton} $workonoff={workonoff}>
+          <OkayButton
+            onClick={handleOkayButton}
+            workonoff={workonoff}
+            color="#000"
+            $borderColor="#d2d2d2"
+            $backgroundColor="#fff">
+            Cancel
+          </OkayButton>
+          <OkayButton
+            onClick={handleOkayButton}
+            workonoff={workonoff}
+            color="#fff"
+            $borderColor="#000"
+            $backgroundColor="#000">
             OK
           </OkayButton>
         </OkayButtonDiv>

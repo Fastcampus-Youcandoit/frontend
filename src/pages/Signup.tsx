@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { auth } from "../firebase";
 import { Form, HomeLink, Input, LoginButton, Message, Wrapper } from "./Login";
+import "../assets/fonts/Font.css";
 
 const StyledForm = styled(Form)`
   height: 35rem;
@@ -24,7 +25,9 @@ const InputWrapper = styled.div`
     border: none;
     border-bottom: 2px solid #b2b2b2;
     outline: none;
-    font: normal normal bold 20px/36px Noto Sans KR;
+    font-family: "NotoSansKR-Medium";
+    font-size: 1rem;
+    font-size: 1.25rem;
     &::placeholder {
       color: #b2b2b2;
     }
