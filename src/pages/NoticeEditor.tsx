@@ -38,8 +38,7 @@ const HeaderButtonBox = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
-  height: 40%;
-  transition: all 0.5s;
+  height: 35%;
 
   @media (max-width: 425px) {
     height: 30%;
@@ -59,6 +58,12 @@ const HeaderButton = styled.button<ButtonProps>`
   border-radius: 5px;
   padding: ${props => props.$pd};
   background-color: ${props => props.$bgColor};
+  cursor: pointer;
+  transition: transform 0.8s;
+  &:hover {
+    transform: scale(1.1);
+    transition: transform 0.8s;
+  }
 `;
 
 const WriteButtonIcon = styled.img`

@@ -48,6 +48,12 @@ export const WikiMainText = styled.span`
 const WriteIcon = styled.img`
   width: 2.8rem;
   height: 2.8rem;
+  transition: transform 0.8s;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.1);
+    transition: transform 0.8s;
+  }
 `;
 
 const WikiContent = styled.div`

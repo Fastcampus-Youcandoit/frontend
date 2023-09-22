@@ -35,6 +35,12 @@ const NoticeMainText = styled.span`
 const WriteIcon = styled.img`
   width: 2.8rem;
   height: 2.8rem;
+  cursor: pointer;
+  transition: transform 0.8s;
+  &:hover {
+    transform: scale(1.1);
+    transition: transform 0.8s;
+  }
 `;
 
 const Hr = styled.hr`

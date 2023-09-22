@@ -9,6 +9,7 @@ import GalleryDetailModal from "./GalleryDetailModal";
 import dropdownIcon from "../../assets/icons/header_icon/header_dropdown_icon.png";
 import { useAuth } from "../../context/AuthContext";
 import { GallerySideBar } from "../sideBar/SideBar";
+import { GalleryMainText } from "../../styles/SideBarStyle";
 
 const GalleryBox = styled.div`
   margin-top: 2rem;
@@ -26,6 +27,15 @@ const GalleryHeader = styled.div`
   justify-content: space-between;
 `;
 
+const GalleryHeaderText = styled.span`
+  font-family: "NotoSansKR-Bold";
+  font-size: 25px;
+
+  @media (max-width: 1024px) {
+    display: none;
+  }
+`;
+
 const UploadButton = styled.button`
   margin: 0;
   padding: 0;
@@ -37,6 +47,11 @@ const UploadButton = styled.button`
   > img {
     width: 2.8rem;
     height: 2.8rem;
+    transition: transform 0.8s;
+    &:hover {
+      transform: scale(1.1);
+      transition: transform 0.8s;
+    }
   }
 `;
 
@@ -242,6 +257,7 @@ const GallerySection = () => {
           </div>
           <DropdownSideBar>{isDrop && <GallerySideBar />}</DropdownSideBar>
         </GallerykSideBarBoxForMobile>
+        <GalleryHeaderText>모든 사진</GalleryHeaderText>
         {currentUser && (
           <UploadButton type="button" onClick={isModalChange}>
             <img src={uploadIconUrl} alt="img upload icon" />

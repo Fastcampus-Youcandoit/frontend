@@ -51,11 +51,12 @@ const SectionButtonBox = styled.div`
 `;
 
 const SectionButton = styled.button`
+  width: 1.5rem;
+  height: 1.5rem;
   background-color: #f6f7f9;
   border-radius: 5px;
   border: none;
   padding: 0.2rem;
-  height: 1.5rem;
   cursor: pointer;
 `;
 
@@ -96,7 +97,7 @@ const Image = styled.img`
     background-color: white;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4);
     transform: scale(1.12);
-    transition: transform 0.5s;
+    transition: transform 0.8s;
   }
 `;
 

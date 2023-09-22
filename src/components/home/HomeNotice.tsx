@@ -46,8 +46,13 @@ const SectionButton = styled.button`
   height: 100%;
   border-radius: 5px;
   border: none;
-  cursor: pointer;
   font-family: "NotoSansKR-Medium";
+  cursor: pointer;
+  transition: transform 0.8s;
+  &:hover {
+    transform: scale(1.1);
+    transition: transform 0.8s;
+  }
 `;
 
 const ContentsBox = styled.div`
