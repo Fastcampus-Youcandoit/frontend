@@ -1,17 +1,16 @@
 /* eslint-disable no-restricted-globals */
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import "../../assets/fonts/Font.css";
-import gelleryBlack from "../../assets/icons/header_icon/header_gellery_black_icon.png";
-import wikiBlack from "../../assets/icons/header_icon/header_wiki_black_icon.png";
-import noticeIcon from "../../assets/icons/header_icon/header_notice_icon.png";
 import dropDownIcon from "../../assets/icons/header_icon/header_dropdown_icon.png";
 import loginIcon from "../../assets/icons/header_icon/header_login_icon.png";
 import logoutIcon from "../../assets/icons/header_icon/header_logout_icon.png";
+import { HEADER_MENU_ITEMS } from "../../constants/dropDown";
+import { useAuth } from "../../context/AuthContext";
 import CommuteButtonComponent from "../commute/CommuteButtonComponent";
 import Logo from "./Logo";
-import { useAuth } from "../../context/AuthContext";
+import Menu from "../../assets/icons/header_icon/hamburger_icon.png";
 
 const HeaderBox = styled.header`
   height: 9vh;
@@ -30,6 +29,7 @@ const HeaderItems = styled.nav`
   display: flex;
   height: 50%;
   gap: 1.5rem;
+  align-items: center;
   font-family: "SUITE-Medium";
 `;
 
@@ -38,6 +38,7 @@ export const HeaderItem = styled.div`
   font-family: "SUITE-bold";
   height: 100%;
   display: flex;
+  justify-content: center;
   align-items: center;
   cursor: pointer;
   gap: 0.3rem;
@@ -81,17 +82,71 @@ const Name = styled.button`
   }
 `;
 
-const Logout = styled.button`
+const DropDownBox = styled.div`
   position: absolute;
-  top: 60px;
-  margin-left: -8px;
-  padding: 15px;
+  top: 110%;
+  right: -1px;
+  width: 10rem;
   background-color: #fff;
-  border: none;
   box-shadow: 0px 3px 6px #00000029;
-  border-radius: 5px;
-  cursor: pointer;
   z-index: 99;
+  border-radius: 5px;
+  padding: 1rem 1rem;
+`;
+
+const DropDownItemBox = styled.div`
+  display: none;
+  @media screen and (max-width: 1023px) {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border-bottom: 2px solid #d2d2d2;
+    height: 10rem;
+    gap: 0.2rem;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.2rem;
+  }
+`;
+
+const LogoutImg = styled.img`
+  width: 1rem;
+  @media screen and (max-width: 1023px) {
+    display: none;
+  }
+`;
+
+const DisAppear = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  @media screen and (max-width: 1023px) {
+    display: none;
+  }
+`;
+
+const Appear = styled.div`
+  position: relative;
+  display: none;
+  @media screen and (max-width: 1023px) {
+    display: flex;
+    justify-content: flex-start;
+    width: 2rem;
+    height: 2rem;
+  }
+`;
+
+const LoginedBox = styled.div`
+  position: relative;
+`;
+
+const UnloginedBox = styled.div`
+  @media screen and (max-width: 1023px) {
+    display: none;
+  }
+`;
+
+const MenuImg = styled.img`
+  width: 100%;
 `;
 
 const Header = () => {
@@ -110,7 +165,6 @@ const Header = () => {
         setIsDrop(!isDrop);
       }
     };
-
     if (isDrop) {
       window.addEventListener("click", clickEvent);
     }
@@ -138,55 +192,85 @@ const Header = () => {
           <Logo />
         </StyledLink>
         <HeaderItems>
-          <HeaderItem>{currentUser && <CommuteButtonComponent />}</HeaderItem>
-          <HeaderItem>
-            <IconImg src={noticeIcon} alt="notice icon" />
-            <Span>
-              <StyledLink to="/notice">notice</StyledLink>
-            </Span>
-          </HeaderItem>
-          <HeaderItem>
-            <IconImg src={wikiBlack} alt="wiki icon" />
-            <Span>
-              <StyledLink to="/wiki/office-life/company-rules">wiki</StyledLink>
-            </Span>
-          </HeaderItem>
-          <HeaderItem>
-            <IconImg src={gelleryBlack} alt="gellery icon" />
-            <Span>
-              <StyledLink to="/gallery/all">gallery</StyledLink>
-            </Span>
-          </HeaderItem>
-
-          {currentUser ? (
+          <DisAppear>
             <HeaderItem>
-              <div ref={dropdownRef}>
-                <Name type="button" onClick={() => setIsDrop(!isDrop)}>
-                  {userName} 님
-                </Name>
-                <IconImg
-                  className="dropdown"
-                  src={dropDownIcon}
-                  alt="dropdown icon"
-                />
-              </div>
-
+              {currentUser && <CommuteButtonComponent $isIcon />}
+            </HeaderItem>
+            {HEADER_MENU_ITEMS.map(item => (
+              <HeaderItem key={item.id}>
+                <IconImg src={item.icon} alt={item.alt} />
+                <Span>
+                  <StyledLink to={item.path}>{item.name}</StyledLink>
+                </Span>
+              </HeaderItem>
+            ))}
+          </DisAppear>
+          <div>
+            {currentUser && (
+              <HeaderItem>
+                <LoginedBox
+                  ref={dropdownRef}
+                  onClick={() => setIsDrop(!isDrop)}>
+                  <Name type="button">{userName} 님</Name>
+                  <IconImg
+                    className="dropdown"
+                    src={dropDownIcon}
+                    alt="dropdown icon"
+                  />
+                  {isDrop && (
+                    <DropDownBox>
+                      <DropDownItemBox>
+                        <HeaderItem>
+                          {currentUser && (
+                            <CommuteButtonComponent $isIcon={false} />
+                          )}
+                        </HeaderItem>
+                        {HEADER_MENU_ITEMS.map(item => (
+                          <HeaderItem key={item.id}>
+                            <StyledLink to={item.path}>{item.name}</StyledLink>
+                          </HeaderItem>
+                        ))}
+                      </DropDownItemBox>
+                      <HeaderItem onClick={handleLogout}>
+                        <LogoutImg src={logoutIcon} alt="logout icon" />
+                        logout
+                      </HeaderItem>
+                    </DropDownBox>
+                  )}
+                </LoginedBox>
+              </HeaderItem>
+            )}
+            {!currentUser && (
+              <UnloginedBox>
+                <HeaderItem>
+                  <IconImg src={loginIcon} alt="gellery icon" />
+                  <Span>
+                    <StyledLink to="/login">login</StyledLink>
+                  </Span>
+                </HeaderItem>
+              </UnloginedBox>
+            )}
+          </div>
+          {!currentUser && (
+            <Appear ref={dropdownRef} onClick={() => setIsDrop(!isDrop)}>
+              <MenuImg src={Menu} />
               {isDrop && (
-                <Logout type="button" onClick={handleLogout}>
+                <DropDownBox>
+                  <DropDownItemBox>
+                    {HEADER_MENU_ITEMS.map(item => (
+                      <HeaderItem key={item.id}>
+                        <StyledLink to={item.path}>{item.name}</StyledLink>
+                      </HeaderItem>
+                    ))}
+                  </DropDownItemBox>
                   <HeaderItem>
-                    <IconImg src={logoutIcon} alt="logout icon" />
-                    logout
+                    <Span>
+                      <StyledLink to="/login">login</StyledLink>
+                    </Span>
                   </HeaderItem>
-                </Logout>
+                </DropDownBox>
               )}
-            </HeaderItem>
-          ) : (
-            <HeaderItem>
-              <IconImg src={loginIcon} alt="gellery icon" />
-              <Span>
-                <StyledLink to="/login">login</StyledLink>
-              </Span>
-            </HeaderItem>
+            </Appear>
           )}
         </HeaderItems>
       </HeaderNav>
