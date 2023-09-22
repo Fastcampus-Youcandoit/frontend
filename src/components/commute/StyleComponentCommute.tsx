@@ -14,12 +14,6 @@ export const WorkOnMark = styled.img`
 `;
 
 export const CommuteButton = styled.button<{ $isIcon: boolean }>`
-  // background-color: #f6f7f9;
-  // height: 100%;
-  // border-radius: 10px;
-  // font-size: inherit;
-  // padding: 0 2rem;
-  // box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,7 +22,7 @@ export const CommuteButton = styled.button<{ $isIcon: boolean }>`
   flex-direction: ${props => (props.$isIcon ? "row" : "row-reverse")};
   background: none;
   border: none;
-  gap: 1.2rem;
+  gap: 1rem;
   padding: 0;
   transition: all 0.3s ease 0s;
   width: 100%;

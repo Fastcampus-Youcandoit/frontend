@@ -120,24 +120,16 @@ export const UploadDescription = styled.p`
 `;
 
 export const FileNameBox = styled.div`
-  width: 41.5vw;
+  width: 100%;
   display: flex;
-  margin: 1rem auto;
-  padding-left: 0.02rem;
   align-items: center;
-
-  @media (max-width: 768px) {
-    width: 55vw;
-  }
-  @media (max-width: 475px) {
-    flex-direction: column;
-    align-items: start;
-    margin: 1rem auto;
-  }
+  justify-content: flex-end;
+  padding: 0 1rem;
+  gap: 0.5rem;
+  margin: 1rem 0;
 `;
 export const FileName = styled.div`
   display: flex;
-  margin-right: auto;
   > svg {
     margin-right: 0.2rem;
   }
@@ -182,20 +174,15 @@ export const Input = styled.input`
 `;
 
 export const ButtonBox = styled.div`
-  width: 41.5vw;
+  width: 100%;
   display: flex;
-  margin-bottom: 2rem;
-  > div {
-    margin-left: auto;
-  }
-  @media (max-width: 768px) {
-    width: 55vw;
-  }
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+  gap: 1rem;
 `;
 
 export const Button = styled.button<GalleryProps>`
-  margin-left: 1.25rem;
-  padding: 0.6vw 1.1vw;
+  padding: 0.3rem 1rem;
   text-align: center;
   font-size: 1.25rem;
   font-family: "NotoSansKR-Medium";
@@ -211,8 +198,7 @@ export const Button = styled.button<GalleryProps>`
   }
 
   @media (max-width: 768px) {
-    margin-left: 0.8rem;
-    padding: 1vw 1.5vw;
+    padding: 0.4rem 1.5rem;
     font-size: 0.8rem;
   }
 `;
@@ -380,24 +366,22 @@ const GalleryModal = ({ isModalChange }: ModalProps) => {
           </FileNameBox>
 
           <ButtonBox>
-            <div>
-              <Button
-                color="#000"
-                bordercolor="#d2d2d2"
-                $backgroundColor="#fff"
-                type="button"
-                onClick={isModalChange}>
-                Cancel
-              </Button>
-              <Button
-                onClick={handleUpload}
-                color="#fff"
-                $backgroundColor="#000"
-                bordercolor="#000"
-                type="button">
-                Upload
-              </Button>
-            </div>
+            <Button
+              color="#000"
+              bordercolor="#d2d2d2"
+              $backgroundColor="#fff"
+              type="button"
+              onClick={isModalChange}>
+              Cancel
+            </Button>
+            <Button
+              onClick={handleUpload}
+              color="#fff"
+              $backgroundColor="#000"
+              bordercolor="#000"
+              type="button">
+              Upload
+            </Button>
           </ButtonBox>
         </div>
       </ModalBox>

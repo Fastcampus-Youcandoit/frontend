@@ -12,7 +12,7 @@ import { NoticeDetailProps } from "../types/notice";
 
 const NoticeBox = styled.div`
   width: 100vw;
-  height: 83vh;
+  height: 91vh;
   padding: 2rem 3rem;
   overflow-y: scroll;
 `;
@@ -186,9 +186,6 @@ const Notice: React.FC = () => {
         ))}
         <Hr />
       </NoticeBox>
-      <FooterBox>
-        <Footer />
-      </FooterBox>
     </>
   );
 };

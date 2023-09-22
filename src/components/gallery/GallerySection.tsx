@@ -106,17 +106,17 @@ const GallerykSideBarBoxForMobile = styled.div`
 `;
 
 const SideBarToggle = styled.button`
-    width: 100%;
-    font-family: "NotoSansKR-Medium";
-    font-size: 1.5rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-    transition: all 0.5s;
-    display: flex;
-    align-items: center;
-    padding: inherit;
-}`;
+  width: 100%;
+  font-family: "NotoSansKR-Medium";
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.5s;
+  display: flex;
+  align-items: center;
+  padding: inherit;
+`;
 
 const DropdownSideBar = styled.div`
   height: 24rem;

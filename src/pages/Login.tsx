@@ -12,16 +12,11 @@ import { useAuth } from "../context/AuthContext";
 import { StyleProps } from "../types/userLog";
 
 export const Wrapper = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 100vh;
-  > div {
-    width: 600px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const HomeLink = styled(Link)`
@@ -30,27 +25,23 @@ export const HomeLink = styled(Link)`
 `;
 
 export const Form = styled.form`
-  width: 600px;
-  height: 480px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  margin-top: 20px;
+  width: 100%;
   box-shadow: 0px 3px 6px #00000029;
   border: 2px solid #d2d2d2;
   border-radius: 5px;
+  padding: 0 1rem;
   > div {
-    width: 500px;
-    margin: 0 auto;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 1rem;
+    padding: 2rem;
   }
 `;
 
 export const Input = styled.input`
-  width: 500px;
+  width: 100%;
   margin-bottom: 25px;
   padding: 3px 2px;
   font-family: "NotoSansKR-Medium";
@@ -106,15 +97,16 @@ const Text = styled.span`
 `;
 
 const Hr = styled.hr`
-  width: 230px;
+  width: 5rem;
   height: 1px;
   size: 1.2px;
   background: #d2d2d2;
 `;
 
 const LinkWrapper = styled.div`
-  margin-top: 25px;
-  margin-right: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   > button {
     font-family: "NotoSansKR-Medium";
     font-size: 1rem;
@@ -137,12 +129,14 @@ const Span = styled.span`
 `;
 
 const FindModal = styled(ModalBox)`
-  width: 25vw;
-  height: 20.2rem;
+  width: 50%;
   display: flex;
   flex-direction: column;
   text-align: left;
   box-sizing: border-box;
+  @media screen and (max-width: 600px) {
+    width: 80%;
+  }
 `;
 
 const Title = styled.div`
@@ -156,7 +150,7 @@ const Title = styled.div`
   }
 `;
 
-const FindForm = styled.div`
+const FindForm = styled.form`
   width: 100%;
   padding: 1rem 2.7rem;
   display: flex;
@@ -164,8 +158,6 @@ const FindForm = styled.div`
   > div:first-of-type {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    margin-bottom: 2.5rem;
   }
 `;
 
@@ -195,7 +187,8 @@ const FindInput = styled.input`
 
 const FindButtonWrapper = styled.div`
   display: flex;
-  margin-left: auto;
+  justify-content: flex-end;
+  margin-top: 1rem;
 `;
 
 const FindButton = styled(Button)`
@@ -203,17 +196,24 @@ const FindButton = styled(Button)`
   box-shadow: 0px 2px 5px #00000029;
 `;
 
+const LoginBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 500px;
+`;
+
 const Login = () => {
   const [email, setEmail] = useState<string | undefined>("");
   const [password, setPassword] = useState<string | undefined>("");
-  const [findEmail, setFindEmail] = useState<string | undefined>("");
+  const [findEmail, setFindEmail] = useState<string>("");
   const [isModal, setIsModal] = useState<boolean>(false);
   const modalBackgroundRef = useRef<HTMLDivElement>(null);
   const { login, resetPassword, googleLogin } = useAuth(); // 현재 사용자 정보 가져오기
   const navigate = useNavigate();
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e?.target.value);
+    setEmail(e.target.value);
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -255,8 +255,8 @@ const Login = () => {
   // 비밀번호 찾기
   const handleFindPassword = async () => {
     try {
-      if (email !== undefined) {
-        await resetPassword(email);
+      if (findEmail.trim() !== "") {
+        await resetPassword(findEmail);
         alert("메일 전송에 성공했습니다.");
         setFindEmail("");
         setIsModal(false);
@@ -278,7 +278,7 @@ const Login = () => {
   return (
     <>
       <Wrapper>
-        <div>
+        <LoginBox>
           <HomeLink to="/">Youcandoit</HomeLink>
           <Form
             onSubmit={e => {
@@ -330,7 +330,7 @@ const Login = () => {
               </LinkWrapper>
             </div>
           </Form>
-        </div>
+        </LoginBox>
       </Wrapper>
 
       {isModal && (
@@ -354,7 +354,11 @@ const Login = () => {
                 />
               </div>
               <FindButtonWrapper>
-                <FindButton color="#808080" bordercolor="#fff" type="submit">
+                <FindButton
+                  color="#808080"
+                  bordercolor="#fff"
+                  type="button"
+                  onClick={() => setIsModal(false)}>
                   Cancel
                 </FindButton>
                 <FindButton

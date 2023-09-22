@@ -1,6 +1,7 @@
 import { deleteObject, ref, uploadString } from "firebase/storage";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import "../../assets/fonts/Font.css";
 import closeIconUrl from "../../assets/icons/gallery_icon/image_close_icon.png";
 import uploadIconUrl from "../../assets/icons/gallery_icon/image_upload_icon.png";
 import { useAuth } from "../../context/AuthContext";
@@ -11,7 +12,6 @@ import {
   ButtonBox,
   CloseButton,
   FileName,
-  FileNameBox,
   ImagePreview,
   Input,
   ModalBackground,
@@ -20,7 +20,6 @@ import {
   UploadBox,
   UploadDescription,
 } from "./GalleryModal";
-import "../../assets/fonts/Font.css";
 
 const DetailModalBox = styled(ModalBox)`
   width: 55vw;
@@ -36,46 +35,47 @@ const DetailModalBox = styled(ModalBox)`
 `;
 
 const DetailImage = styled.div`
-  width: 50vw;
+  width: 100%;
   display: flex;
   margin: 0 auto;
   justify-content: center;
 
   > img {
-    object-fit: contain;
+    width: 100%;
   }
 `;
 
 const DetailUploadBox = styled(UploadBox)`
-  width: 48vw;
+  width: 100%;
   height: 28vw;
   margin: 0 auto;
   @media (max-width: 768px) {
-    width: 61.5vw;
+    width: 100%;
     height: 41.7vw;
   }
 `;
 
 const DetailImagePreview = styled(ImagePreview)`
-  width: 48.2vw;
+  width: 100%;
   height: 28vw;
 `;
 
-const DetailFileNameBox = styled(FileNameBox)`
-  margin: 1.25rem auto 0px 7.5rem;
+const DetailFileNameBox = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin: 1rem 0;
 `;
 
-const Category = styled.p`
-  margin-top: 0.2rem;
-  text-align: left;
+const Category = styled.div`
   font-size: 0.9rem;
+  display: flex;
+  justify-content: flex-end;
   font-family: "NotoSansKR-Medium";
   color: #808080;
 `;
 
 const EditCategory = styled.p`
-  margin-left: -1.5rem;
-  margin-right: 5px;
   font-family: "NotoSansKR-Medium";
   font-size: 0.8rem;
 `;
@@ -288,57 +288,55 @@ const GalleryDetailModal: React.FC<DetailModalProps> = ({
           </DetailFileNameBox>
 
           <ButtonBox>
-            <div>
-              {isEdit ? (
-                <>
+            {isEdit ? (
+              <>
+                <Button
+                  onClick={() => setIsEdit(!isEdit)}
+                  color="#000"
+                  bordercolor="#000"
+                  $backgroundColor="#fff"
+                  type="button">
+                  Cancel
+                </Button>
+                <Button
+                  color="#000"
+                  bordercolor="#000"
+                  $backgroundColor="#fff"
+                  type="button"
+                  onClick={deleteImage}>
+                  Delete
+                </Button>
+                <Button
+                  onClick={handleImageUpdate}
+                  color="#fff"
+                  $backgroundColor="#000"
+                  bordercolor="#000"
+                  type="button">
+                  Save
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  onClick={onClose}
+                  color="#000"
+                  bordercolor="#000"
+                  $backgroundColor="#fff"
+                  type="button">
+                  Cancel
+                </Button>
+                {currentUser && (
                   <Button
-                    onClick={() => setIsEdit(!isEdit)}
-                    color="#000"
-                    bordercolor="#000"
-                    $backgroundColor="#fff"
-                    type="button">
-                    Cancel
-                  </Button>
-                  <Button
-                    color="#000"
-                    bordercolor="#000"
-                    $backgroundColor="#fff"
-                    type="button"
-                    onClick={deleteImage}>
-                    Delete
-                  </Button>
-                  <Button
-                    onClick={handleImageUpdate}
+                    onClick={handleIsEdit}
                     color="#fff"
                     $backgroundColor="#000"
                     bordercolor="#000"
                     type="button">
-                    Save
+                    Edit
                   </Button>
-                </>
-              ) : (
-                <>
-                  <Button
-                    onClick={onClose}
-                    color="#000"
-                    bordercolor="#000"
-                    $backgroundColor="#fff"
-                    type="button">
-                    Cancel
-                  </Button>
-                  {currentUser && (
-                    <Button
-                      onClick={handleIsEdit}
-                      color="#fff"
-                      $backgroundColor="#000"
-                      bordercolor="#000"
-                      type="button">
-                      Edit
-                    </Button>
-                  )}
-                </>
-              )}
-            </div>
+                )}
+              </>
+            )}
           </ButtonBox>
         </div>
       </DetailModalBox>

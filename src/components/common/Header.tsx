@@ -244,7 +244,7 @@ const Header = () => {
                               workonoff={workonoff}
                               setWorkonoff={setWorkonoff}
                               setModalOpen={setModalOpen}
-                              $isIcon
+                              $isIcon={false}
                             />
                           )}
                         </HeaderItem>

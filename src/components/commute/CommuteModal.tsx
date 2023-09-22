@@ -3,7 +3,6 @@ import { deleteDoc, doc, setDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import closeIconUrl from "../../assets/icons/gallery_icon/image_close_icon.png";
 import { db } from "../../firebase";
-import { CloseButton } from "../gallery/GalleryModal";
 import {
   Buttons,
   Clock,
@@ -19,6 +18,7 @@ import {
   WorkOnOff,
 } from "./StyleComponentCommute";
 import { CommuteModalProps } from "../../types/commute";
+import { CloseButton } from "../gallery/GalleryModal";
 // props type 설정
 
 // 현재 날짜를 가져옵니다.

@@ -15,6 +15,7 @@ const FooterBox = styled.footer`
 const GithubIcon = styled.img`
   width: 1.25rem;
   height: 1.25rem;
+  cursor: pointer;
 `;
 
 const FooterItemsBox = styled.div`
@@ -52,7 +53,12 @@ const Footer = () => {
           <div>패스트캠퍼스X야놀자 개발 부트캠프_토이프로젝트</div>
         </FooterTeamInfo>
       </FooterItemsBox>
-      <GithubIcon src={github} alt="footer github logo" />
+      <a
+        href="https://github.com/Fastcampus-Youcandoit/frontend"
+        target="_blank"
+        rel="noreferrer">
+        <GithubIcon src={github} alt="footer github logo" />
+      </a>
     </FooterBox>
   );
 };
