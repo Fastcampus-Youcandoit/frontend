@@ -65,7 +65,7 @@ const CalendarBox = styled.div`
     margin-bottom: 5px;
     border-radius: 5px;
     border: none;
-    background-color: #a5d8ff;
+    background-color: rgb(230, 247, 255);
     font-size: 0.5rem;
     font-family: "NotoSansKR-medium";
   }
@@ -90,12 +90,17 @@ const AddContentButton = styled.button`
   font-size: 0.6rem;
   display: flex;
   align-items: center;
-  background-color: #1555c3;
+  background-color: #3997b6;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-family: "NotoSansKR-Medium";
+  transition: transform 0.8s;
+  &:hover {
+    transform: scale(1.1);
+    transition: transform 0.8s;
+  }
 `;
 
 const HomeCalendar = () => {

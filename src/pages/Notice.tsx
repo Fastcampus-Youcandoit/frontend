@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import writeIcon from "../assets/icons/wiki_icon/wiki_write_icon.png";
-import Footer from "../components/common/Footer";
 import Header from "../components/common/Header";
 import NoticeDetail from "../components/notice/NoticeDetail";
 import { useAuth } from "../context/AuthContext";
@@ -12,8 +11,8 @@ import { NoticeDetailProps } from "../types/notice";
 
 const NoticeBox = styled.div`
   width: 100vw;
-  height: 80vh;
-  padding: 25px 50px;
+  height: 91vh;
+  padding: 2rem 3rem;
   overflow-y: scroll;
 `;
 
@@ -21,8 +20,6 @@ const NoticeHeader = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 5px;
-  position: sticky;
-  top: 0;
   background-color: white;
   z-index: 1;
 `;
@@ -33,8 +30,14 @@ const NoticeMainText = styled.span`
 `;
 
 const WriteIcon = styled.img`
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.8rem;
+  height: 2.8rem;
+  cursor: pointer;
+  transition: transform 0.8s;
+  &:hover {
+    transform: scale(1.1);
+    transition: transform 0.8s;
+  }
 `;
 
 const Hr = styled.hr`
@@ -65,11 +68,20 @@ const NoticeListItem = styled.div<{ $isSelected: boolean }>`
 `;
 
 const NoticeLeft = styled.div`
-  width: 400px;
-  font-size: 18px;
+  width: 90%;
+  font-size: 1rem;
   font-family: "NotoSansKR-Regular";
   display: flex;
   justify-content: flex-start;
+  transition: all 0.5s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media (max-width: 815px) {
+    font-size: 0.8rem;
+    transition: all 0.5s;
+  }
 `;
 
 const NoticeRight = styled.div`
@@ -78,6 +90,15 @@ const NoticeRight = styled.div`
   font-size: 15px;
   display: flex;
   justify-content: space-evenly;
+  transition: all 0.5s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media (max-width: 815px) {
+    font-size: 0.8rem;
+    transition: all 0.5s;
+  }
 `;
 
 const NoticeId = styled.span`
@@ -156,7 +177,6 @@ const Notice: React.FC = () => {
         ))}
         <Hr />
       </NoticeBox>
-      <Footer />
     </>
   );
 };

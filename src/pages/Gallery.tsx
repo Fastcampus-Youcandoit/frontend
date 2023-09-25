@@ -7,12 +7,20 @@ const GalleryWrapper = styled.div`
   display: flex;
 `;
 
+const GallerySideBarBoxForDeskTop = styled.div`
+  @media (max-width: 1024px) {
+    display: none;
+  }
+`;
+
 const Gallery = () => {
   return (
     <>
       <Header />
       <GalleryWrapper>
-        <GallerySideBar />
+        <GallerySideBarBoxForDeskTop>
+          <GallerySideBar />
+        </GallerySideBarBoxForDeskTop>
         <Outlet />
       </GalleryWrapper>
     </>

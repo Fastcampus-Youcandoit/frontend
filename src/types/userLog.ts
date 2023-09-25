@@ -1,4 +1,6 @@
-export interface StylesProps {
+import { useState, useRef } from "react";
+
+export interface StyleProps {
   color?: string;
-  $backgroundColor?: string;
+  background?: string;
 }

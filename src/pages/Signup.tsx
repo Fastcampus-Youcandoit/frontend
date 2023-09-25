@@ -7,10 +7,26 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { auth } from "../firebase";
-import { Form, HomeLink, Input, LoginButton, Message, Wrapper } from "./Login";
+import { Form, HomeLink, Input, LoginButton, Message } from "./Login";
+import "../assets/fonts/Font.css";
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
 
 const StyledForm = styled(Form)`
-  height: 35rem;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @media screen and (max-width: 500px) {
+    width: 100%;
+  }
 `;
 
 const InputWrapper = styled.div`
@@ -24,7 +40,9 @@ const InputWrapper = styled.div`
     border: none;
     border-bottom: 2px solid #b2b2b2;
     outline: none;
-    font: normal normal bold 20px/36px Noto Sans KR;
+    font-family: "NotoSansKR-Medium";
+    font-size: 1rem;
+    font-size: 1.25rem;
     &::placeholder {
       color: #b2b2b2;
     }
@@ -183,71 +201,69 @@ const Signup = () => {
   };
   return (
     <Wrapper>
-      <div>
-        <HomeLink to="/">Youcandoit</HomeLink>
-        <StyledForm>
-          <div>
-            <InputWrapper>
-              <label htmlFor="email">이메일</label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="이메일을 입력하세요"
-                value={email}
-                autoFocus
-                onChange={e => setEmail(e?.target.value)}
-                onBlur={e => checkEmailValidation(e?.target.value)}
-                required
-              />
-              <Message>{emailMessage}</Message>
-            </InputWrapper>
-            <InputWrapper>
-              <label htmlFor="name">이름</label>
-              <Input
-                id="name"
-                type="text"
-                placeholder="이름을 입력해주세요"
-                value={name}
-                onChange={e => setName(e?.target.value)}
-                onBlur={e => checkNameValidation(e?.target.value)}
-              />
-              <Message>{nameMessage}</Message>
-            </InputWrapper>
-            <InputWrapper>
-              <label htmlFor="password">비밀번호</label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="8~16자 영문 소/대문자, 숫자를 입력해주세요."
-                value={password}
-                onChange={e => setPassword(e?.target.value)}
-                onBlur={e => checkPwValidation(e?.target.value)}
-              />
-              <Message>{passwordMessage}</Message>
-            </InputWrapper>
+      <HomeLink to="/">Youcandoit</HomeLink>
+      <StyledForm>
+        <div>
+          <InputWrapper>
+            <label htmlFor="email">이메일</label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="이메일을 입력하세요"
+              value={email}
+              autoFocus
+              onChange={e => setEmail(e?.target.value)}
+              onBlur={e => checkEmailValidation(e?.target.value)}
+              required
+            />
+            <Message>{emailMessage}</Message>
+          </InputWrapper>
+          <InputWrapper>
+            <label htmlFor="name">이름</label>
+            <Input
+              id="name"
+              type="text"
+              placeholder="이름을 입력해주세요"
+              value={name}
+              onChange={e => setName(e?.target.value)}
+              onBlur={e => checkNameValidation(e?.target.value)}
+            />
+            <Message>{nameMessage}</Message>
+          </InputWrapper>
+          <InputWrapper>
+            <label htmlFor="password">비밀번호</label>
+            <Input
+              id="password"
+              type="password"
+              placeholder="8~16자 영문 소/대문자, 숫자를 입력해주세요."
+              value={password}
+              onChange={e => setPassword(e?.target.value)}
+              onBlur={e => checkPwValidation(e?.target.value)}
+            />
+            <Message>{passwordMessage}</Message>
+          </InputWrapper>
 
-            <InputWrapper>
-              <label htmlFor="passwordCheck">비밀번호 확인</label>
-              <Input
-                id="passwordCheck"
-                type="password"
-                placeholder="비밀번호를 똑같이 입력해주세요."
-                value={passwordCheck}
-                onChange={e => setPasswordCheck(e?.target.value)}
-                onBlur={e => checkPwCheckValidation(e?.target.value)}
-              />
-              <Message>{passwordCheckMessage}</Message>
-            </InputWrapper>
-            <LoginButton
-              color="#087ea4"
-              $backgroundColor="#e6f7ff"
-              onClick={() => handleSignUp()}
-              type="button">
-              회원가입
-            </LoginButton>
-          </div>
-        </StyledForm>
-      </div>
+          <InputWrapper>
+            <label htmlFor="passwordCheck">비밀번호 확인</label>
+            <Input
+              id="passwordCheck"
+              type="password"
+              placeholder="비밀번호를 똑같이 입력해주세요."
+              value={passwordCheck}
+              onChange={e => setPasswordCheck(e?.target.value)}
+              onBlur={e => checkPwCheckValidation(e?.target.value)}
+            />
+            <Message>{passwordCheckMessage}</Message>
+          </InputWrapper>
+          <LoginButton
+            color="#087ea4"
+            background="#e6f7ff"
+            onClick={() => handleSignUp()}
+            type="button">
+            회원가입
+          </LoginButton>
+        </div>
+      </StyledForm>
     </Wrapper>
   );
 };

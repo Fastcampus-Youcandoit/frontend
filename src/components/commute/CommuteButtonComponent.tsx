@@ -6,14 +6,17 @@ import commuteRed from "../../assets/icons/header_icon/commute_red_icon.png";
 import commuteIcon from "../../assets/icons/header_icon/header_commute_black_icon.png";
 import { db } from "../../firebase";
 import { IconImg } from "../common/Header";
-import CommuteModal from "./CommuteModal";
 import { CommuteButton, Span, WorkOnMark } from "./StyleComponentCommute";
+import { CommuteButtonProps } from "../../types/commute";
 
-const CommuteButtonComponent = () => {
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [workonoff, setWorkonoff] = useState<boolean>(false);
+const CommuteButtonComponent: React.FC<CommuteButtonProps> = ({
+  setWorkingHours,
+  workonoff,
+  setModalOpen,
+  $isIcon,
+  setWorkonoff,
+}) => {
   const [workOnTime, setWorkOnTime] = useState<string>("00:00:00");
-  const [workingHours, setWorkingHours] = useState<string>("0");
   const workingTime = useRef(0);
   const auth = getAuth();
 
@@ -84,24 +87,16 @@ const CommuteButtonComponent = () => {
   }, [workonoff]);
 
   return (
-    <>
-      <CommuteButton onClick={() => setModalOpen(true)} type="button">
-        <WorkOnMark src={workonoff ? commuteBlue : commuteRed} />
-        <IconImg src={commuteIcon} alt="commute icon" />
-        <Span className="commute_span">
-          {workonoff ? workOnTime : "commute"}
-        </Span>
-      </CommuteButton>
-
-      {modalOpen && (
-        <CommuteModal
-          workonoff={workonoff}
-          setWorkonoff={setWorkonoff}
-          setModalOpen={setModalOpen}
-          workingHours={workingHours}
-        />
-      )}
-    </>
+    <CommuteButton
+      onClick={() => {
+        return setModalOpen(true);
+      }}
+      type="button"
+      $isIcon={$isIcon}>
+      <WorkOnMark src={workonoff ? commuteBlue : commuteRed} />
+      {$isIcon && <IconImg src={commuteIcon} alt="commute icon" />}
+      <Span>{workonoff ? workOnTime : "commute"}</Span>
+    </CommuteButton>
   );
 };
 

@@ -9,19 +9,14 @@ import {
   ModalBox,
 } from "../components/gallery/GalleryModal";
 import { useAuth } from "../context/AuthContext";
-import { StylesProps } from "../types/userLog";
+import { StyleProps } from "../types/userLog";
 
 export const Wrapper = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 100vh;
-  > div {
-    width: 600px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const HomeLink = styled(Link)`
@@ -30,30 +25,28 @@ export const HomeLink = styled(Link)`
 `;
 
 export const Form = styled.form`
-  width: 600px;
-  height: 480px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  margin-top: 20px;
+  width: 100%;
   box-shadow: 0px 3px 6px #00000029;
   border: 2px solid #d2d2d2;
   border-radius: 5px;
+  padding: 0 1rem;
   > div {
-    width: 500px;
-    margin: 0 auto;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 1rem;
+    padding: 2rem;
   }
 `;
 
 export const Input = styled.input`
-  width: 500px;
+  width: 100%;
   margin-bottom: 25px;
   padding: 3px 2px;
-  font: normal normal bold 20px/36px Noto Sans KR;
+  font-family: "NotoSansKR-Medium";
+  font-size: 20px;
+  line-height: 36px;
   border: none;
   outline: none;
   border-bottom: 2px solid #b2b2b2;
@@ -63,24 +56,27 @@ export const Input = styled.input`
 `;
 
 export const Message = styled.span`
-  font: normal bold 16px/28px Noto Sans KR;
+  font-family: "NotoSansKR-Medium";
+  font-size: 16px;
+  line-height: 28pz;
   color: red;
   left: 0;
   margin-top: -15px;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   text-align: left;
 `;
 
-export const LoginButton = styled.button<StylesProps>`
+export const LoginButton = styled.button<StyleProps>`
   margin-bottom: 5px;
   padding: 10px 0;
   border-radius: 2px;
-  font: normal normal bold 22px Noto Sans KR;
+  font-family: "NotoSansKR-Bold";
+  font-size: 22px;
+  line-height: 30px;
   color: ${props => props.color || "#000"};
-  background-color: ${props => props.$backgroundColor || "#fff"};
-  border: ${props => props.$backgroundColor || "1px solid #d4d4d4"};
+  background-color: ${props => props.background || "#fff"};
+  border: ${props => props.background || "1px solid #d4d4d4"};
   cursor: pointer;
-  translate: transform 0.8s;
   > img {
     float: left;
     margin-left: 25px;
@@ -90,29 +86,36 @@ export const LoginButton = styled.button<StylesProps>`
   }
   &:hover {
     transform: scale(1.02);
-    translate: transform 0.8s;
+    transition: transform 0.8s;
   }
 `;
 
 const Text = styled.span`
   display: flex;
   margin: 10px auto 5px auto;
-  color: gray;
+  color: #d2d2d2;
 `;
 
 const Hr = styled.hr`
-  width: 230px;
+  width: 5rem;
   height: 1px;
   size: 1.2px;
+  background: #d2d2d2;
 `;
 
 const LinkWrapper = styled.div`
-  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   > button {
+    font-family: "NotoSansKR-Medium";
     font-size: 1rem;
     border: none;
     background: none;
     cursor: pointer;
+  }
+  > a {
+    font-family: "NotoSansKR-Medium";
   }
 `;
 
@@ -122,44 +125,103 @@ const StyledLink = styled(Link)`
 
 const Span = styled.span`
   margin: 0 30px;
-  color: #808080;
+  color: #d2d2d2;
 `;
 
-const StyledModal = styled(ModalBox)`
-  width: 45rem;
-  height: 20rem;
+const FindModal = styled(ModalBox)`
+  width: 50%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  text-align: left;
+  box-sizing: border-box;
+  @media screen and (max-width: 600px) {
+    width: 80%;
+  }
 `;
 
-const FindMessage = styled.label`
-  font-family: "NotoSansKR-Bold";
-  font-size: 1.4rem;
-  margin-bottom: 4rem;
+const Title = styled.div`
+  width: 100%;
+  border-bottom: 1px solid #d2d2d2;
+  text-align: left;
+  > div {
+    padding: 1.5rem 2.7rem;
+    font-family: "NotoSansKR-Bold";
+    font-size: 1.2rem;
+  }
 `;
 
-const FindButton = styled.button<{ bordercolor: string }>`
-  margin-top: 2.5rem;
-  margin-left: auto;
-  margin-right: 1.5rem;
-  border: 2px solid ${props => props.bordercolor || "#d2d2d2"};
+const FindForm = styled.form`
+  width: 100%;
+  padding: 1rem 2.7rem;
+  display: flex;
+  flex-direction: column;
+  > div:first-of-type {
+    display: flex;
+    flex-direction: column;
+  }
+`;
+
+const FindLabel = styled.label`
+  margin: 1rem 0px;
+  font-family: "NotoSansKR-Medium";
+  font-size: 1rem;
+  color: #000;
+  &::after {
+    content: "*";
+    color: rgb(240, 61, 12);
+    margin-left: 0.4rem;
+  }
+`;
+
+const FindInput = styled.input`
+  width: 100%;
+  height: 100%;
+  font-family: "NotoSansKR-Medium";
+  font-size: 1rem;
+  padding: 1rem;
+  padding-left: 0.8rem;
+  outline: none;
+  border-radius: 10px;
+  border: 1.8px solid #d2d2d2;
+`;
+
+const FindButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+`;
+
+const FindButton = styled(Button)`
+  margin-left: 1.2rem;
+  box-shadow: 0px 2px 5px #00000029;
+`;
+
+const LoginBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 500px;
 `;
 
 const Login = () => {
   const [email, setEmail] = useState<string | undefined>("");
   const [password, setPassword] = useState<string | undefined>("");
+  const [findEmail, setFindEmail] = useState<string>("");
   const [isModal, setIsModal] = useState<boolean>(false);
   const modalBackgroundRef = useRef<HTMLDivElement>(null);
   const { login, resetPassword, googleLogin } = useAuth(); // 현재 사용자 정보 가져오기
   const navigate = useNavigate();
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e?.target.value);
+    setEmail(e.target.value);
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
+  };
+
+  const handleFindEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFindEmail(e.target.value);
   };
 
   // 로그인
@@ -193,15 +255,16 @@ const Login = () => {
   // 비밀번호 찾기
   const handleFindPassword = async () => {
     try {
-      if (email !== undefined) {
-        await resetPassword(email);
+      if (findEmail.trim() !== "") {
+        await resetPassword(findEmail);
         alert("메일 전송에 성공했습니다.");
-        setEmail("");
+        setFindEmail("");
         setIsModal(false);
       }
     } catch (error) {
       alert("메일 전송에 실패했습니다.");
       console.error("메일 전송 실패:", error);
+      setFindEmail("");
     }
   };
 
@@ -215,7 +278,7 @@ const Login = () => {
   return (
     <>
       <Wrapper>
-        <div>
+        <LoginBox>
           <HomeLink to="/">Youcandoit</HomeLink>
           <Form
             onSubmit={e => {
@@ -242,15 +305,11 @@ const Login = () => {
                   <Message>이메일과 패스워드 모두 입력해주세요.</Message>
                 ))}
 
-              <LoginButton
-                color="#087EA4"
-                $backgroundColor="#E6F7FF"
-                type="submit">
+              <LoginButton color="#087EA4" background="#E6F7FF" type="submit">
                 로그인
               </LoginButton>
               <Text>
-                <Hr />
-                {"\u00A0 또는 \u00A0"}
+                <Hr /> &nbsp;또는 &nbsp;&nbsp;
                 <Hr />
               </Text>
               <LoginButton onClick={handleGoogleLogin} type="button">
@@ -271,31 +330,47 @@ const Login = () => {
               </LinkWrapper>
             </div>
           </Form>
-        </div>
+        </LoginBox>
       </Wrapper>
 
       {isModal && (
         <ModalBackground
           onClick={handleClickBackground}
           ref={modalBackgroundRef}>
-          <StyledModal>
-            <FindMessage htmlFor="email">
-              비밀번호 재설정 메일을 보내기 위한 이메일을 입력해주세요.
-            </FindMessage>
-            <Input
-              id="email"
-              type="email"
-              placeholder="example@example.com"
-              value={email}
-              onChange={handleEmailChange}
-            />
-            <FindButton
-              bordercolor="#000"
-              type="button"
-              onClick={handleFindPassword}>
-              SEND
-            </FindButton>
-          </StyledModal>
+          <FindModal>
+            <Title>
+              <div>비밀번호 찾기</div>
+            </Title>
+            <FindForm onSubmit={handleFindPassword}>
+              <div>
+                <FindLabel htmlFor="email">이메일</FindLabel>
+                <FindInput
+                  id="email"
+                  type="email"
+                  placeholder="example@example.com"
+                  value={findEmail}
+                  onChange={handleFindEmailChange}
+                  required
+                />
+              </div>
+              <FindButtonWrapper>
+                <FindButton
+                  color="#808080"
+                  bordercolor="#fff"
+                  type="button"
+                  onClick={() => setIsModal(false)}>
+                  Cancel
+                </FindButton>
+                <FindButton
+                  color="#087EA4"
+                  bordercolor="#E6F7FF"
+                  $backgroundColor="#E6F7FF"
+                  type="submit">
+                  Send
+                </FindButton>
+              </FindButtonWrapper>
+            </FindForm>
+          </FindModal>
         </ModalBackground>
       )}
     </>

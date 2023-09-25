@@ -1,16 +1,11 @@
 import styled from "styled-components";
+import "../../assets/fonts/Font.css";
+import { Button } from "../gallery/GalleryModal";
 
 export const Span = styled.span`
+  font-size: 1.08rem;
+  margin-right: 0.5rem;
   width: 4rem;
-  font-size: 1.1rem;
-  margin: 0 0 4px 5px;
-  font-family: "SUITE-Bold";
-  transition: all 0.5s;
-
-  @media (max-width: 1024px) {
-    font-size: 0.9rem;
-    transition: all 0.5s;
-  }
 `;
 
 export const WorkOnMark = styled.img`
@@ -18,38 +13,35 @@ export const WorkOnMark = styled.img`
   margin-right: 0.4rem;
 `;
 
-export const CommuteButton = styled.button`
-  // background-color: #f6f7f9;
-  // height: 100%;
-  // border-radius: 10px;
-  // font-size: inherit;
-  // padding: 0 2rem;
-  // box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+export const CommuteButton = styled.button<{ $isIcon: boolean }>`
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: center;
   cursor: pointer;
+  flex-direction: ${props => (props.$isIcon ? "row" : "row-reverse")};
   background: none;
   border: none;
+  padding: 0;
+  gap: 0.2rem;
   transition: all 0.3s ease 0s;
+  width: 100%;
 
   &:hover {
-    transform: scale(1);
+    transform: scale(1.05); /* "transform" 및 스케일 속성 수정 */
   }
 `;
 
 export const Modal = styled.div`
   box-sizing: border-box;
-  padding: 1.5rem;
+  padding: 2rem 3rem;
   position: absolute;
-  z-index: 2000;
-  height: 360px;
+  z-index: 999;
   width: 100%;
   max-width: 600px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border-radius: 10px;
+  border-radius: 20px;
   background-color: white;
 
   @media (max-width: 768px) {
@@ -67,29 +59,36 @@ export const ModalLayout = styled.div`
   z-index: 2000;
 `;
 
+export const HeaderWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const Header = styled.div`
-  margin-bottom: 1.7rem;
+  font-family: "NotoSansKR-Bold";
+  margin-bottom: 1.6rem;
   font-weight: bolder;
   display: flex;
   width: 100%;
   justify-content: space-between;
-  font-size: 2.1rem;
+  font-size: 2rem;
 `;
 
 export const TodayDate = styled.div`
+  font-family: "NotoSansKR-Medium";
   display: flex;
   width: 100%;
   height: 2rem;
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin: 0.2rem 0;
 `;
 
 export const CurrentTimeLayout = styled.div`
+  width: 100%;
+  padding: 2rem 0;
   position: absolute;
   border: 1px solid #dcdcdc;
-  width: 100%;
-  border-radius: 10px;
-  height: 150px;
+  border-radius: 20px;
   position: relative;
   top: 10px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 5px;
@@ -114,6 +113,7 @@ export const CurrentTime = styled.div`
 export const Clock = styled.div<{ $workonoff: boolean | string }>`
   font-size: 4rem;
   font-weight: 900;
+  font-family: "NotoSansKR-ExtraBold";
   color: ${props => (props.$workonoff ? "#087ea4" : "black")};
 `;
 
@@ -129,7 +129,7 @@ export const Buttons = styled.div`
   }
 `;
 
-export const WorkOn = styled.button<{ $workonoff: boolean | string }>`
+export const WorkOnOff = styled.button<{ $workonoff: boolean | string }>`
   background-color: ${props => (props.$workonoff ? "#e6f7ff" : "white")};
   border: ${props => (props.$workonoff ? "none" : "1px solid #dcdcdc;")};
   border-radius: 5px;
@@ -152,12 +152,27 @@ export const OkayButtonDiv = styled.div`
   margin-top: 2.2rem;
 `;
 
-export const OkayButton = styled.button<{ $workonoff: boolean | string }>`
-  color: ${props => (props.$workonoff ? "#087ea4" : "white")};
-  background-color: ${props => (props.$workonoff ? "#e6f7ff" : "black")};
-  border-radius: 5px;
-  border: none;
+export const OkayButton = styled(Button)<{
+  color: string;
+  $borderColor: string;
+  $backgroundColor: string;
+  $workonoff: boolean | string;
+}>`
+  color: ${props => (props.$workonoff ? "#087ea4" : props.color)};
+  background-color: ${props =>
+    props.$workonoff ? "#e6f7ff" : props.$backgroundColor};
+  border-radius: 10px;
+  border: ${props => {
+    if (props.$workonoff) {
+      return "none";
+    }
+    if (props.$borderColor) {
+      return `1px solid ${props.$borderColor}`;
+    }
+    return "none";
+  }};
   font-size: 1.3rem;
+  margin-left: 1rem;
   padding: 0.5rem 0.8rem;
   cursor: pointer;
   font-weight: 700;

@@ -26,8 +26,11 @@ const SectionHeader = styled.div`
   justify-content: space-between;
   border-bottom: 1.2px solid #d2d2d2;
   font-family: "SUITE-Bold";
-  padding-bottom: 0.5rem;
+  padding-bottom: 1rem;
   height: 10%;
+  @media screen and (max-width: 1023px) {
+    padding-bottom: 2rem;
+  }
 `;
 
 const HeaderContentContainer = styled.div`
@@ -51,11 +54,12 @@ const SectionButtonBox = styled.div`
 `;
 
 const SectionButton = styled.button`
+  width: 1.5rem;
+  height: 1.5rem;
   background-color: #f6f7f9;
   border-radius: 5px;
   border: none;
   padding: 0.2rem;
-  height: 1.5rem;
   cursor: pointer;
 `;
 
@@ -95,8 +99,8 @@ const Image = styled.img`
     object-fit: scale-down;
     background-color: white;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4);
-    transform: scale(1.25);
-    transition: transform 0.5s;
+    transform: scale(1.12);
+    transition: transform 0.8s;
   }
 `;
 
@@ -169,8 +173,6 @@ const HomeGallery = () => {
     if (buttonNumber === 0) setCurrentImageFile("business");
     else if (buttonNumber === 1) setCurrentImageFile("jobPosting");
     else setCurrentImageFile("officePhoto");
-
-    return () => setButtonNumber(0);
   }, [buttonNumber]);
 
   return (

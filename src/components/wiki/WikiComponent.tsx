@@ -3,34 +3,57 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
+import { WikiSideBar } from "../sideBar/SideBar";
 import checkIcon from "../../assets/icons/wiki_icon/wiki_check_icon.png";
 import writeIcon from "../../assets/icons/wiki_icon/wiki_write_icon.png";
 import { db } from "../../firebase";
 import MarkdownEditor from "./MarkdownEditor";
 import MarkdownViewer from "./MarkdownViewer";
+import dropdownIcon from "../../assets/icons/header_icon/header_dropdown_icon.png";
 
 // styled-components
 const WikiContentBox = styled.div`
   width: 100%;
   font-family: "NotoSansKR-Regular";
-  padding: 0 3rem;
+  padding: 0 3rem 0 0;
+
+  @media (max-width: 1024px) {
+    padding: 0 3rem;
+  }
+`;
+
+const WikiSideBarBoxForMobile = styled.div`
+  display: none;
+  @media (max-width: 1024px) {
+    display: block;
+  }
 `;
 
 const WikiHeader = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-top: 25px;
+  align-items: flex-start;
+  margin-top: 2rem;
 `;
 
 export const WikiMainText = styled.span`
   font-size: 25px;
   font-family: "NotoSansKR-bold";
+
+  @media (max-width: 1024px) {
+    display: none;
+  }
 `;
 
 const WriteIcon = styled.img`
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.8rem;
+  height: 2.8rem;
+  transition: transform 0.8s;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.1);
+    transition: transform 0.8s;
+  }
 `;
 
 const WikiContent = styled.div`
@@ -64,6 +87,38 @@ const ViewerMarginContainer = styled.div`
   margin-left: 15px;
 `;
 
+const SideBarToggle = styled.button`
+    width: 100%;
+    font-family: "NotoSansKR-Medium";
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.5s;
+    display: flex;
+    align-items: center;
+    padding: inherit;
+}`;
+
+export const IconImg = styled.img`
+  width: 1rem;
+  margin-left: 0.5rem;
+  .dropdown {
+    width: 0.8rem;
+  }
+`;
+
+const DropdownSideBar = styled.div`
+  height: 24rem;
+  position: absolute;
+  background-color: #fff;
+  z-index: 99;
+  box-shadow: 0px 3px 6px #00000029;
+  border-radius: 15px;
+  left: 2rem;
+  top: 9.4rem;
+`;
+
 // WikiComponent
 const WikiComponent = () => {
   const { currentUser } = getAuth();
@@ -92,6 +147,10 @@ const WikiComponent = () => {
   const [editMode, setEditMode] = useState(false);
   const [content, setContent] = useState("");
   const [lastModified, setLastModified] = useState<string | null>(null);
+
+  const [isDrop, setIsDrop] = useState<boolean>(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const toggleRef = useRef<HTMLButtonElement | null>(null);
 
   // Functions for Firebase
   const getContent = async () => {
@@ -133,9 +192,47 @@ const WikiComponent = () => {
     getContent();
   }, [pageName]);
 
+  useEffect(() => {
+    const clickEvent = (e: MouseEvent) => {
+      if (toggleRef.current && toggleRef.current.contains(e.target as Node)) {
+        return; // 주메뉴 클릭, 상태 변경 x
+      }
+
+      if (
+        dropdownRef.current &&
+        dropdownRef.current.contains(e.target as Node)
+      ) {
+        setIsDrop(false);
+      }
+    };
+
+    window.addEventListener("click", clickEvent);
+
+    return () => window.removeEventListener("click", clickEvent);
+  }, []);
+
   return (
     <WikiContentBox>
       <WikiHeader>
+        <WikiSideBarBoxForMobile>
+          <div ref={dropdownRef}>
+            <SideBarToggle
+              ref={toggleRef}
+              onClick={e => {
+                setIsDrop(!isDrop);
+              }}>
+              {pageTitleMapping[pageName] || "회사내규"}
+              <IconImg
+                className="dropdown"
+                src={dropdownIcon}
+                alt="dropdown icon"
+              />
+            </SideBarToggle>
+          </div>
+          <DropdownSideBar>
+            {isDrop && <WikiSideBar closeDropdown={() => setIsDrop(false)} />}
+          </DropdownSideBar>
+        </WikiSideBarBoxForMobile>
         <WikiMainText>{pageTitleMapping[pageName] || "회사내규"}</WikiMainText>
         {currentUser && (
           <WriteIcon
