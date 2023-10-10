@@ -26,7 +26,7 @@ const HeaderNav = styled.nav`
   align-items: center;
 `;
 
-const HeaderItems = styled.nav`
+const HeaderItems = styled.div`
   display: flex;
   height: 50%;
   gap: 1.5rem;
