@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import { doc, setDoc } from "firebase/firestore";
+import { arrayUnion, doc, setDoc, updateDoc, getDoc } from "firebase/firestore";
 import { useState } from "react";
 import uuid from "react-uuid";
+import styled from "styled-components";
 import { db } from "../../firebase";
 import { CalendarModalProps, EventData } from "../../types/home";
 
@@ -77,7 +77,7 @@ const HomeCalendarModal = ({
   handleFatchEvent,
 }: CalendarModalProps) => {
   const eventId = uuid();
-  const eventsRef = doc(db, "events", eventId);
+
   const [eventInfo, setEventInfo] = useState<EventData>({
     id: eventId,
     title: "",
@@ -93,8 +93,16 @@ const HomeCalendarModal = ({
   };
 
   const handleAddEvent = async () => {
+    const eventsRef = doc(db, "events", eventInfo.date);
+    const docSnap = await getDoc(eventsRef);
+    const eventData = { events: arrayUnion(eventInfo) };
+
     try {
-      await setDoc(eventsRef, eventInfo);
+      if (docSnap.exists()) {
+        await updateDoc(eventsRef, eventData);
+      } else {
+        await setDoc(eventsRef, eventData);
+      }
       isModalChange();
       handleFatchEvent();
     } catch (error) {

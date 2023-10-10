@@ -80,6 +80,14 @@ const CalendarBox = styled.div`
   .fc .fc-daygrid-day-frame {
     cursor: pointer;
   }
+
+  .fc-direction-ltr .fc-daygrid-event.fc-event-end,
+  .fc-direction-rtl .fc-daygrid-event.fc-event-start {
+    &:hover {
+      background-color: #3997b6;
+      transition: 0.3s;
+    }
+  }
 `;
 
 const AddContentButton = styled.button`
@@ -104,17 +112,16 @@ const AddContentButton = styled.button`
 `;
 
 const HomeCalendar = () => {
-  const [isAddModal, setIsModal] = useState<boolean>(false);
-  const [isDetailModal, setIsDetailModal] = useState<boolean>(false);
-  const [isFetched, setIsFetched] = useState<boolean>(false);
+  const [isAddModal, setIsModal] = useState(false);
+  const [isDetailModal, setIsDetailModal] = useState(false);
+  const [isFetched, setIsFetched] = useState(false);
   const [events, setEvents] = useState<EventData[] | []>([]);
   const [selectedDay, setSelectedDay] = useState<string>("");
   const { currentUser } = useAuth();
-
   const handelAddModal = () => {
     setIsModal(!isAddModal);
   };
-
+  console.log(events);
   const handelDetailModal = () => {
     setIsDetailModal(!isDetailModal);
   };
@@ -130,9 +137,9 @@ const HomeCalendar = () => {
 
   const fetchData = async () => {
     const querySnapshot = await getDocs(collection(db, "events"));
-    const data: any[] = [];
+    const data: EventData[] = [];
     querySnapshot.forEach(doc => {
-      data.push({ id: doc.id, ...doc.data() });
+      data.push(...doc.data().events);
     });
     setEvents(data);
   };
@@ -162,7 +169,8 @@ const HomeCalendar = () => {
         height="100%"
         locale="ko"
         selectable
-        dateClick={info => handleDayClick(info.dateStr)}
+        eventClick={info => console.log(info.event.id)}
+        // dateClick={info => handleDayClick(info.dateStr)}
       />
       {currentUser?.displayName && (
         <AddContentButton type="button" onClick={handelAddModal}>
