@@ -6,7 +6,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { db } from "../../firebase";
-import { EventData } from "../../types/home";
+import { EventData, SelectEvents, SelectedEvent } from "../../types/home";
 import AddEventModal from "./AddEventModal";
 import EventDetailModal from "./EventDetailModal";
 import { useAuth } from "../../context/AuthContext";
@@ -116,18 +116,40 @@ const HomeCalendar = () => {
   const [isDetailModal, setIsDetailModal] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
   const [events, setEvents] = useState<EventData[] | []>([]);
-  const [selectedDay, setSelectedDay] = useState<string>("");
+  const [selectedEvent, setSelectedEvent] = useState<EventData>({
+    id: "",
+    title: "",
+    start: "",
+  });
   const { currentUser } = useAuth();
+
   const handelAddModal = () => {
     setIsModal(!isAddModal);
   };
-  console.log(events);
+
   const handelDetailModal = () => {
     setIsDetailModal(!isDetailModal);
   };
 
-  const handleDayClick = (day: string) => {
-    setSelectedDay(day);
+  const formmatDate = (start: Date): string => {
+    const date = new Date(start);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  };
+
+  const handleEventClick = (event: SelectedEvent) => {
+    const { id, title, start } = event;
+    if (start !== null) {
+      const formmatedDate = formmatDate(start);
+      setSelectedEvent({
+        id,
+        title,
+        start: formmatedDate,
+      });
+    }
     handelDetailModal();
   };
 
@@ -160,7 +182,7 @@ const HomeCalendar = () => {
         <EventDetailModal
           isModalChange={handelDetailModal}
           handleFatchEvent={handleFatchEvent}
-          selectedDay={selectedDay}
+          selectedEvent={selectedEvent}
         />
       )}
       <FullCalendar
@@ -169,8 +191,7 @@ const HomeCalendar = () => {
         height="100%"
         locale="ko"
         selectable
-        eventClick={info => console.log(info.event.id)}
-        // dateClick={info => handleDayClick(info.dateStr)}
+        eventClick={info => handleEventClick(info.event)}
       />
       {currentUser?.displayName && (
         <AddContentButton type="button" onClick={handelAddModal}>

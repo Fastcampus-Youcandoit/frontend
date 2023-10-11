@@ -1,9 +1,14 @@
-export type EventData = {
-  id?: string;
-  date: string;
+export interface EventData {
+  id: string;
+  start: string;
   title: string;
-};
+}
 
+export interface SelectedEvent {
+  id: string;
+  start: Date | null;
+  title: string;
+}
 export interface CalendarModalProps {
   isModalChange: () => void;
   handleFatchEvent: () => void;
@@ -11,8 +16,8 @@ export interface CalendarModalProps {
 
 export interface CalendarDetailModalProps {
   isModalChange: () => void;
-  selectedDay: string;
   handleFatchEvent: () => void;
+  selectedEvent: EventData;
 }
 
 export interface SelectEvents {

@@ -81,7 +81,7 @@ const HomeCalendarModal = ({
   const [eventInfo, setEventInfo] = useState<EventData>({
     id: eventId,
     title: "",
-    date: "",
+    start: "",
   });
 
   const updateEvent = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,16 +93,13 @@ const HomeCalendarModal = ({
   };
 
   const handleAddEvent = async () => {
-    const eventsRef = doc(db, "events", eventInfo.date);
+    const eventsRef = doc(db, "events", eventInfo.start);
     const docSnap = await getDoc(eventsRef);
     const eventData = { events: arrayUnion(eventInfo) };
 
     try {
-      if (docSnap.exists()) {
-        await updateDoc(eventsRef, eventData);
-      } else {
-        await setDoc(eventsRef, eventData);
-      }
+      if (docSnap.exists()) await updateDoc(eventsRef, eventData);
+      else await setDoc(eventsRef, eventData);
       isModalChange();
       handleFatchEvent();
     } catch (error) {
@@ -116,8 +113,8 @@ const HomeCalendarModal = ({
         <ModalTitle>일정 추가하기</ModalTitle>
         <SelectDate
           type="date"
-          name="date"
-          value={eventInfo.date}
+          name="start"
+          value={eventInfo.start}
           onChange={updateEvent}
         />
         <DateTitle
