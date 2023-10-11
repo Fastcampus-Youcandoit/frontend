@@ -13,7 +13,7 @@
 ![image](https://github.com/Fastcampus-Youcandoit/frontend/assets/42928784/44f4dbb1-c506-4060-beb1-881d7a0763c9)
 
 - 🔗 프로젝트 URL : [youcandoit-wiki](https://youcandoit-wiki.netlify.app)
-- 🗓️ 개발 기간 : 20203.09.08 ~ 2023.09.22
+- 🗓️ 개발 기간 : 2023.09.08 ~ 2023.09.22
 - 🔨 사용 기술 스택
 
   <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
