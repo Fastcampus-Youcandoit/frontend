@@ -6,7 +6,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { db } from "../../firebase";
-import { EventData, SelectEvents, SelectedEvent } from "../../types/home";
+import { EventData } from "../../types/home";
 import AddEventModal from "./AddEventModal";
 import EventDetailModal from "./EventDetailModal";
 import { useAuth } from "../../context/AuthContext";
@@ -80,14 +80,6 @@ const CalendarBox = styled.div`
   .fc .fc-daygrid-day-frame {
     cursor: pointer;
   }
-
-  .fc-direction-ltr .fc-daygrid-event.fc-event-end,
-  .fc-direction-rtl .fc-daygrid-event.fc-event-start {
-    &:hover {
-      background-color: #3997b6;
-      transition: 0.3s;
-    }
-  }
 `;
 
 const AddContentButton = styled.button`
@@ -116,11 +108,7 @@ const HomeCalendar = () => {
   const [isDetailModal, setIsDetailModal] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
   const [events, setEvents] = useState<EventData[] | []>([]);
-  const [selectedEvent, setSelectedEvent] = useState<EventData>({
-    id: "",
-    title: "",
-    start: "",
-  });
+  const [selectedDay, setSelectedDay] = useState<string>("");
   const { currentUser } = useAuth();
 
   const handelAddModal = () => {
@@ -131,25 +119,8 @@ const HomeCalendar = () => {
     setIsDetailModal(!isDetailModal);
   };
 
-  const formmatDate = (start: Date): string => {
-    const date = new Date(start);
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const day = date.getDate().toString().padStart(2, "0");
-
-    return `${year}-${month}-${day}`;
-  };
-
-  const handleEventClick = (event: SelectedEvent) => {
-    const { id, title, start } = event;
-    if (start !== null) {
-      const formmatedDate = formmatDate(start);
-      setSelectedEvent({
-        id,
-        title,
-        start: formmatedDate,
-      });
-    }
+  const handleDayClick = (day: string) => {
+    setSelectedDay(day);
     handelDetailModal();
   };
 
@@ -159,9 +130,9 @@ const HomeCalendar = () => {
 
   const fetchData = async () => {
     const querySnapshot = await getDocs(collection(db, "events"));
-    const data: EventData[] = [];
+    let data: any[] = [];
     querySnapshot.forEach(doc => {
-      data.push(...doc.data().events);
+      data = [...data, { id: doc.id, ...doc.data() }];
     });
     setEvents(data);
   };
@@ -182,7 +153,7 @@ const HomeCalendar = () => {
         <EventDetailModal
           isModalChange={handelDetailModal}
           handleFatchEvent={handleFatchEvent}
-          selectedEvent={selectedEvent}
+          selectedDay={selectedDay}
         />
       )}
       <FullCalendar
@@ -190,8 +161,10 @@ const HomeCalendar = () => {
         events={events}
         height="100%"
         locale="ko"
+        // eslint-disable-next-line no-underscore-dangle
+        eventClick={info => console.log(info.event._def.publicId)}
         selectable
-        eventClick={info => handleEventClick(info.event)}
+        // dateClick={info => handleDayClick(info.dateStr)}
       />
       {currentUser?.displayName && (
         <AddContentButton type="button" onClick={handelAddModal}>

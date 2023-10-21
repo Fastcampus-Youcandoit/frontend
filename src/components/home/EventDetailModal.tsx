@@ -1,5 +1,4 @@
 import {
-  arrayRemove,
   collection,
   deleteDoc,
   doc,
@@ -11,8 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { db } from "../../firebase";
-import { CalendarDetailModalProps } from "../../types/home";
-import { useAuth } from "../../context/AuthContext";
+import { CalendarDetailModalProps, SelectEvents } from "../../types/home";
 
 const ModalArea = styled.div`
   position: fixed;
@@ -57,6 +55,12 @@ const EventBox = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
+`;
+
+const CheckButton = styled.input`
+  cursor: pointer;
+  width: 1.5rem;
+  height: 1.5rem;
 `;
 
 const DateTitle = styled.h2`
@@ -110,36 +114,68 @@ const SelectDate = styled.input`
 
 const EventDetailModal = ({
   isModalChange,
-  selectedEvent,
+  selectedDay,
   handleFatchEvent,
 }: CalendarDetailModalProps) => {
-  const { currentUser } = useAuth();
+  const [selectedEvents, setSelectedEvents] = useState<SelectEvents[] | []>([]);
+  const [selectedEvent, setSelectedEvent] = useState<SelectEvents>({
+    eventId: "",
+    id: "",
+    title: "",
+    date: "",
+  });
+
+  const [checkedValue, setCheckedValue] = useState<string[]>([]);
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const { id, title, start } = selectedEvent;
-  // const fetchUpdatedEvent = async () => {
-  //   const { eventId, id, title, date } = selectedEvent;
-  //   try {
-  //     const selectedEventRef = doc(db, "events", selectedEvent.eventId);
-  //     await updateDoc(selectedEventRef, {
-  //       eventId,
-  //       id,
-  //       title,
-  //       date,
-  //     });
-  //     setIsEditing(false);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const handleCheckChange = (value: string) => {
+    const newCheckedValue = checkedValue.includes(value) ? [] : [value];
+    const selectedData = selectedEvents.filter(
+      event => event.eventId === value,
+    );
+    setCheckedValue(newCheckedValue);
+    setSelectedEvent(selectedData[0]);
+  };
+
+  const fetchData = async () => {
+    const dayRef = collection(db, "events");
+    const q = query(dayRef, where("date", "==", selectedDay));
+    const data: any[] = [];
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach(event => {
+      data.push({ eventId: event.id, ...event.data() });
+    });
+    setSelectedEvents(data);
+  };
+
+  const updateEventData = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.target;
+    setSelectedEvent(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const fetchUpdatedEvent = async () => {
+    const { eventId, id, title, date } = selectedEvent;
+    try {
+      const selectedEventRef = doc(db, "events", selectedEvent.eventId);
+      await updateDoc(selectedEventRef, {
+        eventId,
+        id,
+        title,
+        date,
+      });
+      setIsEditing(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const deleteSelectedEvent = async () => {
     const shouldDelete = window.confirm("이벤트를 삭제하시겠습니까?");
     if (shouldDelete) {
-      const eventRef = doc(db, "events", start);
       try {
-        await updateDoc(eventRef, {
-          events: arrayRemove(id),
-        });
+        await deleteDoc(doc(db, "events", selectedEvent.eventId));
         setIsEditing(false);
       } catch (error) {
         console.log(error);
@@ -148,7 +184,9 @@ const EventDetailModal = ({
   };
 
   const handleEditClick = () => {
-    setIsEditing(true);
+    if (checkedValue[0]) {
+      setIsEditing(true);
+    }
   };
 
   const handleEditModal = () => {
@@ -156,25 +194,37 @@ const EventDetailModal = ({
     isModalChange();
   };
 
+  useEffect(() => {
+    fetchData();
+
+    return () => setCheckedValue([]);
+  }, [selectedDay, isEditing]);
+
   return (
     <ModalArea>
       <ModalBox>
         {!isEditing && (
           <>
             <ModalTitle>상세 일정 보기</ModalTitle>
-            <EventsDay>{start}</EventsDay>
-            <EventBox>
-              <DateTitle>{title}</DateTitle>
-            </EventBox>
+            <EventsDay>{selectedDay}</EventsDay>
+            {selectedEvents.map(event => (
+              <EventBox key={event.id}>
+                <CheckButton
+                  type="checkbox"
+                  value={event.eventId}
+                  checked={checkedValue.includes(event.eventId)}
+                  onChange={() => handleCheckChange(event.eventId)}
+                />
+                <DateTitle>{event.title}</DateTitle>
+              </EventBox>
+            ))}
             <ModalButtonBox>
-              {currentUser?.displayName && (
-                <ModalButton
-                  type="button"
-                  onClick={handleEditClick}
-                  $backgroundColor="#3997b6">
-                  일정 수정
-                </ModalButton>
-              )}
+              <ModalButton
+                type="button"
+                onClick={handleEditClick}
+                $backgroundColor="#3997b6">
+                선택 일정 수정
+              </ModalButton>
               <ModalButton
                 type="button"
                 onClick={handleEditModal}
@@ -190,21 +240,21 @@ const EventDetailModal = ({
             <SelectDate
               type="date"
               name="date"
-              value={start}
-              // onChange={updateEventData}
+              value={selectedEvent.date}
+              onChange={updateEventData}
             />
             <EventBox>
               <EditInput
                 type="text"
                 name="title"
                 value={selectedEvent.title}
-                // onChange={updateEventData}
+                onChange={updateEventData}
               />
             </EventBox>
             <ModalButtonBox>
               <ModalButton
                 type="button"
-                // onClick={fetchUpdatedEvent}
+                onClick={fetchUpdatedEvent}
                 $backgroundColor="#3997b6">
                 일정 저장
               </ModalButton>
