@@ -1,5 +1,4 @@
 export type EventData = {
-  id: string;
   date: string;
   title: string;
 };
@@ -9,17 +8,8 @@ export interface CalendarModalProps {
   handleFatchEvent: () => void;
 }
 
-export interface CalendarDetailModalProps {
-  isModalChange: () => void;
-  selectedDay: string;
-  handleFatchEvent: () => void;
-}
-
-export interface SelectEvents {
-  id: string;
-  date: string;
-  title: string;
-  eventId: string;
+export interface CalendarDetailModalProps extends CalendarModalProps {
+  selectedEventId: string;
 }
 
 export interface ImageFilesType {
@@ -28,10 +18,8 @@ export interface ImageFilesType {
   officePhoto: string[];
 }
 
-export interface NoticeType {
+export interface NoticeType extends EventData {
   id: string;
-  title: string;
-  date: string;
   content: string;
   author: string;
 }
