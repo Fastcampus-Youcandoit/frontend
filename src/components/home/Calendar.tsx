@@ -68,6 +68,10 @@ const CalendarBox = styled.div`
     background-color: rgb(230, 247, 255);
     font-size: 0.5rem;
     font-family: "NotoSansKR-medium";
+    &:hover {
+      background-color: #3997b6;
+      transition: 0.5s;
+    }
   }
   .fc-sticky {
     color: #000;
@@ -104,11 +108,11 @@ const AddContentButton = styled.button`
 `;
 
 const HomeCalendar = () => {
-  const [isAddModal, setIsModal] = useState<boolean>(false);
-  const [isDetailModal, setIsDetailModal] = useState<boolean>(false);
-  const [isFetched, setIsFetched] = useState<boolean>(false);
+  const [isAddModal, setIsModal] = useState(false);
+  const [isDetailModal, setIsDetailModal] = useState(false);
+  const [isFetched, setIsFetched] = useState(false);
   const [events, setEvents] = useState<EventData[] | []>([]);
-  const [selectedDay, setSelectedDay] = useState<string>("");
+  const [selectedEventId, setSelectedEventId] = useState<string>("");
   const { currentUser } = useAuth();
 
   const handelAddModal = () => {
@@ -119,8 +123,8 @@ const HomeCalendar = () => {
     setIsDetailModal(!isDetailModal);
   };
 
-  const handleDayClick = (day: string) => {
-    setSelectedDay(day);
+  const handleDayClick = (EventId: string) => {
+    setSelectedEventId(EventId);
     handelDetailModal();
   };
 
@@ -130,9 +134,9 @@ const HomeCalendar = () => {
 
   const fetchData = async () => {
     const querySnapshot = await getDocs(collection(db, "events"));
-    const data: any[] = [];
+    let data: any[] = [];
     querySnapshot.forEach(doc => {
-      data.push({ id: doc.id, ...doc.data() });
+      data = [...data, { id: doc.id, ...doc.data() }];
     });
     setEvents(data);
   };
@@ -153,7 +157,7 @@ const HomeCalendar = () => {
         <EventDetailModal
           isModalChange={handelDetailModal}
           handleFatchEvent={handleFatchEvent}
-          selectedDay={selectedDay}
+          selectedEventId={selectedEventId}
         />
       )}
       <FullCalendar
@@ -161,8 +165,9 @@ const HomeCalendar = () => {
         events={events}
         height="100%"
         locale="ko"
+        // eslint-disable-next-line no-underscore-dangle
+        eventClick={info => handleDayClick(info.event._def.publicId)}
         selectable
-        dateClick={info => handleDayClick(info.dateStr)}
       />
       {currentUser?.displayName && (
         <AddContentButton type="button" onClick={handelAddModal}>

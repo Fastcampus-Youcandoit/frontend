@@ -1,16 +1,8 @@
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  query,
-  updateDoc,
-  where,
-} from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { db } from "../../firebase";
-import { CalendarDetailModalProps, SelectEvents } from "../../types/home";
+import { CalendarDetailModalProps, EventData } from "../../types/home";
 
 const ModalArea = styled.div`
   position: fixed;
@@ -55,12 +47,6 @@ const EventBox = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-`;
-
-const CheckButton = styled.input`
-  cursor: pointer;
-  width: 1.5rem;
-  height: 1.5rem;
 `;
 
 const DateTitle = styled.h2`
@@ -114,37 +100,27 @@ const SelectDate = styled.input`
 
 const EventDetailModal = ({
   isModalChange,
-  selectedDay,
+  selectedEventId,
   handleFatchEvent,
 }: CalendarDetailModalProps) => {
-  const [selectedEvents, setSelectedEvents] = useState<SelectEvents[] | []>([]);
-  const [selectedEvent, setSelectedEvent] = useState<SelectEvents>({
-    eventId: "",
-    id: "",
+  const [selectedEvent, setSelectedEvent] = useState<EventData>({
     title: "",
     date: "",
   });
 
-  const [checkedValue, setCheckedValue] = useState<string[]>([]);
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-  const handleCheckChange = (value: string) => {
-    const newCheckedValue = checkedValue.includes(value) ? [] : [value];
-    const selectedData = selectedEvents.filter(
-      event => event.eventId === value,
-    );
-    setCheckedValue(newCheckedValue);
-    setSelectedEvent(selectedData[0]);
-  };
+  const [isEditing, setIsEditing] = useState(false);
 
   const fetchData = async () => {
-    const dayRef = collection(db, "events");
-    const q = query(dayRef, where("date", "==", selectedDay));
-    const data: any[] = [];
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach(event => {
-      data.push({ eventId: event.id, ...event.data() });
-    });
-    setSelectedEvents(data);
+    const dayRef = doc(db, "events", selectedEventId);
+    const docSnap = await getDoc(dayRef);
+    if (docSnap.exists()) {
+      const eventData = docSnap.data();
+      const { date, title } = eventData;
+      setSelectedEvent({
+        date,
+        title,
+      });
+    }
   };
 
   const updateEventData = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -156,12 +132,10 @@ const EventDetailModal = ({
   };
 
   const fetchUpdatedEvent = async () => {
-    const { eventId, id, title, date } = selectedEvent;
+    const { title, date } = selectedEvent;
     try {
-      const selectedEventRef = doc(db, "events", selectedEvent.eventId);
+      const selectedEventRef = doc(db, "events", selectedEventId);
       await updateDoc(selectedEventRef, {
-        eventId,
-        id,
         title,
         date,
       });
@@ -175,7 +149,7 @@ const EventDetailModal = ({
     const shouldDelete = window.confirm("이벤트를 삭제하시겠습니까?");
     if (shouldDelete) {
       try {
-        await deleteDoc(doc(db, "events", selectedEvent.eventId));
+        await deleteDoc(doc(db, "events", selectedEventId));
         setIsEditing(false);
       } catch (error) {
         console.log(error);
@@ -184,9 +158,7 @@ const EventDetailModal = ({
   };
 
   const handleEditClick = () => {
-    if (checkedValue[0]) {
-      setIsEditing(true);
-    }
+    setIsEditing(true);
   };
 
   const handleEditModal = () => {
@@ -196,9 +168,7 @@ const EventDetailModal = ({
 
   useEffect(() => {
     fetchData();
-
-    return () => setCheckedValue([]);
-  }, [selectedDay, isEditing]);
+  }, [selectedEventId, isEditing]);
 
   return (
     <ModalArea>
@@ -206,18 +176,10 @@ const EventDetailModal = ({
         {!isEditing && (
           <>
             <ModalTitle>상세 일정 보기</ModalTitle>
-            <EventsDay>{selectedDay}</EventsDay>
-            {selectedEvents.map(event => (
-              <EventBox key={event.id}>
-                <CheckButton
-                  type="checkbox"
-                  value={event.eventId}
-                  checked={checkedValue.includes(event.eventId)}
-                  onChange={() => handleCheckChange(event.eventId)}
-                />
-                <DateTitle>{event.title}</DateTitle>
-              </EventBox>
-            ))}
+            <EventsDay>{selectedEvent.date}</EventsDay>
+            <EventBox>
+              <DateTitle>{selectedEvent.title}</DateTitle>
+            </EventBox>
             <ModalButtonBox>
               <ModalButton
                 type="button"
@@ -278,4 +240,4 @@ const EventDetailModal = ({
   );
 };
 
-export default EventDetailModal;
+export default React.memo(EventDetailModal);
