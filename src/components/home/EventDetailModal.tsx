@@ -1,5 +1,5 @@
 import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { db } from "../../firebase";
 import { CalendarDetailModalProps, EventData } from "../../types/home";
@@ -68,8 +68,7 @@ const ModalButtonBox = styled.div`
 const ModalButton = styled.button<{ $backgroundColor: string }>`
   cursor: pointer;
   color: black;
-  background-color: ${props =>
-    props.$backgroundColor ? props.$backgroundColor : "#dee2e6"};
+  background-color: ${props => props.$backgroundColor || "#dee2e6"};
   border: none;
   font-size: 0.8rem;
   font-family: "NotoSansKR-medium";
@@ -123,13 +122,16 @@ const EventDetailModal = ({
     }
   };
 
-  const updateEventData = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target;
-    setSelectedEvent(prev => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  const updateEventData = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { value, name } = e.target;
+      setSelectedEvent(prev => ({
+        ...prev,
+        [name]: value,
+      }));
+    },
+    [selectedEvent],
+  );
 
   const fetchUpdatedEvent = async () => {
     const { title, date } = selectedEvent;
@@ -240,4 +242,4 @@ const EventDetailModal = ({
   );
 };
 
-export default React.memo(EventDetailModal);
+export default EventDetailModal;
