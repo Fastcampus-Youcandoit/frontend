@@ -5,11 +5,11 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useAuth } from "../../context/AuthContext";
 import { db } from "../../firebase";
 import { EventData } from "../../types/home";
 import AddEventModal from "./AddEventModal";
 import EventDetailModal from "./EventDetailModal";
-import { useAuth } from "../../context/AuthContext";
 
 const CalendarBox = styled.div`
   position: relative;

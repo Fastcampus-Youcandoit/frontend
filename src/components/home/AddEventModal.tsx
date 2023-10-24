@@ -1,5 +1,5 @@
 import { addDoc, collection } from "firebase/firestore";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import styled from "styled-components";
 import { db } from "../../firebase";
 import { CalendarModalProps, EventData } from "../../types/home";
@@ -80,13 +80,16 @@ const HomeCalendarModal = ({
     date: "",
   });
 
-  const updateEvent = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target;
-    setEventInfo(prev => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  const updateEvent = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { value, name } = e.target;
+      setEventInfo(prev => ({
+        ...prev,
+        [name]: value,
+      }));
+    },
+    [eventInfo],
+  );
 
   const handleAddEvent = async () => {
     try {
